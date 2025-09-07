@@ -9,24 +9,18 @@ class UF extends Controller
 {
     private $municipio_model;
 
-    public function __construct()
+    function __construct()
     {
         $this->municipio_model = new MunicipioModel();
     }
 
-    public function preparaMunicipios()
+    public function carregaMunicipios($id_uf)
     {
-        $id_uf = $this->request->getvar('id_uf');
-        
         $municipios = $this->municipio_model
-                            ->where('id_uf', $id_uf)
-                            ->findAll();
+                           ->where('id_uf', $id_uf)
+                           ->orderBy('municipio', 'ASC')
+                           ->findAll();
 
-        echo "<option value=\"\">Selecione</option>";
- 
-
-        foreach($municipios as $municipio) :
-            echo "<option value=\"{$municipio['id_municipio']}\">{$municipio['municipio']}</option>";
-        endforeach;
+        return $this->response->setJSON($municipios);
     }
 }
