@@ -10,7 +10,7 @@ class ProdutosProvisorios extends Migration
 			'id_produto_provisorio' => [
 				'type'           => 'INT',
 				'constraint'     => 9,
-				'usigned'        => TRUE,
+				'unsigned'       => TRUE,
 				'auto_increment' => TRUE
 			],
 

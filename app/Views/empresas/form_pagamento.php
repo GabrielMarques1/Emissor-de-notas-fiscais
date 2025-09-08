@@ -4,6 +4,7 @@
     <div class="content">
         <div class="container-fluid">
             <form action="/empresas/storePagamento/<?= $id_empresa ?>" method="post" enctype="multipart/form-data">
+                <?= csrf_field() ?>
 
                 <div class="card">
                     <div class="card-header">

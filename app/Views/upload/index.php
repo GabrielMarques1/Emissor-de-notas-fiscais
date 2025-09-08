@@ -6,6 +6,7 @@
     <div class="content">
         <div class="container-fluid">
             <form action="/upload/store" method="post" enctype="multipart/form-data">
+                <?= csrf_field() ?>
 
                 <div class="card">
                     <!-- /.card-header -->

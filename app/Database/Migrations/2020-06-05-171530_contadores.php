@@ -10,7 +10,7 @@ class Contadores extends Migration
 			'id_contador' => [
 				'type'           => 'INT',
 				'constraint'     => 9,
-				'usigned'        => TRUE,
+				'unsigned'       => TRUE,
 				'auto_increment' => TRUE
 			],
 

@@ -9,6 +9,7 @@
                 </button>
             </div>
             <form action="/notaDeDevolucao/alteraDadosDoProduto" method="post">
+                <?= csrf_field() ?>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-8">
@@ -118,6 +119,7 @@
                         </div>
                     </div>
                     <form action="/notaDeDevolucao/adicionaProduto" method="post">
+                        <?= csrf_field() ?>
                         <div class="row" style="margin-top: 20px">
                             <div class="col-lg-5">
                                 <div class="form-group">
@@ -220,6 +222,7 @@
             <!-- /.card -->
             
             <form action="/NFe/emitirNotaDeDevolucao" method="post">
+                <?= csrf_field() ?>
 
                 <div class="card">
                     <div class="card-header">

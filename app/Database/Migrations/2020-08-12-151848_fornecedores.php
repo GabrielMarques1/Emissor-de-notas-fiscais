@@ -10,7 +10,7 @@ class Fornecedores extends Migration
 			'id_fornecedor' => [
 				'type'           => 'INT',
 				'constraint'     => 9,
-				'usigned'        => TRUE,
+				'unsigned'       => TRUE,
 				'auto_increment' => TRUE
 			],
 

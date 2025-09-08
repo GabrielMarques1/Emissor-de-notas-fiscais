@@ -11,6 +11,7 @@
                 </button>
             </div>
             <form action="/empresas/trocarCertificado" method="post" enctype="multipart/form-data">
+                <?= csrf_field() ?>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
@@ -41,6 +42,7 @@
     <div class="content">
         <div class="container-fluid">
             <form action="/empresas/store" method="post" enctype="multipart/form-data">
+                <?= csrf_field() ?>
                 
                 <div class="card">
                     <div class="card-header">
@@ -69,15 +71,7 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label for="">Status</label>
-                                        <select class="form-control select2" name="status" style="width: 100%">
-                                            <?php if($empresa['status'] == "Ativo") : ?>
-                                                <option value="Ativo" selected>Ativo</option>
-                                                <option value="Desativado">Desativado</option>
-                                            <?php else: ?>
-                                                <option value="Ativo">Ativo</option>
-                                                <option value="Desativado" selected>Desativado</option>
-                                            <?php endif; ?>
-                                        </select>
+                                        <input type="text" class="form-control" value="<?= $empresa['status'] ?>" disabled>
                                     </div>
                                 </div>
                             <?php endif; ?>

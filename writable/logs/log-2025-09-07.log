@@ -1,0 +1,2233 @@
+INFO - 2025-09-07 14:54:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 14:54:39 --> Error connecting to the database: mysqli_sql_exception: Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente in C:\xampp\htdocs\erp.local\system\Database\MySQLi\Connection.php:184
+Stack trace:
+#0 C:\xampp\htdocs\erp.local\system\Database\MySQLi\Connection.php(184): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'erp', 3306, '', 0)
+#1 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(392): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\erp.local\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\erp.local\system\Model.php(270): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.local\system\BaseModel.php(676): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\erp.local\app\Controllers\Login.php(39): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\erp.local\system\CodeIgniter.php(941): App\Controllers\Login->index()
+#8 C:\xampp\htdocs\erp.local\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+#9 C:\xampp\htdocs\erp.local\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.local\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente in C:\xampp\htdocs\erp.local\system\Database\MySQLi\Connection.php:229
+Stack trace:
+#0 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(392): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\erp.local\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\xampp\htdocs\erp.local\system\Model.php(270): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\erp.local\system\BaseModel.php(676): CodeIgniter\Model->doFirst()
+#5 C:\xampp\htdocs\erp.local\app\Controllers\Login.php(39): CodeIgniter\BaseModel->first()
+#6 C:\xampp\htdocs\erp.local\system\CodeIgniter.php(941): App\Controllers\Login->index()
+#7 C:\xampp\htdocs\erp.local\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+#8 C:\xampp\htdocs\erp.local\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\erp.local\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2025-09-07 14:54:39 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente
+in SYSTEMPATH\Database\BaseConnection.php on line 428.
+ 1 SYSTEMPATH\Database\BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `configuracoes`
+WHERE `id_config` = :id_config:
+ LIMIT 1', [...], false)
+ 3 SYSTEMPATH\Model.php(270): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFirst()
+ 5 APPPATH\Controllers\Login.php(39): CodeIgniter\BaseModel->first()
+ 6 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Login->index()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 15:00:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 15:01:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 15:04:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 15:05:09 --> Error connecting to the database: ErrorException: mysqli::real_connect(): Error while reading greeting packet. PID=20864 in C:\xampp\htdocs\erp.local\system\Database\MySQLi\Connection.php:184
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'mysqli::real_co...', 'C:\\xampp\\htdocs...', 184)
+#1 C:\xampp\htdocs\erp.local\system\Database\MySQLi\Connection.php(184): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'erp', 3306, '', 0)
+#2 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(392): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#3 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#4 C:\xampp\htdocs\erp.local\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#5 C:\xampp\htdocs\erp.local\system\Model.php(270): CodeIgniter\Database\BaseBuilder->get()
+#6 C:\xampp\htdocs\erp.local\system\BaseModel.php(676): CodeIgniter\Model->doFirst()
+#7 C:\xampp\htdocs\erp.local\app\Controllers\Login.php(39): CodeIgniter\BaseModel->first()
+#8 C:\xampp\htdocs\erp.local\system\CodeIgniter.php(941): App\Controllers\Login->index()
+#9 C:\xampp\htdocs\erp.local\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+#10 C:\xampp\htdocs\erp.local\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\erp.local\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#12 {main}
+
+Next mysqli_sql_exception: MySQL server has gone away in C:\xampp\htdocs\erp.local\system\Database\MySQLi\Connection.php:184
+Stack trace:
+#0 C:\xampp\htdocs\erp.local\system\Database\MySQLi\Connection.php(184): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'erp', 3306, '', 0)
+#1 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(392): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\erp.local\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\erp.local\system\Model.php(270): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.local\system\BaseModel.php(676): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\erp.local\app\Controllers\Login.php(39): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\erp.local\system\CodeIgniter.php(941): App\Controllers\Login->index()
+#8 C:\xampp\htdocs\erp.local\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+#9 C:\xampp\htdocs\erp.local\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.local\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: MySQL server has gone away in C:\xampp\htdocs\erp.local\system\Database\MySQLi\Connection.php:229
+Stack trace:
+#0 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(392): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\erp.local\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\xampp\htdocs\erp.local\system\Model.php(270): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\erp.local\system\BaseModel.php(676): CodeIgniter\Model->doFirst()
+#5 C:\xampp\htdocs\erp.local\app\Controllers\Login.php(39): CodeIgniter\BaseModel->first()
+#6 C:\xampp\htdocs\erp.local\system\CodeIgniter.php(941): App\Controllers\Login->index()
+#7 C:\xampp\htdocs\erp.local\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+#8 C:\xampp\htdocs\erp.local\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\erp.local\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2025-09-07 15:05:09 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: MySQL server has gone away
+in SYSTEMPATH\Database\BaseConnection.php on line 428.
+ 1 SYSTEMPATH\Database\BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `configuracoes`
+WHERE `id_config` = :id_config:
+ LIMIT 1', [...], false)
+ 3 SYSTEMPATH\Model.php(270): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFirst()
+ 5 APPPATH\Controllers\Login.php(39): CodeIgniter\BaseModel->first()
+ 6 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Login->index()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 15:05:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 18:21:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:21:49 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'erp.test' in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:184
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(184): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'erp.test', 3306, '', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(392): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(270): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(676): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Login.php(39): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Login->index()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'erp.test' in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:229
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(392): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\xampp\htdocs\erp.test\system\Model.php(270): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\erp.test\system\BaseModel.php(676): CodeIgniter\Model->doFirst()
+#5 C:\xampp\htdocs\erp.test\app\Controllers\Login.php(39): CodeIgniter\BaseModel->first()
+#6 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Login->index()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2025-09-07 18:21:49 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'erp.test'
+in SYSTEMPATH\Database\BaseConnection.php on line 428.
+ 1 SYSTEMPATH\Database\BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `configuracoes`
+WHERE `id_config` = :id_config:
+ LIMIT 1', [...], false)
+ 3 SYSTEMPATH\Model.php(270): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFirst()
+ 5 APPPATH\Controllers\Login.php(39): CodeIgniter\BaseModel->first()
+ 6 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Login->index()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:22:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 18:22:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 18:22:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 18:23:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:23:01 --> mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:23:01 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:23:01 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:23:01 --> [Caused by] mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:25:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 18:25:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:25:43 --> mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:25:43 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:25:43 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:25:43 --> [Caused by] mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:28:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:28:34 --> mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:28:34 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:28:34 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:28:34 --> [Caused by] mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:28:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 18:28:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:28:37 --> mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:28:37 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:28:37 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:28:37 --> [Caused by] mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:29:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:29:37 --> mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:29:37 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:29:37 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:29:37 --> [Caused by] mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:29:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:29:40 --> mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:29:40 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:29:40 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:29:40 --> [Caused by] mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:29:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:29:46 --> mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:29:46 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:29:46 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:29:46 --> [Caused by] mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:29:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 18:29:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 18:29:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 18:29:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:29:54 --> mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:29:54 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:29:54 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:29:54 --> [Caused by] mysqli_sql_exception: Table 'erp.test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:54:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:54:12 --> mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:54:12 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:54:12 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:54:12 --> [Caused by] mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:54:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:54:32 --> mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:54:32 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:54:32 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:54:32 --> [Caused by] mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ERROR - 2025-09-07 18:56:32 --> mysqli_sql_exception: Can't create table `erp_test`.`municipios` (errno: 150 "Foreign key constraint is incorrectly formed") in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('CREATE TABLE `m...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('CREATE TABLE `m...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('CREATE TABLE `m...')
+#3 C:\xampp\htdocs\erp.test\system\Database\Forge.php(555): CodeIgniter\Database\BaseConnection->query('CREATE TABLE `m...')
+#4 C:\xampp\htdocs\erp.test\app\Database\Migrations\2020-06-04-194145_municipios.php(46): CodeIgniter\Database\Forge->createTable('municipios')
+#5 C:\xampp\htdocs\erp.test\system\Database\MigrationRunner.php(865): App\Database\Migrations\Municipios->up()
+#6 C:\xampp\htdocs\erp.test\system\Database\MigrationRunner.php(181): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#7 C:\xampp\htdocs\erp.test\system\Commands\Database\Migrate.php(84): CodeIgniter\Database\MigrationRunner->latest(NULL)
+#8 C:\xampp\htdocs\erp.test\system\CLI\Commands.php(65): CodeIgniter\Commands\Database\Migrate->run(Array)
+#9 C:\xampp\htdocs\erp.test\system\CLI\Console.php(46): CodeIgniter\CLI\Commands->run('migrate', Array)
+#10 C:\xampp\htdocs\erp.test\spark(102): CodeIgniter\CLI\Console->run()
+#11 {main}
+INFO - 2025-09-07 18:56:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:56:43 --> mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:56:43 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:56:43 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:56:43 --> [Caused by] mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:56:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:56:55 --> mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:56:55 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:56:55 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:56:55 --> [Caused by] mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:56:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:56:56 --> mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:56:56 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:56:56 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:56:56 --> [Caused by] mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:58:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:58:13 --> mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:58:13 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:58:13 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:58:13 --> [Caused by] mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:58:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:58:14 --> mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:58:14 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:58:14 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:58:14 --> [Caused by] mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:58:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 18:58:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 18:58:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 18:58:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 18:58:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-07 18:58:19 --> mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobranc...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobranc...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobranc...')
+#3 C:\xampp\htdocs\erp.test\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobranc...', Array, false)
+#4 C:\xampp\htdocs\erp.test\system\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\erp.test\system\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\erp.test\app\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+#8 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2025-09-07 18:58:19 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 647.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 2 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:58:19 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 311.
+ 1 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 4 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 8 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 9 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2025-09-07 18:58:19 --> [Caused by] mysqli_sql_exception: Table 'erp_test.cobrancas_mensais' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 306.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(306): mysqli->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = \'Pendente\'
+OR `cobrancas_mensais`.`status` = \'Vencido\'
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `cobrancas_mensais`.*, `empresas`.`xFant` as `empresa_nome`, `empresas`.`status` as `status_empresa`
+FROM `cobrancas_mensais`
+JOIN `empresas` ON `empresas`.`id_empresa` = `cobrancas_mensais`.`id_empresa`
+WHERE   (
+`cobrancas_mensais`.`status` = :cobrancas_mensais.status:
+OR `cobrancas_mensais`.`status` = :cobrancas_mensais.status.1:
+ )
+ORDER BY `ano_referencia` DESC, `mes_referencia` DESC', [...], false)
+ 5 SYSTEMPATH\Model.php(242): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(638): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Cobranca.php(236): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 9 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+10 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 18:59:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-09-07 18:59:24 --> ErrorException: Undefined variable $link
+in APPPATH\Views\templates\footer.php on line 41.
+ 1 APPPATH\Views\templates\footer.php(41): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $link', 'C:\\xampp\\htdocs\\erp.test\\app\\Views\\templates\\footer.php', 41)
+ 2 SYSTEMPATH\View\View.php(228): include('C:\\xampp\\htdocs\\erp.test\\app\\Views\\templates\\footer.php')
+ 3 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1178): CodeIgniter\View\View->render('templates/footer', [], true)
+ 5 APPPATH\Controllers\Cobranca.php(250): view('templates/footer')
+ 6 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Cobranca->adminLista()
+ 7 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Cobranca))
+ 8 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+INFO - 2025-09-07 19:04:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:06:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:06:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:06:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:06:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:06:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:06:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:06:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:07:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:10:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:10:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:11:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:11:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:11:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:11:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:11:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:14:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:15:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:16:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:17:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:18:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:18:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:18:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:18:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:18:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:18:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:18:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:19:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:20:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:20:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:20:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:20:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:20:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:20:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:20:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:20:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:20:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:20:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:20:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:20:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:20:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:21:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:22:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:22:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:22:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:22:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:22:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:22:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:22:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:23:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:23:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:23:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:23:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:23:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:23:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:23:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:23:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:27:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:27:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:27:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:27:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:27:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:27:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:27:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:27:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:27:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:27:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:27:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:27:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:27:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:27:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:27:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:28:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:28:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:28:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:28:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:28:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:28:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:28:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:28:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:29:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:30:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:30:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:30:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:30:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:33:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:33:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:33:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:33:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:33:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:33:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:34:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:34:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:34:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:34:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:34:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:34:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:34:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:34:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:34:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:34:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:35:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:36:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:38:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:40:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:40:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:40:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:41:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:42:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:48:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:48:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:48:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:48:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:50:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:50:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:50:53 --> CSRF token verified.
+INFO - 2025-09-07 19:50:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:50:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 19:50:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:26 --> CSRF token verified.
+INFO - 2025-09-07 20:00:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:42 --> CSRF token verified.
+INFO - 2025-09-07 20:00:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:48 --> CSRF token verified.
+INFO - 2025-09-07 20:00:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:00:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:07:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:07:15 --> CSRF token verified.
+INFO - 2025-09-07 20:07:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:07:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:10:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:10:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:10:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:10:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:10:09 --> CSRF token verified.
+INFO - 2025-09-07 20:10:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-09-07 20:10:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

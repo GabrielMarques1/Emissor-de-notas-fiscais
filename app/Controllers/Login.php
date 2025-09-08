@@ -43,15 +43,46 @@ class Login extends Controller
 
     public function autenticar()
     {
+        // Throttle por IP: 5 tentativas por minuto
+        $throttler = service('throttler');
+        $ipKey = 'login-' . $this->request->getIPAddress();
+        if (!$throttler->check($ipKey, 5, MINUTE)) {
+            $this->session->setFlashdata(
+                'alert',
+                [
+                    'type'  => 'error',
+                    'title' => 'Muitas tentativas. Tente novamente em instantes.'
+                ]
+            );
+            return redirect()->to('/login');
+        }
         $dados = $this->request
                         ->getvar();
 
         $login = $this->login_model
                     ->where('usuario', $dados['usuario'])
-                    ->where('senha', $dados['senha'])
                     ->first();
 
-        if(!empty($login)) :
+        // Verifica senha (suporta senhas antigas em texto e novas com hash)
+        $senhaValida = false;
+        if ($login) {
+            $info = password_get_info($login['senha']);
+            if (!empty($info['algo'])) {
+                $senhaValida = password_verify($dados['senha'], $login['senha']);
+            } else {
+                $senhaValida = hash_equals((string) $login['senha'], (string) $dados['senha']);
+            }
+        }
+
+        if(!empty($login) && $senhaValida) :
+            // Upgrade de senha: se armazenada sem hash, re-hash agora
+            $info = password_get_info($login['senha']);
+            if (empty($info['algo'])) {
+                $this->login_model
+                    ->where('id_login', $login['id_login'])
+                    ->set('senha', password_hash($dados['senha'], PASSWORD_DEFAULT))
+                    ->update();
+            }
             $config = $this->configuracao_model
                                 ->where('id_config', 1)
                                 ->first();
@@ -68,6 +99,7 @@ class Login extends Controller
                 );
                 
                 // Insere variáveis na sessão
+                $this->session->regenerate();
                 $this->session->set('id_login', $login['id_login']);
                 $this->session->set('xFant', "NxSistemas");
                 $this->session->set('xApp', $config['nome_do_app']);
@@ -82,6 +114,7 @@ class Login extends Controller
                                 ->where('id_login', $login['id_login'])
                                 ->first();
 
+                $this->session->regenerate();
                 $this->session
                     ->set('id_contador', $contador['id_contador']);
 
@@ -124,7 +157,7 @@ class Login extends Controller
                         'alert',
                         [
                             'type'  => 'warning',
-                            'title' => 'Não foi possível realizar o acesso! Entre em contato com seu contador.'
+                            'title' => 'Acesso bloqueado. Entre em contato com o administrador.'
                         ]
                     );
 
@@ -132,6 +165,7 @@ class Login extends Controller
 
                 endif;
 
+                $this->session->regenerate();
                 $this->session->set('id_empresa', $empresa['id_empresa']);
                 $this->session->set('id_contador', $empresa['id_contador']);
 

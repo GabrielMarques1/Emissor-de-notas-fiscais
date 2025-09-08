@@ -10,7 +10,7 @@ class Logins extends Migration
 			'id_login' => [
 				'type'           => 'INT',
 				'constraint'     => 9,
-				'usigned'        => TRUE,
+				'unsigned'       => TRUE,
 				'auto_increment' => TRUE
 			],
 

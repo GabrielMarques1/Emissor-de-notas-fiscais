@@ -149,8 +149,13 @@ class Contadores extends Controller
 
         if(isset($dados['id_login'])) : // Caso exista o id_login então a ação é editar
         
-            $this->login_model
-                ->save($dados);
+            // Hash de senha se enviada
+            if (!empty($dados['senha'])) {
+                $dados['senha'] = password_hash($dados['senha'], PASSWORD_DEFAULT);
+            } else {
+                unset($dados['senha']);
+            }
+            $this->login_model->save($dados);
 
             $this->contador_model
                 ->save($dados);
@@ -173,8 +178,9 @@ class Contadores extends Controller
 
             $dados['status'] = "Ativo"; // Informa que o usuário é ativo
 
-            $id_login = $this->login_model
-                            ->insert($dados);
+            // Hash de senha
+            $dados['senha'] = password_hash($dados['senha'], PASSWORD_DEFAULT);
+            $id_login = $this->login_model->insert($dados);
 
             $dados['id_login'] = $id_login;
 

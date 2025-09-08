@@ -32,6 +32,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <form action="/relatorios/contadores" method="post">
+                        <?= csrf_field() ?>
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="form-group">

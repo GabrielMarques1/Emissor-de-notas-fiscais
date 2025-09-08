@@ -10,7 +10,7 @@ class Configuracoes extends Migration
 			'id_config' => [
 				'type'           => 'INT',
 				'constraint'     => 9,
-				'usigned'        => TRUE,
+				'unsigned'       => TRUE,
 				'auto_increment' => TRUE
 			],
 

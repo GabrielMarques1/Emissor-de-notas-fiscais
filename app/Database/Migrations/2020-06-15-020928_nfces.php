@@ -10,7 +10,7 @@ class Nfces extends Migration
             'id_nfce' => [
                 'type' => 'INT',
                 'constraint' => 9,
-                'usigned' => true,
+                'unsigned' => true,
                 'auto_increment' => true,
             ],
 

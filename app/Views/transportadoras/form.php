@@ -4,6 +4,7 @@
     <div class="content">
         <div class="container-fluid">
             <form action="/transportadoras/store" method="post">
+                <?= csrf_field() ?>
                 
                 <div class="card">
                     <div class="card-header">

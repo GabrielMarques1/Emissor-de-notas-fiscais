@@ -24,6 +24,7 @@
             <div class="card col-lg-12 no-print">
                 <div class="card-body">
                     <form action="/relatorios/pagamentos" method="post">
+                        <?= csrf_field() ?>
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="form-group">

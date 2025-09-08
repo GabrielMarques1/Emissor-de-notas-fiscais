@@ -220,6 +220,11 @@ class Empresas extends Controller
         $dados = $this->request
                         ->getVar();
 
+        // Contador não pode alterar status da empresa no update
+        if (isset($dados['id_login'])) {
+            unset($dados['status']);
+        }
+
         // REMOVE AS MASCARAS
         $dados['CNPJ'] = removeMascaras($dados['CNPJ']);
         $dados['CEP']  = removeMascaras($dados['CEP']);
@@ -235,9 +240,13 @@ class Empresas extends Controller
         // Caso exista o id_login então a ação é editar
         if(isset($dados['id_login'])) :
 
-            // Atualiza os dados do login
-            $this->login_model
-                ->save($dados);
+            // Atualiza os dados do login (hash de senha se enviado)
+            if (!empty($dados['senha'])) {
+                $dados['senha'] = password_hash($dados['senha'], PASSWORD_DEFAULT);
+            } else {
+                unset($dados['senha']);
+            }
+            $this->login_model->save($dados);
 
             // Atualiza os dados da empresa
             $this->empresa_model
@@ -258,21 +267,38 @@ class Empresas extends Controller
         else : // Caso não exista id_login então a ação é create
 
             // ----------------------- UPLOAD DO CERTIFICADO ----------------------- //
-            $file = $this->request
-                        ->getFile('file');
+            $file = $this->request->getFile('file');
+            if (!$file->isValid()) {
+                $this->session->setFlashdata('alert', ['type' => 'error', 'title' => 'Arquivo inválido.']);
+                return redirect()->back();
+            }
+            $ext = strtolower($file->getClientExtension());
+            if (!in_array($ext, ['pfx', 'p12'])) {
+                $this->session->setFlashdata('alert', ['type' => 'error', 'title' => 'Extensão não permitida.']);
+                return redirect()->back();
+            }
+            if ($file->getSize() > 5 * 1024 * 1024) { // 5MB
+                $this->session->setFlashdata('alert', ['type' => 'error', 'title' => 'Arquivo muito grande.']);
+                return redirect()->back();
+            }
 
             $name = date("dmY").date("His").rand(1, 99999999).".pfx";
             $local = "../../writable/uploads/certificados";
 
-            $file->store($local, $name);
+            if (!$file->store($local, $name)) {
+                $this->session->setFlashdata('alert', ['type' => 'error', 'title' => 'Falha ao salvar o certificado.']);
+                return redirect()->back();
+            }
             $dados['certificado'] = $name;
 
             // --------------------------------------------------------------------- //
 
             $dados['tipo'] = 3; // Informa o tipo. 3=empresa
+            $dados['status'] = 'Ativo'; // Define status inicial sempre Ativo (contador não escolhe)
 
-            $id_login = $this->login_model
-                            ->insert($dados);
+            // Hash de senha
+            $dados['senha'] = password_hash($dados['senha'], PASSWORD_DEFAULT);
+            $id_login = $this->login_model->insert($dados);
 
             $dados['id_login'] = $id_login;
 
@@ -301,7 +327,9 @@ class Empresas extends Controller
 
         // Apaga o arquivo .pfx - Certificado
         $local = WRITEPATH . "uploads/certificados/" . $empresa['certificado'];
-        unlink($local);
+        if (is_file($local)) {
+            @unlink($local);
+        }
 
         // Apaga o registro da empresa
         $this->empresa_model
@@ -344,13 +372,18 @@ class Empresas extends Controller
 
         // Apaga o arquivo .pfx - Certificado
         $local = WRITEPATH . "uploads/certificados/" . $empresa['certificado'];
-        unlink($local);
+        if (is_file($local)) {
+            @unlink($local);
+        }
 
         // UPLOAD DO NOVO CERTIFICADO //
         $name = date("dmY").date("His").rand(1, 99999999).".pfx";
         $local = "../../writable/uploads/certificados";
 
-        $file->store($local, $name);
+        if (!$file->store($local, $name)) {
+            $this->session->setFlashdata('alert', ['type' => 'error', 'title' => 'Falha ao salvar o certificado.']);
+            return redirect()->back();
+        }
         // --------------------- //
 
         // MUDA O NOME DO CERTIFICADO NO BANCO DE DADOS //

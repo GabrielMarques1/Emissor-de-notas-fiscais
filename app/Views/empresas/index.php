@@ -80,6 +80,7 @@
                         </div>
                     </div>
                     <form action="/empresas" method="post">
+                        <?= csrf_field() ?>
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="form-group">

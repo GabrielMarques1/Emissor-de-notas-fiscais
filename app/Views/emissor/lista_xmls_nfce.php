@@ -9,6 +9,7 @@
                 </button>
             </div>
             <form action="/NFCe/cancelar" method="post">
+                <?= csrf_field() ?>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
@@ -62,6 +63,7 @@
             <div class="card col-lg-12">
                 <div class="card-body">
                     <form action="/emissor/listaXMLsNFCe" method="post">
+                        <?= csrf_field() ?>
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="form-group">

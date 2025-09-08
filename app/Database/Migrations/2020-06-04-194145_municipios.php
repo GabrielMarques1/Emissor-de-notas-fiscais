@@ -10,7 +10,7 @@ class Municipios extends Migration
             'id_municipio' => [
                 'type' => 'INT',
                 'constraint' => 9,
-                'usigned' => true,
+                'unsigned' => true,
                 'auto_increment' => true,
 			],
 			

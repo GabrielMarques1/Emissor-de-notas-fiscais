@@ -52,6 +52,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <p class="login-box-msg">Acesse sua conta para continuar</p>
 
                 <form action="/login/autenticar" method="post">
+                    <?= csrf_field() ?>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" style="height: 45px" name="usuario" placeholder="Digite seu Usuário" autofocus required>
                         <div class="input-group-append">

@@ -10,7 +10,7 @@ class PagamentosDaEmpresa extends Migration
 			'id_pagamento' => [
 				'type'           => 'INT',
 				'constraint'     => 9,
-				'usigned'        => TRUE,
+				'unsigned'       => TRUE,
 				'auto_increment' => TRUE
 			],
 

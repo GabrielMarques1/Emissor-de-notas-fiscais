@@ -41,6 +41,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a id="5" href="/cobranca/admin" class="nav-link">
+                                <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                                <p>
+                                    Cobranças
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a id="4" href="/configuracoes/edit" class="nav-link">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>

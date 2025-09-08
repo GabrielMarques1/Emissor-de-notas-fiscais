@@ -10,7 +10,7 @@ class Transportadoras extends Migration
 			'id_transportadora' => [
 				'type' => 'INT',
 				'constraint' => 9,
-				'usigned' => true,
+				'unsigned' => true,
 				'auto_increment' => true,
 			],
 

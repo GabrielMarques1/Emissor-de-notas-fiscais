@@ -10,7 +10,7 @@ class Unidades extends Migration
             'id_unidade' => [
                 'type' => 'INT',
                 'constraint' => 9,
-                'usigned' => true,
+                'unsigned' => true,
                 'auto_increment' => true,
             ],
 
