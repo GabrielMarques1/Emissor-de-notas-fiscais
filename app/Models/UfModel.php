@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
-
-class UfModel extends Model
+class UfModel extends BaseAppModel
 {
     protected $table = 'ufs';
     protected $primaryKey = 'id_uf';

@@ -28,7 +28,7 @@ class Inicio extends Controller
 
     function __construct()
     {
-        $this->helpers = ['app'];
+        $this->helpers = ['app', 'url'];
 
         $this->session = session();
         $this->id_contador = $this->session->get('id_contador');
@@ -70,7 +70,14 @@ class Inicio extends Controller
                 ]
             );
 
-            return redirect()->to($this->session->get('_ci_previous_url')) ;
+            $prev = $this->session->get('_ci_previous_url');
+            if (!is_string($prev) || $prev === '') {
+                $prev = function_exists('previous_url') ? previous_url() : null;
+                if (!$prev || !is_string($prev) || $prev === '') {
+                    $prev = site_url('/login');
+                }
+            }
+            return redirect()->to($prev);
         endif;
 
         $data['link'] = $this->link;

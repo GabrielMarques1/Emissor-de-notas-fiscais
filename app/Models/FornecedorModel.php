@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
-
-class FornecedorModel extends Model
+class FornecedorModel extends BaseAppModel
 {
     protected $table = 'fornecedores';
     protected $primaryKey = 'id_fornecedor';

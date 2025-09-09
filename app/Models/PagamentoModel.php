@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
-
-class PagamentoModel extends Model
+class PagamentoModel extends BaseAppModel
 {
     protected $table = 'pagamentos_da_empresa';
     protected $primaryKey = 'id_pagamento';

@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
-
-class TransportadoraModel extends Model
+class TransportadoraModel extends BaseAppModel
 {
     protected $table = 'transportadoras';
     protected $primaryKey = 'id_transportadora';

@@ -5,6 +5,7 @@ namespace Config;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\HotReloader\HotReloader;
+use App\Libraries\AutoSync;
 
 /*
  * --------------------------------------------------------------------
@@ -51,5 +52,38 @@ Events::on('pre_system', static function () {
                 (new HotReloader())->run();
             });
         }
+    }
+
+    // --------------------------------------------------------------------
+    // Auto-run database migrations on web requests (non-CLI)
+    // --------------------------------------------------------------------
+    // Ensures new installations or updates apply pending migrations
+    // without requiring manual `php spark migrate`.
+    try {
+        if (! is_cli()) {
+            $migrationsConfig = config('Migrations');
+            if ($migrationsConfig && $migrationsConfig->enabled === true) {
+                // Initialize database connection early; skip if it fails
+                $db = \Config\Database::connect();
+                $db->initialize();
+
+                $migrator = \Config\Services::migrations();
+                // Limit to application namespace to avoid vendor migrations unless desired
+                if (method_exists($migrator, 'setNamespace')) {
+                    $migrator->setNamespace('App');
+                }
+                $migrator->latest();
+            }
+        }
+    } catch (\Throwable $e) {
+        log_message('error', 'Auto-migration failed: {message}', ['message' => $e->getMessage()]);
+    }
+});
+
+// Sincronização automática e backup periódico ao final de cada resposta web
+Events::on('post_system', static function () {
+    if (! is_cli()) {
+        AutoSync::maybeSync();
+        AutoSync::maybeDailyBackup();
     }
 });

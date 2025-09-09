@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
-
-class NFCeModel extends Model
+class NFCeModel extends BaseAppModel
 {
     protected $table = 'nfces';
     protected $primaryKey = 'id_nfce';

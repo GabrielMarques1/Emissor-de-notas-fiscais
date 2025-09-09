@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
-
-class MunicipioModel extends Model
+class MunicipioModel extends BaseAppModel
 {
     protected $table = 'municipios';
     protected $primaryKey = 'id_municipio';

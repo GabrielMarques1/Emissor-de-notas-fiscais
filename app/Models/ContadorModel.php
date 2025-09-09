@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
-
-class ContadorModel extends Model
+class ContadorModel extends BaseAppModel
 {
     protected $table = 'contadores';
     protected $primaryKey = 'id_contador';

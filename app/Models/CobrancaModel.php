@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
-
-class CobrancaModel extends Model
+class CobrancaModel extends BaseAppModel
 {
 	protected $table = 'cobrancas_mensais';
 	protected $primaryKey = 'id_cobranca';

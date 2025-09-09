@@ -23,7 +23,14 @@
                     ]
                 );
 
-                return $session->get('_ci_previous_url') ;
+                $prev = $session->get('_ci_previous_url');
+                if (!is_string($prev) || $prev === '') {
+                    $prev = function_exists('previous_url') ? previous_url() : null;
+                    if (!$prev || !is_string($prev) || $prev === '') {
+                        $prev = site_url('/login');
+                    }
+                }
+                return $prev;
             // Caso tenha permissão de acessar a função
             else:
                 return FALSE;
@@ -73,5 +80,27 @@
         $valor = str_replace(',', '.', $valor);
 
         return $valor;
+    }
+
+    // ---- Offline helpers ----
+    function is_offline_mode(): bool
+    {
+        try {
+            $dbGroup = config('Database')->defaultGroup ?? 'cloud';
+            // Se estiver usando local_backup (ou forçado), consideramos offline
+            if ($dbGroup === 'local_backup') {
+                return true;
+            }
+            // Se conexões falharem, também tratamos como offline
+            $db = \Config\Database::connect();
+            return $db->getPlatform() === null; // improvável, mas seguro
+        } catch (\Throwable $e) {
+            return true;
+        }
+    }
+
+    function offline_banner_text(): string
+    {
+        return 'Sem conexão com a nuvem. Operando em modo offline (dados locais).';
     }
 ?>
