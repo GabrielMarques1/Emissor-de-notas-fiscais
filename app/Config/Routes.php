@@ -19,3 +19,12 @@ $routes->group('cobranca', static function($routes) {
 	$routes->get('empresas', 'Cobranca::minhasCobrancasContador');
 	$routes->get('admin', 'Cobranca::adminLista');
 });
+
+// Rotas Stripe
+$routes->group('stripe', static function($routes) {
+	$routes->post('checkout', 'Stripe::createCheckoutSession');
+	$routes->post('portal', 'Stripe::createPortalSession');
+	$routes->post('webhook', 'Stripe::webhook');
+	$routes->get('success', 'Inicio::emissor');
+	$routes->get('cancel', 'Inicio::emissor');
+});

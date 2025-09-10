@@ -11,6 +11,38 @@
                 <div class="col-sm-6 no-print">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item active">Inicio</li>
+                        <li class="breadcrumb-item">
+                            <?php
+                                $pricesEnv = getenv('stripe.prices') ?: '';
+                                $pricePairs = [];
+                                if ($pricesEnv) {
+                                    foreach (explode(',', $pricesEnv) as $pair) {
+                                        $pair = trim($pair);
+                                        if ($pair === '') continue;
+                                        $parts = explode(':', $pair, 2);
+                                        $pid = trim($parts[0] ?? '');
+                                        $label = trim($parts[1] ?? $pid);
+                                        if ($pid) $pricePairs[] = [$pid, $label];
+                                    }
+                                }
+                                $defaultPrice = getenv('stripe.price') ?: '';
+                            ?>
+                            <select id="stripe-plan-dash" class="form-control form-control-sm" style="display:inline-block; width:auto; margin-right:6px">
+                                <?php if (!empty($pricePairs)) : ?>
+                                    <?php foreach ($pricePairs as $pp) : ?>
+                                        <option value="<?= esc($pp[0]) ?>" <?= ($defaultPrice === $pp[0]) ? 'selected' : '' ?>><?= esc($pp[1]) ?></option>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <?php if (!empty($defaultPrice)) : ?>
+                                        <option value="<?= esc($defaultPrice) ?>" selected><?= esc($defaultPrice) ?></option>
+                                    <?php else: ?>
+                                        <option value="" selected>Defina stripe.price no .env</option>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            </select>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="stripeAssinarDash()"><i class="fas fa-credit-card"></i> Assinar</button>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="stripePortalDash()"><i class="fas fa-user-cog"></i> Portal</button>
+                        </li>
                     </ol>
                 </div><!-- /.col -->
             </div>
@@ -180,6 +212,26 @@
 <!-- /.content-wrapper -->
 
 <script>
+    async function stripeAssinarDash() {
+        try {
+            const body = new URLSearchParams();
+            const sel = document.getElementById('stripe-plan-dash');
+            if (sel && sel.value) body.append('price_id', sel.value);
+            body.append('<?= csrf_token() ?>', '<?= csrf_hash() ?>');
+            const res = await fetch('/stripe/checkout', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
+            const data = await res.json();
+            if (data.url) window.location.href = data.url; else alert('Erro: ' + (data.error || 'desconhecido'));
+        } catch (e) { alert('Falha ao iniciar checkout'); }
+    }
+    async function stripePortalDash() {
+        try {
+            const body = new URLSearchParams();
+            body.append('<?= csrf_token() ?>', '<?= csrf_hash() ?>');
+            const res = await fetch('/stripe/portal', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
+            const data = await res.json();
+            if (data.url) window.location.href = data.url; else alert('Erro: ' + (data.error || 'desconhecido'));
+        } catch (e) { alert('Falha ao abrir portal'); }
+    }
     // Gráfico
     new Chart(document.getElementById("chartjs-1"), {
         "type": "bar",

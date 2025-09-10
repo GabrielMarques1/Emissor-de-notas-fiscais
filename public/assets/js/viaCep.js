@@ -4,9 +4,9 @@ $(document).ready(function() {
         // Limpa valores do formulário de cep.
         $("#logradouro").val("");
         $("#bairro").val("");
-        $("#cidade").val("");
-        $("#uf").val("");
-        $("#ibge").val("");
+        $("#id_municipio").val("").trigger('change');
+        // Para UF usamos select #id_uf
+        // $("#id_uf").val("").trigger('change');
     }
     
     //Quando o campo cep perde o foco.
@@ -27,9 +27,6 @@ $(document).ready(function() {
                 //Preenche os campos com "..." enquanto consulta webservice.
                 $("#logradouro").val("...");
                 $("#bairro").val("...");
-                $("#cidade").val("...");
-                $("#uf").val("...");
-                $("#ibge").val("...");
 
                 //Consulta o webservice viacep.com.br/
                 $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
@@ -38,9 +35,20 @@ $(document).ready(function() {
                         //Atualiza os campos com os valores da consulta.
                         $("#logradouro").val(dados.logradouro);
                         $("#bairro").val(dados.bairro);
-                        $("#cidade").val(dados.localidade);
-                        $("#uf").val(dados.uf);
-                        $("#ibge").val(dados.ibge);
+                        // Seleciona UF pelo texto visível
+                        var ufOption = $('#id_uf option').filter(function(){ return $(this).text() === dados.uf; }).val();
+                        if (ufOption) {
+                            $('#id_uf').val(ufOption).trigger('change');
+                            // Após carregar municípios via selecionaUF, seleciona o município retornado pelo CEP
+                            setTimeout(function(){
+                                var munOption = $('#id_municipio option').filter(function(){ return $(this).text() === dados.localidade; }).val();
+                                if (munOption) {
+                                    $('#id_municipio').val(munOption).trigger('change');
+                                }
+                            }, 800);
+                        }
+                        $("#logradouro").val(dados.logradouro);
+                        $("#bairro").val(dados.bairro);
                     } //end if.
                     else {
                         //CEP pesquisado não foi encontrado.

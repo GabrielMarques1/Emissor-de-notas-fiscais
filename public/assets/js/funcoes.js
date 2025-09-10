@@ -53,10 +53,16 @@ function selecionaUF(id)
 {
     var id_uf = document.getElementById(id).value;
 
+    var payload = { id_uf: id_uf };
+    try {
+        if (window.CI && CI.csrf && CI.csrf.name && CI.csrf.hash) {
+            payload[CI.csrf.name] = CI.csrf.hash;
+        }
+    } catch (e) {}
+
     $.post(
-        "/UF/preparaMunicipios", {
-            id_uf: id_uf
-        },
+        "/UF/preparaMunicipios",
+        payload,
         function(data, status) {
             if (status == "success") {
                 $('#id_municipio').html(data);
@@ -89,45 +95,49 @@ function verificaUsuarioNobanco(id)
 
 function pegaDadosDoCNPJ(cnpj)
 {
+	var payload = { cnpj: cnpj };
+	try {
+		if (window.CI && CI.csrf && CI.csrf.name && CI.csrf.hash) {
+			payload[CI.csrf.name] = CI.csrf.hash;
+		}
+	} catch (e) {}
+
 	$.post(
-        "/receitaWS/pegaDadosDoCNPJ", {
-            cnpj: cnpj
-        },
-        function(data, status) {
-            if (status == "success") {
-                
-                var obj = JSON.parse(data);
-  
-                if(obj.status != "ERROR")
-                {
-                    $("#input-razao-social").val(obj.nome);
+		"/receitaWS/pegaDadosDoCNPJ",
+		payload,
+		function(data, status) {
+			if (status == "success") {
+				var obj = JSON.parse(data);
+				if(obj.status != "ERROR")
+				{
+					$("#input-razao-social").val(obj.nome);
 
-                    $("#cep").val(obj.cep);
-                    $("#logradouro").val(obj.logradouro);
-                    
-                    if(obj.numero == "SN")
-                    {
-                        $("#numero").val("S/N");
-                    }
-                    else
-                    {
-                        $("#numero").val(obj.numero);
-                    }
+					$("#cep").val(obj.cep);
+					$("#logradouro").val(obj.logradouro);
 
-                    $("#complemento").val(obj.complemento);
-                    $("#bairro").val(obj.bairro);
+					if(obj.numero == "SN")
+					{
+						$("#nro").val("S/N").prop('disabled', true);
+					}
+					else
+					{
+						$("#nro").val(obj.numero).prop('disabled', false);
+					}
 
-                    // Seleciona o UF pelo nome e não pelo option value.
-                    $("#id_uf").val($('option:contains("' + obj.uf + '")').val() );
-                    $('#id_uf').trigger('change'); // Depois de selecionado mostra a seleção na tela
+					$("#complemento").val(obj.complemento);
+					$("#bairro").val(obj.bairro);
 
-                    window.setTimeout( function(){
-                        // Seleciona o MUNICIPIO pelo nome e não pelo option value.
-                        $("#id_municipio").val($('option:contains("' + obj.municipio + '")').val());
-                        $('#id_municipio').trigger('change'); // Depois de selecionado mostra a seleção na tela
-                    }, 3000 );
-                }
-            }
-        }
-    );
+					// Seleciona o UF pelo nome e não pelo option value.
+					$("#id_uf").val($('option:contains("' + obj.uf + '")').val());
+					$('#id_uf').trigger('change'); // Depois de selecionado mostra a seleção na tela
+
+					window.setTimeout(function(){
+						// Seleciona o MUNICIPIO pelo nome e não pelo option value.
+						$("#id_municipio").val($('option:contains("' + obj.municipio + '")').val());
+						$('#id_municipio').trigger('change'); // Depois de selecionado mostra a seleção na tela
+					}, 3000);
+				}
+			}
+		}
+	);
 }

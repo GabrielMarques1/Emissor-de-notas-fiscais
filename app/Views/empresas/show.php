@@ -30,6 +30,39 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <a href="/empresas/novoPagamento/<?= $id_empresa ?>" class="btn btn-info"><i class="fas fa-plus-circle"></i> Novo Pagamento</a>
+
+                                    <?php
+                                        $pricesEnv = getenv('stripe.prices') ?: '';
+                                        $pricePairs = [];
+                                        if ($pricesEnv) {
+                                            foreach (explode(',', $pricesEnv) as $pair) {
+                                                $pair = trim($pair);
+                                                if ($pair === '') continue;
+                                                $parts = explode(':', $pair, 2);
+                                                $pid = trim($parts[0] ?? '');
+                                                $label = trim($parts[1] ?? $pid);
+                                                if ($pid) $pricePairs[] = [$pid, $label];
+                                            }
+                                        }
+                                        $defaultPrice = $empresa['stripe_price_id'] ?? (getenv('stripe.price') ?: '');
+                                    ?>
+
+                                    <select id="stripe-plan" class="form-control" style="display:inline-block; width:auto; margin-left:8px">
+                                        <?php if (!empty($pricePairs)) : ?>
+                                            <?php foreach ($pricePairs as $pp) : ?>
+                                                <option value="<?= esc($pp[0]) ?>" <?= ($defaultPrice === $pp[0]) ? 'selected' : '' ?>><?= esc($pp[1]) ?></option>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <?php if (!empty($defaultPrice)) : ?>
+                                                <option value="<?= esc($defaultPrice) ?>" selected><?= esc($defaultPrice) ?></option>
+                                            <?php else: ?>
+                                                <option value="" selected>Defina stripe.price no .env</option>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                    </select>
+
+                                    <button type="button" class="btn btn-primary" style="margin-left:8px" onclick="stripeAssinar()"><i class="fas fa-credit-card"></i> Assinar agora</button>
+                                    <button type="button" class="btn btn-secondary" style="margin-left:6px" onclick="stripePortal()"><i class="fas fa-user-cog"></i> Gerenciar assinatura</button>
                                 </div>
                             </div>
                         </div>
@@ -433,6 +466,44 @@
         {
             icone.className = "far fa-eye";
             campo.type = "password";
+        }
+    }
+
+    async function stripeAssinar(priceId)
+    {
+        try {
+            const body = new URLSearchParams();
+            const sel = document.getElementById('stripe-plan');
+            const chosen = sel && sel.value ? sel.value : priceId;
+            if (chosen) body.append('price_id', chosen);
+            // CSRF
+            body.append('<?= csrf_token() ?>', '<?= csrf_hash() ?>');
+            const res = await fetch('/stripe/checkout', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
+            const data = await res.json();
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                alert('Erro ao iniciar checkout: ' + (data.error || 'desconhecido'));
+            }
+        } catch (e) {
+            alert('Falha ao iniciar checkout');
+        }
+    }
+
+    async function stripePortal()
+    {
+        try {
+            const body = new URLSearchParams();
+            body.append('<?= csrf_token() ?>', '<?= csrf_hash() ?>');
+            const res = await fetch('/stripe/portal', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
+            const data = await res.json();
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                alert('Erro ao abrir portal: ' + (data.error || 'desconhecido'));
+            }
+        } catch (e) {
+            alert('Falha ao abrir portal');
         }
     }
 </script>

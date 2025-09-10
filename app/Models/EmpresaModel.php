@@ -37,7 +37,16 @@ class EmpresaModel extends BaseAppModel
         'id_uf',
         'id_municipio',
         'id_login',
-        'id_contador'
+        'id_contador',
+        'valor_mensalidade',
+        'data_bloqueio',
+        'motivo_bloqueio',
+        'stripe_customer_id',
+        'stripe_subscription_id',
+        'stripe_price_id',
+        'stripe_product_id',
+        'stripe_status',
+        'trial_ends_at'
     ];
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';

@@ -39,6 +39,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
+    <meta name="<?= csrf_header() ?>" content="<?= csrf_hash() ?>">
+    <script>
+        window.CI = window.CI || {};
+        window.CI.csrf = { name: '<?= csrf_token() ?>', hash: '<?= csrf_hash() ?>', header: '<?= csrf_header() ?>', cookie: '<?= config('Security')->cookieName ?>' };
+    </script>
+
     <!-- ========= Scripts com prioridade ============= -->
     <!-- jQuery -->
     <script src="<?= base_url('theme/plugins/jquery/jquery.js') ?>"></script>

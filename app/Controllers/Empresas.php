@@ -266,30 +266,32 @@ class Empresas extends Controller
         
         else : // Caso não exista id_login então a ação é create
 
-            // ----------------------- UPLOAD DO CERTIFICADO ----------------------- //
+            // ----------------------- UPLOAD DO CERTIFICADO (opcional) ----------------------- //
             $file = $this->request->getFile('file');
-            if (!$file->isValid()) {
-                $this->session->setFlashdata('alert', ['type' => 'error', 'title' => 'Arquivo inválido.']);
-                return redirect()->back();
-            }
-            $ext = strtolower($file->getClientExtension());
-            if (!in_array($ext, ['pfx', 'p12'])) {
-                $this->session->setFlashdata('alert', ['type' => 'error', 'title' => 'Extensão não permitida.']);
-                return redirect()->back();
-            }
-            if ($file->getSize() > 5 * 1024 * 1024) { // 5MB
-                $this->session->setFlashdata('alert', ['type' => 'error', 'title' => 'Arquivo muito grande.']);
-                return redirect()->back();
-            }
+            if ($file && $file->isValid() && $file->getSize() > 0) {
+                $ext = strtolower($file->getClientExtension());
+                if (!in_array($ext, ['pfx', 'p12'])) {
+                    $this->session->setFlashdata('alert', ['type' => 'error', 'title' => 'Extensão não permitida.']);
+                    return redirect()->back();
+                }
+                if ($file->getSize() > 5 * 1024 * 1024) { // 5MB
+                    $this->session->setFlashdata('alert', ['type' => 'error', 'title' => 'Arquivo muito grande.']);
+                    return redirect()->back();
+                }
 
-            $name = date("dmY").date("His").rand(1, 99999999).".pfx";
-            $local = "../../writable/uploads/certificados";
+                $name = date("dmY").date("His").rand(1, 99999999).".pfx";
+                $local = "../../writable/uploads/certificados";
 
-            if (!$file->store($local, $name)) {
-                $this->session->setFlashdata('alert', ['type' => 'error', 'title' => 'Falha ao salvar o certificado.']);
-                return redirect()->back();
+                if (!$file->store($local, $name)) {
+                    $this->session->setFlashdata('alert', ['type' => 'error', 'title' => 'Falha ao salvar o certificado.']);
+                    return redirect()->back();
+                }
+                $dados['certificado'] = $name;
+            } else {
+                // sem certificado enviado agora
+                $dados['certificado'] = null;
+                $dados['senha_do_certificado'] = null;
             }
-            $dados['certificado'] = $name;
 
             // --------------------------------------------------------------------- //
 

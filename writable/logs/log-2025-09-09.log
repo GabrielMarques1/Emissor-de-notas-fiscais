@@ -1271,3 +1271,37 @@ Stack trace:
 #12 {main}
 ERROR - 2025-09-09 03:35:52 --> Auto-migration failed: Invalid default value for 'created_at'
 INFO - 2025-09-09 03:35:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-09 03:41:12 --> mysqli_sql_exception: Invalid default value for 'created_at' in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('CREATE TABLE `o...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('CREATE TABLE `o...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('CREATE TABLE `o...')
+#3 C:\xampp\htdocs\erp.test\system\Database\Forge.php(555): CodeIgniter\Database\BaseConnection->query('CREATE TABLE `o...')
+#4 C:\xampp\htdocs\erp.test\app\Database\Migrations\2025-09-09-000001_outbox_and_indexes.php(47): CodeIgniter\Database\Forge->createTable('outbox_events', true)
+#5 C:\xampp\htdocs\erp.test\system\Database\MigrationRunner.php(865): App\Database\Migrations\OutboxAndIndexes->up()
+#6 C:\xampp\htdocs\erp.test\system\Database\MigrationRunner.php(181): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#7 C:\xampp\htdocs\erp.test\app\Config\Events.php(75): CodeIgniter\Database\MigrationRunner->latest()
+#8 C:\xampp\htdocs\erp.test\system\Events\Events.php(154): CodeIgniter\Events\Events::Config\{closure}()
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(442): CodeIgniter\Events\Events::trigger('pre_system')
+#10 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#12 {main}
+ERROR - 2025-09-09 03:41:12 --> Auto-migration failed: Invalid default value for 'created_at'
+INFO - 2025-09-09 03:41:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-09-09 03:43:04 --> mysqli_sql_exception: Invalid default value for 'created_at' in C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.test\system\Database\MySQLi\Connection.php(306): mysqli->query('CREATE TABLE `o...', 0)
+#1 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('CREATE TABLE `o...')
+#2 C:\xampp\htdocs\erp.test\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('CREATE TABLE `o...')
+#3 C:\xampp\htdocs\erp.test\system\Database\Forge.php(555): CodeIgniter\Database\BaseConnection->query('CREATE TABLE `o...')
+#4 C:\xampp\htdocs\erp.test\app\Database\Migrations\2025-09-09-000001_outbox_and_indexes.php(47): CodeIgniter\Database\Forge->createTable('outbox_events', true)
+#5 C:\xampp\htdocs\erp.test\system\Database\MigrationRunner.php(865): App\Database\Migrations\OutboxAndIndexes->up()
+#6 C:\xampp\htdocs\erp.test\system\Database\MigrationRunner.php(181): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#7 C:\xampp\htdocs\erp.test\app\Config\Events.php(75): CodeIgniter\Database\MigrationRunner->latest()
+#8 C:\xampp\htdocs\erp.test\system\Events\Events.php(154): CodeIgniter\Events\Events::Config\{closure}()
+#9 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(442): CodeIgniter\Events\Events::trigger('pre_system')
+#10 C:\xampp\htdocs\erp.test\system\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\erp.test\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#12 {main}
+ERROR - 2025-09-09 03:43:04 --> Auto-migration failed: Invalid default value for 'created_at'
+INFO - 2025-09-09 03:43:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

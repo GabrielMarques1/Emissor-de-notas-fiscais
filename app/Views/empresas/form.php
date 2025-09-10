@@ -368,15 +368,15 @@
                             <?php else: ?>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="">Certificado</label>
-                                        <input type="file" class="form-control" style="padding-left: 3px; padding-top: 3px" name="file" required>
+                                        <label for="">Certificado (opcional)</label>
+                                        <input type="file" class="form-control" style="padding-left: 3px; padding-top: 3px" name="file" accept=".pfx,.p12">
                                     </div>
                                 </div>
                             <?php endif; ?>
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label for="">Senha do Certificado</label>
-                                    <input type="password" class="form-control" name="senha_do_certificado" value="<?= (isset($empresa)) ? $empresa['senha_do_certificado'] : "" ?>" required>
+                                    <label for="">Senha do Certificado (se enviar certificado)</label>
+                                    <input type="password" class="form-control" name="senha_do_certificado" value="<?= (isset($empresa)) ? $empresa['senha_do_certificado'] : "" ?>">
                                 </div>
                             </div>
                         </div>
