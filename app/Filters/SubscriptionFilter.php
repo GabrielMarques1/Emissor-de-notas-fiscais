@@ -18,10 +18,16 @@ class SubscriptionFilter implements FilterInterface
         }
 
         $empresa = (new EmpresaModel())->find($idEmpresa);
+        $statusEmpresa = $empresa['status'] ?? null;
         $status = $empresa['stripe_status'] ?? null;
         $periodEnd = $empresa['current_period_end'] ?? null;
 
-        // Apenas 'active' (sem trialing) e período válido
+        // Se a empresa está ativa no sistema, libera acesso sem Stripe
+        if ($statusEmpresa === 'Ativo') {
+            return;
+        }
+
+        // Caso contrário, exige assinatura ativa no Stripe
         $isPaid = ($status === 'active');
         $isPeriodValid = true;
         if (!empty($periodEnd)) {
@@ -30,7 +36,7 @@ class SubscriptionFilter implements FilterInterface
         }
 
         if (!($isPaid && $isPeriodValid)) {
-            return redirect()->to('/precos');
+            return redirect()->to('/stripe/pay');
         }
     }
 

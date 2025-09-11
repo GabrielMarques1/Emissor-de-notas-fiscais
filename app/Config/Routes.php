@@ -25,12 +25,20 @@ $routes->group('stripe', static function($routes) {
 	$routes->post('checkout', 'Stripe::createCheckoutSession');
 	$routes->post('portal', 'Stripe::createPortalSession');
 	$routes->post('webhook', 'Stripe::webhook');
+	$routes->get('pay', 'Stripe::pay');
 	$routes->get('success', 'Inicio::emissor');
 	$routes->get('cancel', 'Inicio::emissor');
 });
 
 // Rota de preços aberta
 $routes->get('precos', 'Site::precos');
+
+// Rotas Master para empresas
+$routes->group('admin', static function($routes) {
+    $routes->get('empresas', 'Empresas::adminIndex');
+    $routes->get('empresas/edit/(:num)', 'Empresas::adminEdit/$1');
+    $routes->post('empresas/store', 'Empresas::adminStore');
+});
 
 // Aplica filtro de assinatura a rotas críticas
 $routes->group('', ['filter' => 'subscription'], static function($routes) {

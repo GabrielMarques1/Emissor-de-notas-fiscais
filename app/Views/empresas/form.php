@@ -41,7 +41,8 @@
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-            <form action="/empresas/store" method="post" enctype="multipart/form-data">
+            <?php $tipoSessao = $session->get('tipo'); ?>
+            <form action="<?= ($tipoSessao == 1) ? '/admin/empresas/store' : '/empresas/store' ?>" method="post" enctype="multipart/form-data">
                 <?= csrf_field() ?>
                 
                 <div class="card">
@@ -102,7 +103,12 @@
                             <div class="col-lg-2">
                                 <div class="form-group">
                                     <label for="">Dia do Pagamento</label>
-                                    <input type="number" class="form-control" name="dia_do_pagamento" value="<?= (isset($empresa)) ? $empresa['dia_do_pagamento'] : "" ?>" required="">
+                                    <?php $tipoSessao = $session->get('tipo'); ?>
+                                    <?php if(isset($empresa) && $tipoSessao != 1): ?>
+                                        <input type="number" class="form-control" value="<?= $empresa['dia_do_pagamento'] ?>" disabled>
+                                    <?php else: ?>
+                                        <input type="number" class="form-control" name="dia_do_pagamento" min="1" max="28" value="<?= (isset($empresa)) ? $empresa['dia_do_pagamento'] : "" ?>" required>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -409,7 +415,9 @@
                                 </div>
                             </div>
 
-                            <input type="hidden" class="form-control" name="id_contador" value="<?= $session->get('id_contador') ?>">
+                            <?php if ($tipoSessao != 1): ?>
+                                <input type="hidden" class="form-control" name="id_contador" value="<?= $session->get('id_contador') ?>">
+                            <?php endif; ?>
 
                             <?php if (isset($empresa)) : ?>
                                 <input type="hidden" class="form-control" name="id_empresa" value="<?= $empresa['id_empresa'] ?>">

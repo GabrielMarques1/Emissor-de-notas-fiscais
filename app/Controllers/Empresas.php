@@ -142,12 +142,28 @@ class Empresas extends Controller
             ['titulo' => "Editar", 'rota'   => "", 'active' => true]
         ];
 
-        $empresa = $this->empresa_model
-            ->where('id_contador', $this->id_contador)
-            ->where('id_empresa', $id_empresa)
-            ->join('ufs', 'empresas.id_uf = ufs.id_uf')
-            ->join('municipios', 'empresas.id_municipio = municipios.id_municipio')
-            ->first();
+        if ((int) $this->session->get('tipo') === 1) {
+            $empresa = $this->empresa_model
+                ->where('id_empresa', $id_empresa)
+                ->join('ufs', 'empresas.id_uf = ufs.id_uf')
+                ->join('municipios', 'empresas.id_municipio = municipios.id_municipio')
+                ->first();
+        } else {
+            $empresa = $this->empresa_model
+                ->where('id_contador', $this->id_contador)
+                ->where('id_empresa', $id_empresa)
+                ->join('ufs', 'empresas.id_uf = ufs.id_uf')
+                ->join('municipios', 'empresas.id_municipio = municipios.id_municipio')
+                ->first();
+        }
+
+        if (!$empresa) {
+            $this->session->setFlashdata('alert', [
+                'type' => 'error',
+                'title' => 'Empresa não encontrada.'
+            ]);
+            return redirect()->to(($this->session->get('tipo') === 1) ? '/admin/empresas' : '/empresas');
+        }
 
         $pagamentos_da_empresa = $this->pagamento_model
                                     ->where('id_contador', $this->id_contador)
@@ -189,10 +205,22 @@ class Empresas extends Controller
             ['titulo' => "Editar", 'rota'   => "", 'active' => true]
         ];
 
-        $empresa = $this->empresa_model
-            ->where('id_contador', $this->id_contador)
-            ->where('id_empresa', $id_empresa)
-            ->first();
+        if ((int) $this->session->get('tipo') === 1) {
+            $empresa = $this->empresa_model->find((int) $id_empresa);
+        } else {
+            $empresa = $this->empresa_model
+                ->where('id_contador', $this->id_contador)
+                ->where('id_empresa', $id_empresa)
+                ->first();
+        }
+
+        if (!$empresa) {
+            $this->session->setFlashdata('alert', [
+                'type' => 'error',
+                'title' => 'Empresa não encontrada.'
+            ]);
+            return redirect()->to(($this->session->get('tipo') === 1) ? '/admin/empresas' : '/empresas');
+        }
 
         $login = $this->login_model
             ->where('id_login', $empresa['id_login'])
@@ -220,39 +248,73 @@ class Empresas extends Controller
         $dados = $this->request
                         ->getVar();
 
-        // Contador não pode alterar status da empresa no update
-        if (isset($dados['id_login'])) {
+        $tipoSessao = (int) $this->session->get('tipo');
+
+        // Contador não pode alterar status da empresa no update (master pode)
+        if (isset($dados['id_login']) && $tipoSessao !== 1) {
             unset($dados['status']);
+        }
+
+        // Restrição: no update, apenas MASTER (tipo 1) pode alterar dia_do_pagamento
+        if (isset($dados['id_login']) && isset($dados['dia_do_pagamento']) && $tipoSessao !== 1) {
+            unset($dados['dia_do_pagamento']);
         }
 
         // REMOVE AS MASCARAS
         $dados['CNPJ'] = removeMascaras($dados['CNPJ']);
         $dados['CEP']  = removeMascaras($dados['CEP']);
 
-        if(isset($dados['nro'])): // Caso exista o campo então o usuário digitou um número
-            if($dados['nro'] == "" || $dados['nro'] == "0") : // Valida
+        // Trata 'nro' apenas se o campo veio no POST (evita sobrescrever quando input está desabilitado)
+        if(array_key_exists('nro', $dados)) :
+            if($dados['nro'] == "" || $dados['nro'] == "0") :
                 $dados['nro'] = "S/N";
             endif;
-        else: // Caso não exista então é sem número
-            $dados['nro'] = "S/N";
         endif;
 
         // Caso exista o id_login então a ação é editar
         if(isset($dados['id_login'])) :
 
             // Atualiza os dados do login (hash de senha se enviado)
-            if (!empty($dados['senha'])) {
-                $dados['senha'] = password_hash($dados['senha'], PASSWORD_DEFAULT);
-            } else {
-                unset($dados['senha']);
+            $loginUpdate = [];
+            if (isset($dados['id_login'])) {
+                $loginUpdate['id_login'] = (int) $dados['id_login'];
             }
-            $this->login_model->save($dados);
+            if (!empty($dados['usuario'])) {
+                $loginUpdate['usuario'] = $dados['usuario'];
+            }
+            if (!empty($dados['senha'])) {
+                $loginUpdate['senha'] = password_hash($dados['senha'], PASSWORD_DEFAULT);
+            }
+            if (!empty($loginUpdate)) {
+                $this->login_model->save($loginUpdate);
+            }
+
+            // Prepara apenas os campos pertencentes à empresa para evitar ruído
+            $empresaFields = [
+                'status','CNPJ','xNome','xFant','IE','dia_do_pagamento','CRT','CEP','xLgr','nro','xCpl','xBairro','fone','natOp','serie','verProc','nNF_homologacao','nNF_producao','tpAmb_NFe','nNFC_homologacao','nNFC_producao','tpAmb_NFCe','CSC_Id','CSC','certificado','senha_do_certificado','id_uf','id_municipio','id_login','id_contador','valor_mensalidade','data_bloqueio','motivo_bloqueio','stripe_customer_id','stripe_subscription_id','stripe_price_id','stripe_product_id','stripe_status','trial_ends_at','current_period_end'
+            ];
+            $empresaUpdate = [];
+            foreach ($empresaFields as $field) {
+                if (array_key_exists($field, $dados)) {
+                    $empresaUpdate[$field] = $dados[$field];
+                }
+            }
+            // Normaliza dia_do_pagamento se presente
+            if (array_key_exists('dia_do_pagamento', $empresaUpdate)) {
+                $empresaUpdate['dia_do_pagamento'] = max(1, min(28, (int) $empresaUpdate['dia_do_pagamento']));
+            }
 
             // Atualiza os dados da empresa
-            $this->empresa_model
-                ->where('id_contador', $this->id_contador)
-                ->where('id_empresa', $dados['id_empresa'])
-                ->save($dados);
+            if ($tipoSessao === 1) {
+                // MASTER pode editar qualquer empresa, sem escopo do contador
+                $empresaUpdate['id_empresa'] = (int) $dados['id_empresa'];
+                $this->empresa_model->save($empresaUpdate);
+            } else {
+                // Contador só edita suas empresas
+                $empresaUpdate['id_empresa'] = (int) $dados['id_empresa'];
+                $empresaUpdate['id_contador'] = $this->id_contador;
+                $this->empresa_model->save($empresaUpdate);
+            }
 
             $this->session->setFlashdata(
                 'alert',
@@ -262,6 +324,10 @@ class Empresas extends Controller
                 ]
             );
 
+            $tipoSessao = $this->session->get('tipo');
+            if ($tipoSessao === 1) {
+                return redirect()->to("/admin/empresas/edit/{$dados['id_empresa']}");
+            }
             return redirect()->to("/empresas/edit/{$dados['id_empresa']}");
         
         else : // Caso não exista id_login então a ação é create
@@ -298,6 +364,11 @@ class Empresas extends Controller
             $dados['tipo'] = 3; // Informa o tipo. 3=empresa
             $dados['status'] = 'Ativo'; // Define status inicial sempre Ativo (contador não escolhe)
 
+            // Dia do pagamento escolhido na criação não poderá ser alterado pelo contador futuramente
+            if (isset($dados['dia_do_pagamento'])) {
+                $dados['dia_do_pagamento'] = max(1, min(28, (int) $dados['dia_do_pagamento']));
+            }
+
             // Hash de senha
             $dados['senha'] = password_hash($dados['senha'], PASSWORD_DEFAULT);
             $id_login = $this->login_model->insert($dados);
@@ -321,11 +392,18 @@ class Empresas extends Controller
 
     public function delete($id_empresa)
     {
+        $tipoSessao = $this->session->get('tipo');
         // Pega os dados da empresa
-        $empresa = $this->empresa_model
-            ->where('id_contador', $this->id_contador)
-            ->where('id_empresa', $id_empresa)
-            ->first();
+        if ($tipoSessao === 1) {
+            $empresa = $this->empresa_model
+                ->where('id_empresa', $id_empresa)
+                ->first();
+        } else {
+            $empresa = $this->empresa_model
+                ->where('id_contador', $this->id_contador)
+                ->where('id_empresa', $id_empresa)
+                ->first();
+        }
 
         // Apaga o arquivo .pfx - Certificado
         $local = WRITEPATH . "uploads/certificados/" . $empresa['certificado'];
@@ -334,10 +412,16 @@ class Empresas extends Controller
         }
 
         // Apaga o registro da empresa
-        $this->empresa_model
-            ->where('id_contador', $this->id_contador)
-            ->where('id_empresa', $id_empresa)
-            ->delete();
+        if ($tipoSessao === 1) {
+            $this->empresa_model
+                ->where('id_empresa', $id_empresa)
+                ->delete();
+        } else {
+            $this->empresa_model
+                ->where('id_contador', $this->id_contador)
+                ->where('id_empresa', $id_empresa)
+                ->delete();
+        }
 
         // Apaga o login da empresa
         $this->login_model
@@ -352,7 +436,7 @@ class Empresas extends Controller
             ]
         );
 
-        return redirect()->to('/empresas');
+        return ($tipoSessao === 1) ? redirect()->to('/admin/empresas') : redirect()->to('/empresas');
     }
 
     public function baixarCertificado($nome_do_certificado)
@@ -367,10 +451,24 @@ class Empresas extends Controller
         $id_empresa = $this->request->getvar('id_empresa');
         $file       = $this->request->getFile('file');
 
-        $empresa = $this->empresa_model
-                        ->where('id_contador', $this->id_contador)
-                        ->where('id_empresa', $id_empresa)
-                        ->first();
+        if ((int) $this->session->get('tipo') === 1) {
+            $empresa = $this->empresa_model
+                            ->where('id_empresa', $id_empresa)
+                            ->first();
+        } else {
+            $empresa = $this->empresa_model
+                            ->where('id_contador', $this->id_contador)
+                            ->where('id_empresa', $id_empresa)
+                            ->first();
+        }
+
+        if (!$empresa) {
+            $this->session->setFlashdata('alert', [
+                'type' => 'error',
+                'title' => 'Empresa não encontrada.'
+            ]);
+            return redirect()->to(($this->session->get('tipo') === 1) ? '/admin/empresas' : '/empresas');
+        }
 
         // Apaga o arquivo .pfx - Certificado
         $local = WRITEPATH . "uploads/certificados/" . $empresa['certificado'];
@@ -389,11 +487,18 @@ class Empresas extends Controller
         // --------------------- //
 
         // MUDA O NOME DO CERTIFICADO NO BANCO DE DADOS //
-        $this->empresa_model
-            ->set('certificado', $name)
-            ->where('id_contador', $this->id_contador)
-            ->where('id_empresa', $id_empresa)
-            ->update();
+        if ($this->session->get('tipo') === 1) {
+            $this->empresa_model
+                ->set('certificado', $name)
+                ->where('id_empresa', $id_empresa)
+                ->update();
+        } else {
+            $this->empresa_model
+                ->set('certificado', $name)
+                ->where('id_contador', $this->id_contador)
+                ->where('id_empresa', $id_empresa)
+                ->update();
+        }
 
         // Retorna e mostra o alerta
         $this->session->setFlashdata(
@@ -650,5 +755,89 @@ class Empresas extends Controller
         );
 
         return redirect()->to("/empresas/show/$id_empresa");
+    }
+
+    public function adminIndex()
+    {
+        // Apenas master
+        if($retorno = verificaPermissaoDeAcesso(1)) :
+            return redirect()->to($retorno);
+        endif;
+
+        $data['link'] = '6';
+        $data['titulo'] = [
+            'modulo' => 'Empresas (Master)',
+            'icone'  => 'fa fa-city'
+        ];
+        $data['caminhos'] = [
+            ['titulo' => "Início", 'rota' => "/inicio/admin", 'active' => false],
+            ['titulo' => "Empresas", 'rota'   => "", 'active' => true]
+        ];
+
+        $dados = $this->request->getvar();
+        if(isset($dados['cnpj'])) {
+            $cnpj = removeMascaras($dados['cnpj']);
+            $data['empresas'] = $this->empresa_model
+                ->where('CNPJ', $cnpj)
+                ->findAll();
+            $data['cnpj'] = $cnpj;
+        } else {
+            $data['empresas'] = $this->empresa_model->findAll();
+        }
+
+        echo view('templates/header');
+        echo view('empresas/index', $data);
+        echo view('templates/footer');
+    }
+
+    public function adminEdit($id_empresa)
+    {
+        // Apenas master
+        if($retorno = verificaPermissaoDeAcesso(1)) :
+            return redirect()->to($retorno);
+        endif;
+
+        $data['link'] = '6';
+        $data['titulo'] = [
+            'modulo' => 'Editar Empresa (Master)',
+            'icone'  => 'fa fa-edit'
+        ];
+        $data['caminhos'] = [
+            ['titulo' => "Início", 'rota' => "/inicio/admin", 'active' => false],
+            ['titulo' => "Empresas", 'rota' => "/admin/empresas", 'active' => false],
+            ['titulo' => "Editar", 'rota'   => "", 'active' => true]
+        ];
+
+        $empresa = $this->empresa_model->where('id_empresa', $id_empresa)->first();
+        if (!$empresa) {
+            $this->session->setFlashdata('alert', [
+                'type' => 'error',
+                'title' => 'Empresa não encontrada.'
+            ]);
+            return redirect()->to('/admin/empresas');
+        }
+        $login = $this->login_model->where('id_login', $empresa['id_login'])->first();
+        $ufs = $this->uf_model->findAll();
+        $municipios = $this->municipio_model->where('id_uf', $empresa['id_uf'])->find();
+
+        $data['empresa']    = $empresa;
+        $data['login']      = $login;
+        $data['ufs']        = $ufs;
+        $data['municipios'] = $municipios;
+
+        echo view('templates/header');
+        echo view('empresas/form', $data);
+        echo view('templates/footer');
+    }
+
+    public function adminStore()
+    {
+        // Apenas master
+        if($retorno = verificaPermissaoDeAcesso(1)) :
+            return redirect()->to($retorno);
+        endif;
+
+        // Reaproveita store normal, mas como master
+        return $this->store();
     }
 }

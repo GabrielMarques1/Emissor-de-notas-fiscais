@@ -117,9 +117,8 @@ class Cobranca extends Controller
 						->first();
 
 			if(!$existe) :
-				$dia_venc = intval($this->contador_model
-								->where('id_contador', $empresa['id_contador'])
-								->first()['dia_do_pagamento'] ?? 1);
+				// Usa o dia de pagamento definido na própria empresa
+				$dia_venc = intval($empresa['dia_do_pagamento'] ?? 1);
 
 				$dia_venc = max(1, min(28, $dia_venc));
 				$data_venc = date('Y-m-d', strtotime(sprintf('%04d-%02d-%02d', $ano, $mes, $dia_venc)));
@@ -159,13 +158,20 @@ class Cobranca extends Controller
 						->findAll();
 
 		foreach($cobrancas as $c) :
-			// Apenas marca como Vencido. Bloqueio fica a cargo do MASTER manualmente.
+			// Marca vencido e desativa empresa inadimplente automaticamente
 			$this->cobranca_model->update($c['id_cobranca'], ['status' => 'Vencido']);
+
+			$this->empresa_model
+				->where('id_empresa', $c['id_empresa'])
+				->set('status', 'Desativado')
+				->set('data_bloqueio', $hoje)
+				->set('motivo_bloqueio', 'Inadimplência: cobrança vencida em ' . date('d/m/Y', strtotime($c['data_vencimento'])))
+				->update();
 		endforeach;
 
 		$this->session->setFlashdata('alert', [
 			'type' => 'warning',
-			'title' => 'Cobranças vencidas marcadas. Bloqueio deve ser feito pelo administrador.'
+			'title' => 'Cobranças vencidas marcadas e empresas desativadas automaticamente.'
 		]);
 
 		return redirect()->back();

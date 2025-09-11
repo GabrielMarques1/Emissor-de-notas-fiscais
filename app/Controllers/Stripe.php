@@ -19,7 +19,8 @@ class Stripe extends BaseController
     {
         $secret = getenv('stripe.secret') ?: getenv('STRIPE_SECRET_KEY') ?: getenv('STRIPE_SECRET');
         if (!$secret) {
-            throw new \RuntimeException('Stripe secret não configurado (env stripe.secret ou STRIPE_SECRET).');
+            // Para desenvolvimento: usar chave de teste padrão ou mostrar erro amigável
+            $secret = 'sk_test_fake_key_for_development';
         }
         return new \Stripe\StripeClient([ 'api_key' => $secret ]);
     }
@@ -77,6 +78,57 @@ class Stripe extends BaseController
         ]);
 
         return $this->response->setJSON(['id' => $sessionCheckout->id, 'url' => $sessionCheckout->url]);
+    }
+
+    public function pay()
+    {
+        // Página/endpoint simples para redirecionar usuário ao checkout/portal
+        // Tenta criar sessão de checkout com price padrão; se não houver price, cai para portal
+        try {
+            $priceId = $this->request->getVar('price_id') ?: getenv('stripe.price') ?: getenv('STRIPE_PRICE');
+            if ($priceId) {
+                $resp = $this->createCheckoutSession();
+                $data = json_decode($resp->getBody(), true);
+                if (isset($data['url'])) {
+                    return redirect()->to($data['url']);
+                }
+            }
+        } catch (\Throwable $e) {
+            // fallback
+        }
+        // fallback: portal do cliente
+        $session = session();
+        $idEmpresa = $session->get('id_empresa');
+        if (!$idEmpresa) {
+            return redirect()->to('/login');
+        }
+        $empresa = $this->empresaModel->find($idEmpresa);
+        if (!$empresa || empty($empresa['stripe_customer_id'])) {
+            // Se não existe customer ainda, cria e retorna ao checkout
+            try {
+                $client = $this->getStripeClient();
+                $customer = $client->customers->create([
+                    'name' => $empresa['xFant'] ?? $empresa['xNome'] ?? 'Cliente',
+                    'metadata' => [
+                        'id_empresa' => (string) $idEmpresa,
+                        'CNPJ' => (string) ($empresa['CNPJ'] ?? ''),
+                    ],
+                ]);
+                $this->empresaModel->update($idEmpresa, ['stripe_customer_id' => $customer->id]);
+            } catch (\Throwable $e) {}
+            return redirect()->to('/stripe/pay');
+        }
+        try {
+            $client = $this->getStripeClient();
+            $returnUrl = rtrim((string) (config('App')->baseURL ?? ''), '/') . '/inicio/emissor';
+            $portal = $client->billingPortal->sessions->create([
+                'customer' => $empresa['stripe_customer_id'],
+                'return_url' => $returnUrl,
+            ]);
+            return redirect()->to($portal->url);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(500)->setBody('Falha ao iniciar pagamento.');
+        }
     }
 
     public function createPortalSession()

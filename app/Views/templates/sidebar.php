@@ -33,6 +33,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a id="6" href="/admin/empresas" class="nav-link">
+                                <i class="nav-icon fas fa-city"></i>
+                                <p>
+                                    Empresas
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a id="3" href="/relatorios/contadores" class="nav-link">
                                 <i class="nav-icon fas fa-file-pdf"></i>
                                 <p>

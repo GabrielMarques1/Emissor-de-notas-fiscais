@@ -66,12 +66,15 @@
                     </ol>
                 </div><!-- /.col -->
             </div>
+            <?php $tipoSessao = session()->get('tipo'); ?>
             <div class="card">
                 <!-- /.card-header -->
                 <div class="card-body no-print">
                     <div class="row">
                         <div class="col-lg-12">
-                            <a href="/empresas/create" class="btn btn-info"><i class="fas fa-plus-circle"></i> Nova Empresa</a>
+                            <?php if ($tipoSessao != 1): ?>
+                                <a href="/empresas/create" class="btn btn-info"><i class="fas fa-plus-circle"></i> Nova Empresa</a>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="row">
@@ -79,7 +82,7 @@
                             <hr>
                         </div>
                     </div>
-                    <form action="/empresas" method="post">
+                    <form action="<?= ($tipoSessao == 1) ? '/admin/empresas' : '/empresas' ?>" method="post">
                         <?= csrf_field() ?>
                         <div class="row">
                             <div class="col-lg-3">
@@ -131,10 +134,10 @@
                                         <td><?= $empresa['xNome'] ?></td>
                                         <td class="cnpj"><?= $empresa['CNPJ'] ?></td>
                                         <td>
-                                            <a href="/empresas/show/<?= $empresa['id_empresa'] ?>" class="btn btn-primary style-action"><i class="fas fa-folder-open"></i></a>
+                                            <a href="<?= ($tipoSessao == 1) ? '/admin/empresas/edit/'.$empresa['id_empresa'] : '/empresas/show/'.$empresa['id_empresa'] ?>" class="btn btn-primary style-action"><i class="fas fa-folder-open"></i></a>
                                             <button type="button" class="btn btn-success style-action" onclick="document.getElementById('id_empresa').value = <?= $empresa['id_empresa'] ?>" data-toggle="modal" data-target="#modal-selecionar-tipo-da-nota"><i class="fas fa-code"></i> xmls</button>
-                                            <a href="/empresas/edit/<?= $empresa['id_empresa'] ?>" class="btn btn-warning style-action"><i class="fas fa-edit"></i></a>
-                                            <button type="button" class="btn btn-danger style-action" onclick="confirmaAcaoExcluir('Deseja realmente excluir essa empresa?', '/empresas/delete/<?= $empresa['id_empresa'] ?>')"><i class="fas fa-trash"></i></button>
+                                            <a href="<?= ($tipoSessao == 1) ? '/admin/empresas/edit/'.$empresa['id_empresa'] : '/empresas/edit/'.$empresa['id_empresa'] ?>" class="btn btn-warning style-action"><i class="fas fa-edit"></i></a>
+                                            <button type="button" class="btn btn-danger style-action" onclick="confirmaAcaoExcluir('Deseja realmente excluir essa empresa?', '<?= ($tipoSessao == 1) ? '/empresas/delete/'.$empresa['id_empresa'] : '/empresas/delete/'.$empresa['id_empresa'] ?>')"><i class="fas fa-trash"></i></button>
                                         </td>
                                     </tr>
                                 <?php endforeach ?>

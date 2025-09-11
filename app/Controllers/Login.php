@@ -43,10 +43,10 @@ class Login extends Controller
 
     public function autenticar()
     {
-        // Throttle por IP: 5 tentativas por minuto
+        // Throttle por IP: 10 tentativas por minuto
         $throttler = service('throttler');
         $ipKey = 'login-' . $this->request->getIPAddress();
-        if (!$throttler->check($ipKey, 5, MINUTE)) {
+        if (!$throttler->check($ipKey, 10, MINUTE)) {
             $this->session->setFlashdata(
                 'alert',
                 [
@@ -105,6 +105,8 @@ class Login extends Controller
                 $this->session->set('xApp', $config['nome_do_app']);
                 $this->session->set('usuario', $login['usuario']);
                 $this->session->set('tipo', $login['tipo']);
+                // Garante status ativo no contexto de permissões
+                $this->session->set('status', 'Ativo');
                 
                 return redirect()->to('/inicio/admin');
             
@@ -234,4 +236,5 @@ class Login extends Controller
         echo "<br>";
         echo md5('soueu123!$%C0');
     }
+
 }

@@ -12,6 +12,10 @@
 
         // Caso exista sessão
         if(isset($tipo_usuario_da_sessao)) :
+            // MASTER (tipo 1) tem acesso total
+            if ((int) $tipo_usuario_da_sessao === 1) {
+                return FALSE;
+            }
             
             // Caso não tenha permissão de acessar a função
             if($tipo_usuario_da_sessao != $tipo || $status == "Desativado") :
