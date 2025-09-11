@@ -50,10 +50,10 @@ class Database extends Config
      */
     public array $cloud = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => '',
+        'hostname'     => '127.0.0.1',
+        'username'     => 'root',
         'password'     => '',
-        'database'     => '',
+        'database'     => 'erp_test',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,

@@ -16,7 +16,7 @@
         "ext-mbstring": "*",
         "laminas/laminas-escaper": "^2.9",
         "psr/log": "^1.1",
-        "stripe/stripe-php": "^13.0"
+        "stripe/stripe-php": "*"
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.7",

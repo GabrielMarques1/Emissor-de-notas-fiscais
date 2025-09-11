@@ -33,10 +33,12 @@ class OutboxAndIndexes extends Migration
                 'type' => 'MEDIUMTEXT',
                 'null' => true,
             ],
+            // Observação: em algumas versões/configurações do MySQL, CURRENT_TIMESTAMP como default
+            // combinado com outras colunas TIMESTAMP/DATETIME pode causar erro de "Invalid default value".
+            // Para compatibilidade ampla, não definimos default aqui; o app deve preencher created_at.
             'created_at' => [
-                'type' => 'TIMESTAMP',
+                'type' => 'DATETIME',
                 'null' => false,
-                'default' => new RawSql('CURRENT_TIMESTAMP'),
             ],
             'processed_at' => [
                 'type' => 'TIMESTAMP',

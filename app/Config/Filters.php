@@ -8,6 +8,7 @@ use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
+use App\Filters\SubscriptionFilter; // add alias
 
 class Filters extends BaseConfig
 {
@@ -24,6 +25,7 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'subscription'  => SubscriptionFilter::class, // new alias
     ];
 
     /**
@@ -76,5 +78,6 @@ class Filters extends BaseConfig
                 'login/verificaUsuario',
             ],
         ],
+        // you may apply subscription per-route in Routes.php
     ];
 }

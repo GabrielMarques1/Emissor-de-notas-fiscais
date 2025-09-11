@@ -46,7 +46,8 @@ class EmpresaModel extends BaseAppModel
         'stripe_price_id',
         'stripe_product_id',
         'stripe_status',
-        'trial_ends_at'
+        'trial_ends_at',
+        'current_period_end'
     ];
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';

@@ -17,7 +17,7 @@ class Stripe extends BaseController
 
     private function getStripeClient(): \Stripe\StripeClient
     {
-        $secret = getenv('stripe.secret') ?: getenv('STRIPE_SECRET');
+        $secret = getenv('stripe.secret') ?: getenv('STRIPE_SECRET_KEY') ?: getenv('STRIPE_SECRET');
         if (!$secret) {
             throw new \RuntimeException('Stripe secret não configurado (env stripe.secret ou STRIPE_SECRET).');
         }
@@ -128,6 +128,9 @@ class Stripe extends BaseController
             case 'checkout.session.completed':
                 $this->handleCheckoutCompleted($data);
                 break;
+            case 'invoice.paid':
+                $this->handleInvoicePaid($data);
+                break;
             case 'customer.subscription.updated':
             case 'customer.subscription.created':
             case 'customer.subscription.deleted':
@@ -153,11 +156,44 @@ class Stripe extends BaseController
             $idEmpresa = $empresa['id_empresa'] ?? null;
         }
         if ($idEmpresa) {
+            $currentPeriodEnd = null;
+            try {
+                if ($subscriptionId) {
+                    $client = $this->getStripeClient();
+                    $subscription = $client->subscriptions->retrieve($subscriptionId);
+                    if (!empty($subscription->current_period_end)) {
+                        $currentPeriodEnd = date('Y-m-d H:i:s', (int) $subscription->current_period_end);
+                    }
+                }
+            } catch (\Throwable $e) {}
             $this->empresaModel->update($idEmpresa, [
                 'stripe_customer_id' => $customerId,
                 'stripe_subscription_id' => $subscriptionId,
                 'stripe_status' => 'active',
+                'current_period_end' => $currentPeriodEnd,
             ]);
+        }
+    }
+
+    private function handleInvoicePaid($invoiceObj): void
+    {
+        $subscriptionId = $invoiceObj->subscription ?? null;
+        if (!$subscriptionId) return;
+        try {
+            $client = $this->getStripeClient();
+            $subscription = $client->subscriptions->retrieve($subscriptionId);
+            $currentPeriodEnd = !empty($subscription->current_period_end)
+                ? date('Y-m-d H:i:s', (int) $subscription->current_period_end)
+                : null;
+            $empresa = $this->empresaModel->where('stripe_subscription_id', $subscriptionId)->first();
+            if ($empresa) {
+                $this->empresaModel->update($empresa['id_empresa'], [
+                    'current_period_end' => $currentPeriodEnd,
+                    'stripe_status' => 'active',
+                ]);
+            }
+        } catch (\Throwable $e) {
+            // noop
         }
     }
 
