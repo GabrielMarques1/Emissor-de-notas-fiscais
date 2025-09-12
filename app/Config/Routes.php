@@ -7,6 +7,9 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 
+// Verificação de usuário existente (para fluxo de cadastro/Stripe)
+$routes->post('login/verificaUsuario', 'Login::verificaUsuario');
+
 // Rotas de cobrança - apenas ADMIN (tipo 1) terá acesso via verificaPermissaoDeAcesso no controller
 $routes->group('cobranca', static function($routes) {
 	$routes->get('gerar', 'Cobranca::gerarCobrancasMensais');
@@ -27,4 +30,9 @@ $routes->group('stripe', static function($routes) {
 	$routes->post('webhook', 'Stripe::webhook');
 	$routes->get('success', 'Inicio::emissor');
 	$routes->get('cancel', 'Inicio::emissor');
+});
+
+// Empresa <-> Contador
+$routes->group('empresa', static function($routes) {
+	$routes->post('adicionar-contador', 'EmpresaContador::adicionarContador');
 });
