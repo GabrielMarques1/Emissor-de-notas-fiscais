@@ -32,6 +32,14 @@ $routes->group('stripe', static function($routes) {
 	$routes->get('cancel', 'Inicio::emissor');
 });
 
+// Proteger o emissor com filtro de assinatura
+$routes->group('inicio', ['filter' => 'subscription'], static function($routes) {
+	$routes->get('emissor', 'Inicio::emissor');
+});
+
+// Página pública de planos/checkout
+$routes->get('planos', 'Inicio::planos');
+
 // Empresa <-> Contador
 $routes->group('empresa', static function($routes) {
 	$routes->post('adicionar-contador', 'EmpresaContador::adicionarContador');

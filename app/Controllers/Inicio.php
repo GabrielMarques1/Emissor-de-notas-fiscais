@@ -255,4 +255,15 @@ class Inicio extends Controller
         echo view('start/emissor', $data);
         echo view('templates/footer');
     }
+
+    public function planos()
+    {
+        $data['config'] = $this->configuracao_model
+                                ->where('id_config', 1)
+                                ->first();
+
+        echo view('templates/header');
+        echo view('site/planos', $data);
+        echo view('templates/footer');
+    }
 }

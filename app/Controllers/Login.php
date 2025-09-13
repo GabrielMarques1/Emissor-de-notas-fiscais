@@ -38,6 +38,14 @@ class Login extends Controller
                                 ->where('id_config', 1)
                                 ->first();
 
+        // Para teste: simular pop-up de paywall
+        if ($this->request->getGet('test_paywall')) {
+            $this->session->setFlashdata('paywall', [
+                'message' => 'Acesso restrito a assinantes ativos. Conclua o pagamento para continuar.',
+                'email'   => 'teste@exemplo.com',
+            ]);
+        }
+
         echo view('login/index', $data);
     }
 
@@ -140,7 +148,7 @@ class Login extends Controller
                 return redirect()->to('/inicio/contador');
 
             elseif($login['tipo'] == 3) :
-                // Caso o tipo for 3 (Emissor) então pega o id_empresa e coloca também na sessão
+                // Caso o tipo for 3 (Emissor) então pega o id_empresa e valida acesso da assinatura
                 $empresa = $this->empresa_model
                                 ->where('id_login', $login['id_login'])
                                 ->first();
@@ -150,19 +158,22 @@ class Login extends Controller
                                 ->where('id_contador', $empresa['id_contador'])
                                 ->first();
 
-                // Verifica se o contador ou a empresa está desativado
-                if($contador['status'] == "Desativado" || $empresa['status'] == "Desativado") :
-                    
-                    $this->session->setFlashdata(
-                        'alert',
-                        [
-                            'type'  => 'warning',
-                            'title' => 'Acesso bloqueado. Entre em contato com o administrador.'
-                        ]
-                    );
+                // Regra: se empresa/contador desativados OU assinatura inativa/ausente, exibe pop-up na tela de login com CTA de pagamento
+                $stripeStatus = (string) ($empresa['stripe_status'] ?? '');
+                $currentPeriodEnd = (string) ($empresa['current_period_end'] ?? '');
+                $allowTrial = (bool) ((getenv('stripe.allow_trial') ?: getenv('STRIPE_ALLOW_TRIAL')));
+                $nowOk = true;
+                if (!empty($currentPeriodEnd)) {
+                    $nowOk = (strtotime($currentPeriodEnd) ?: 0) >= time();
+                }
+                $assinaturaAtiva = ($stripeStatus === 'active' && $nowOk) || ($allowTrial && $stripeStatus === 'trialing' && $nowOk);
 
+                if($contador['status'] == "Desativado" || $empresa['status'] == "Desativado" || !$assinaturaAtiva) :
+                    $this->session->setFlashdata('paywall', [
+                        'message' => 'Acesso restrito a assinantes ativos. Conclua o pagamento para continuar.',
+                        'email'   => (string) $login['usuario'],
+                    ]);
                     return redirect()->to('/login');
-
                 endif;
 
                 $this->session->regenerate();
