@@ -25,6 +25,8 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'subscription'  => \App\Filters\SubscriptionFilter::class,
+        'pdvaccess'     => \App\Filters\PdvAccessFilter::class,
+        'apithrottle'   => \App\Filters\ApiThrottleFilter::class,
     ];
 
     /**
@@ -75,6 +77,7 @@ class Filters extends BaseConfig
                 'UF/preparaMunicipios',
                 'receitaWS/pegaDadosDoCNPJ',
                 'login/verificaUsuario',
+                'api/*',
             ],
         ],
     ];

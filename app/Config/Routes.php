@@ -44,3 +44,36 @@ $routes->get('planos', 'Inicio::planos');
 $routes->group('empresa', static function($routes) {
 	$routes->post('adicionar-contador', 'EmpresaContador::adicionarContador');
 });
+
+// Auth - recuperação de senha
+$routes->group('auth', static function($routes) {
+	$routes->match(['get','post'], 'forgot', 'Auth\Password::forgot');
+	$routes->match(['get','post'], 'reset/(:segment)', 'Auth\Password::reset/$1');
+});
+
+// PDV - protegido por assinatura
+$routes->group('pdv', ['filter' => 'subscription'], static function($routes) {
+	$routes->get('/', 'PDV::index');
+	$routes->get('adicionar', 'PDV::adicionar');
+	$routes->get('remover/(:num)', 'PDV::remover/$1');
+	$routes->get('limpar', 'PDV::limpar');
+	$routes->get('finalizar', 'PDV::finalizar');
+	$routes->get('buscar-por-barras/(:any)', 'PDV::buscarPorBarras/$1');
+});
+
+// API do PDV - RESTful resources
+$routes->group('api', ['namespace' => 'App\\Controllers\\Api', 'filter' => 'subscription|pdvaccess|apithrottle'], static function($routes) {
+	$routes->resource('pos', ['controller' => 'Pos']);
+	$routes->resource('cash-registers', ['controller' => 'CashRegisters']);
+	$routes->resource('shifts', ['controller' => 'Shifts']);
+	$routes->post('pos/(:num)/finalize', 'Pos::finalize/$1');
+	$routes->post('pos/(:num)/cancel', 'Pos::cancel/$1');
+	$routes->get('pos/(:num)/receipt', 'Pos::receipt/$1');
+	$routes->get('pos/(:num)/receipt/html', 'Pos::receiptHtml/$1');
+	$routes->get('pos/active', 'Pos::active');
+	$routes->get('products/barcode/(:any)', 'Products::barcode/$1');
+	$routes->get('cart', 'Cart::index');
+	$routes->post('cart', 'Cart::create');
+	$routes->delete('cart/(:num)', 'Cart::delete/$1');
+	$routes->delete('cart', 'Cart::clear');
+});

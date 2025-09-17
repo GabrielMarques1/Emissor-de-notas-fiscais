@@ -24,4 +24,29 @@ class ProdutoModel extends BaseAppModel
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
+
+    public function baixarEstoque(array $itens): void
+    {
+        foreach ($itens as $it) {
+            if (!isset($it['id_produto']) || !isset($it['quantidade'])) continue;
+            $id = (int) $it['id_produto'];
+            $qtd = (float) $it['quantidade'];
+            if ($id > 0 && $qtd > 0) {
+                // campo hipotético "estoque"; ajuste se seu schema for diferente
+                $this->db->query('UPDATE produtos SET estoque = estoque - ? WHERE id_produto = ?', [$qtd, $id]);
+            }
+        }
+    }
+
+    public function estornarEstoque(array $itens): void
+    {
+        foreach ($itens as $it) {
+            if (!isset($it['id_produto']) || !isset($it['quantidade'])) continue;
+            $id = (int) $it['id_produto'];
+            $qtd = (float) $it['quantidade'];
+            if ($id > 0 && $qtd > 0) {
+                $this->db->query('UPDATE produtos SET estoque = estoque + ? WHERE id_produto = ?', [$qtd, $id]);
+            }
+        }
+    }
 }
