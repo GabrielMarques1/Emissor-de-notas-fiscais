@@ -66,6 +66,7 @@ $routes->group('api', ['namespace' => 'App\\Controllers\\Api', 'filter' => 'subs
 	$routes->resource('pos', ['controller' => 'Pos']);
 	$routes->resource('cash-registers', ['controller' => 'CashRegisters']);
 	$routes->resource('shifts', ['controller' => 'Shifts']);
+	$routes->get('shifts/(:num)/report', 'Shifts::report/$1');
 	$routes->post('pos/(:num)/finalize', 'Pos::finalize/$1');
 	$routes->post('pos/(:num)/cancel', 'Pos::cancel/$1');
 	$routes->get('pos/(:num)/receipt', 'Pos::receipt/$1');

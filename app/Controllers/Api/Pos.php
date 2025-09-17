@@ -344,7 +344,7 @@ class Pos extends ResourceController
         $emitente = (new EmpresaModel())->find(is_array($sale)?($sale['id_empresa']??0):($sale->id_empresa??0));
         $qr = isset($nfce['chave']) ? 'https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?chNFe=' . urlencode($nfce['chave']) : '';
         $html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>DANFE NFC-e</title>' .
-                '<style>body{font-family:Arial,Helvetica,sans-serif;font-size:12px;} .center{text-align:center} .q{margin-top:8px} table{width:100%;border-collapse:collapse} td,th{border:1px solid #ddd;padding:4px}</style>' .
+                '<style>body{font-family:Arial,Helvetica,sans-serif;font-size:12px;max-width:280px;margin:0 auto;} .center{text-align:center} .q{margin-top:8px} table{width:100%;border-collapse:collapse} td,th{border:1px solid #ddd;padding:4px}</style>' .
                 '</head><body onload="window.print()">' .
                 '<div class="center"><h3>DANFE NFC-e (Recibo)</h3></div>' .
                 '<div><strong>' . htmlspecialchars($emitente['xFant'] ?? '') . '</strong><br/>' . htmlspecialchars(($emitente['xLgr'] ?? '') . ', ' . ($emitente['nro'] ?? '') . ' - ' . ($emitente['xBairro'] ?? '')) . '<br/>' . 'CNPJ: ' . htmlspecialchars($emitente['CNPJ'] ?? '') . '</div>' .
@@ -353,7 +353,9 @@ class Pos extends ResourceController
                 '<div>Valor: R$ ' . number_format($valor, 2, ',', '.') . '</div>' .
                 '<div class="q"><table><thead><tr><th>Produto</th><th>Qtd</th><th>Vlr Unit</th><th>Subtotal</th></tr></thead><tbody>' . $linhas . '</tbody></table></div>' .
                 '<div class="q">XML disponível no sistema.</div>' .
-                ($qr ? ('<div class="q">Consulta: <a href="' . htmlspecialchars($qr) . '" target="_blank">' . htmlspecialchars($qr) . '</a></div>') : '') .
+                ($qr ? ('<div class="q center"><div id="qrcode"></div><div style="word-break:break-all;margin-top:4px">' . htmlspecialchars($qr) . '</div></div>') : '') .
+                '<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>' .
+                ($qr ? ('<script>try{ new QRCode(document.getElementById("qrcode"), { text: ' . json_encode($qr) . ', width: 128, height: 128 }); }catch(e){}</script>') : '') .
                 '</body></html>';
         return $this->response->setHeader('Content-Type', 'text/html; charset=utf-8')->setBody($html);
     }

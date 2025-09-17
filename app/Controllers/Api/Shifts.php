@@ -63,6 +63,22 @@ class Shifts extends ResourceController
         }
         return $this->respond($this->model->find($id));
     }
+
+    // Relatório simples do turno: totais por forma de pagamento e total geral
+    public function report($id = null)
+    {
+        if (!$id) return $this->failValidationErrors('ID obrigatório');
+        $db = \Config\Database::connect();
+        $rows = $db->table('pos_sales')
+                   ->select('payment_type, SUM(total) as valor, COUNT(*) as qtd')
+                   ->where('id_shift', (int) $id)
+                   ->where('status', 'finalized')
+                   ->groupBy('payment_type')
+                   ->get()->getResultArray();
+        $totalGeral = 0.0;
+        foreach ($rows as $r) { $totalGeral += (float) $r['valor']; }
+        return $this->respond(['itens' => $rows, 'total' => $totalGeral]);
+    }
 }
 
 

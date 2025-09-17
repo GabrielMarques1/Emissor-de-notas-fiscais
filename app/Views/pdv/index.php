@@ -50,6 +50,7 @@
                                     <button type="button" class="btn btn-success" onclick="adicionarItemPDV()"><i class="fas fa-plus-circle"></i> Adicionar</button>
                                     <a href="/pdv/limpar" class="btn btn-default"><i class="fas fa-broom"></i> Limpar</a>
                                     <a href="/pdv/finalizar" class="btn btn-primary"><i class="fas fa-receipt"></i> Finalizar</a>
+                                    <button type="button" class="btn btn-warning" onclick="fecharCaixa()"><i class="fas fa-cash-register"></i> Fechar Caixa</button>
                                 </div>
                             </div>
                         </div>
@@ -217,6 +218,30 @@ async function finalizarPDV() {
         await atualizarCarrinho();
         window.open('/api/pos/' + saleId + '/receipt/html', '_blank');
     } catch(e) { Swal.fire({ icon: 'error', title: 'Erro ao finalizar', text: e.message }); }
+}
+
+async function fecharCaixa() {
+    try {
+        // obter último turno aberto
+        const shifts = await fetch('/api/shifts', { headers: {'Accept':'application/json'} }).then(r=>r.json());
+        if (!Array.isArray(shifts) || !shifts.length) { Swal.fire({icon:'error',title:'Sem turnos'}); return; }
+        const shift = shifts[0];
+        if (shift.status !== 'open') { Swal.fire({icon:'info',title:'Turno já fechado'}); return; }
+        const amount = await Swal.fire({ title: 'Valor no Caixa', input: 'text', inputValue: '0,00', showCancelButton:true });
+        if (!amount.isConfirmed) return;
+        // fechar
+        await fetch('/api/shifts/close/' + shift.id_shift, { method: 'POST', headers: {'Accept':'application/json','Content-Type':'application/json'}, body: JSON.stringify({ closed_by: 'pdv', closing_amount: amount.value }) });
+        const rep = await fetch('/api/shifts/' + shift.id_shift + '/report', { headers: {'Accept':'application/json'} }).then(r=>r.json());
+        let html = '<b>Total:</b> R$ ' + Number(rep.total||0).toLocaleString('pt-BR',{minimumFractionDigits:2}) + '<br/><br/>';
+        if (Array.isArray(rep.itens)) {
+            html += '<table class="table table-sm"><thead><tr><th>Forma</th><th class="text-right">Qtd</th><th class="text-right">Valor</th></tr></thead><tbody>';
+            rep.itens.forEach(i=>{ html += `<tr><td>${i.payment_type}</td><td class="text-right">${i.qtd}</td><td class="text-right">${Number(i.valor||0).toLocaleString('pt-BR',{minimumFractionDigits:2})}</td></tr>`; });
+            html += '</tbody></table>';
+        }
+        Swal.fire({ icon:'success', title:'Caixa fechado', html });
+    } catch(e) {
+        Swal.fire({ icon:'error', title:'Erro ao fechar', text: e.message });
+    }
 }
 </script>
 
