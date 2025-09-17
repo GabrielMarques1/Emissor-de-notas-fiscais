@@ -8,12 +8,14 @@ class ProdutoProvisorioModel extends BaseAppModel
     protected $primaryKey = 'id_produto_provisorio';
     protected $allowedFields = [
         'id_produto_provisorio',
+        'id_produto',
         'nome',
         'codigo_de_barras',
         'unidade',
         'quantidade',
         'valor_unitario',
         'desconto',
+        'observacao',
         'CFOP_NFe',
         'CFOP_NFCe',
         'CFOP_Externo',

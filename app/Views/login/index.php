@@ -140,7 +140,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <?php
         $session = session();
         $alert = $session->getFlashdata('alert');
-        $paywall = $session->getFlashdata('paywall');
 
         if (isset($alert)) : ?>
 
@@ -159,82 +158,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <?php endif;
         ?>
 
-        <?php if (isset($paywall)) : ?>
-        $(document).ready(function(){
-            console.log('Paywall detectado, exibindo pop-up...');
-            Swal.fire({
-                icon: 'warning',
-                title: 'Acesso restrito a assinantes ativos. Conclua o pagamento para continuar.',
-                showCancelButton: true,
-                confirmButtonText: 'Fazer pagamento',
-                cancelButtonText: 'Fechar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    console.log('Usuário clicou em Fazer pagamento');
-                    
-                    // Preenche dados e inicia checkout imediatamente
-                    const email = '<?= esc($paywall['email'] ?? '', 'js') ?>';
-                    const nome = email.split('@')[0] || 'Cliente';
-                    
-                    console.log('Iniciando checkout para:', email, nome);
-                    
-                    const payload = {
-                        email_empresa: email,
-                        nome_fantasia: nome,
-                        contador_email: '',
-                        cnpj: '',
-                    };
-                    payload['<?= csrf_token() ?>'] = '<?= csrf_hash() ?>';
-                    
-                    console.log('Enviando requisição para:', '/stripe/checkout');
-                    console.log('Payload:', payload);
-                    
-                    $.ajax({
-                        url: '/stripe/checkout',
-                        type: 'POST',
-                        data: payload,
-                        dataType: 'json',
-                        beforeSend: function() {
-                            console.log('Enviando requisição AJAX...');
-                        }
-                    }).done(function(data) {
-                        console.log('Resposta checkout recebida:', data);
-                        console.log('Status da resposta:', data ? 'OK' : 'NULL');
-                        if (data && data.url) {
-                            console.log('Redirecionando para:', data.url);
-                            window.location.href = data.url;
-                        } else {
-                            console.error('Resposta inválida:', data);
-                            Swal.fire({ 
-                                icon: 'error', 
-                                title: 'Erro no checkout',
-                                text: (data && data.error) ? data.error : 'Falha ao iniciar pagamento'
-                            });
-                        }
-                    }).fail(function(xhr, status, error) {
-                        console.error('Erro AJAX completo:', {
-                            xhr: xhr,
-                            status: status,
-                            error: error,
-                            responseText: xhr.responseText
-                        });
-                        let msg = 'Falha ao iniciar checkout';
-                        try { 
-                            const j = JSON.parse(xhr.responseText); 
-                            if (j && j.error) msg = j.error; 
-                        } catch(e){
-                            console.error('Erro ao parsear JSON:', e);
-                        }
-                        Swal.fire({ 
-                            icon: 'error', 
-                            title: 'Erro',
-                            text: msg 
-                        });
-                    });
-                }
-            });
-        });
-        <?php endif; ?>
+        // Paywall removido: não exibir mais pop-up de assinatura
 
         function startCheckout(email, nome, contadorEmail, cnpj) {
             if (!email || !nome) {

@@ -38,14 +38,6 @@ class Login extends Controller
                                 ->where('id_config', 1)
                                 ->first();
 
-        // Para teste: simular pop-up de paywall
-        if ($this->request->getGet('test_paywall')) {
-            $this->session->setFlashdata('paywall', [
-                'message' => 'Acesso restrito a assinantes ativos. Conclua o pagamento para continuar.',
-                'email'   => 'teste@exemplo.com',
-            ]);
-        }
-
         echo view('login/index', $data);
     }
 
@@ -158,23 +150,7 @@ class Login extends Controller
                                 ->where('id_contador', $empresa['id_contador'])
                                 ->first();
 
-                // Regra: se empresa/contador desativados OU assinatura inativa/ausente, exibe pop-up na tela de login com CTA de pagamento
-                $stripeStatus = (string) ($empresa['stripe_status'] ?? '');
-                $currentPeriodEnd = (string) ($empresa['current_period_end'] ?? '');
-                $allowTrial = (bool) ((getenv('stripe.allow_trial') ?: getenv('STRIPE_ALLOW_TRIAL')));
-                $nowOk = true;
-                if (!empty($currentPeriodEnd)) {
-                    $nowOk = (strtotime($currentPeriodEnd) ?: 0) >= time();
-                }
-                $assinaturaAtiva = ($stripeStatus === 'active' && $nowOk) || ($allowTrial && $stripeStatus === 'trialing' && $nowOk);
-
-                if($contador['status'] == "Desativado" || $empresa['status'] == "Desativado" || !$assinaturaAtiva) :
-                    $this->session->setFlashdata('paywall', [
-                        'message' => 'Acesso restrito a assinantes ativos. Conclua o pagamento para continuar.',
-                        'email'   => (string) $login['usuario'],
-                    ]);
-                    return redirect()->to('/login');
-                endif;
+				// Acesso liberado: sem verificação de assinatura/stripe/status
 
                 $this->session->regenerate();
                 $this->session->set('id_empresa', $empresa['id_empresa']);

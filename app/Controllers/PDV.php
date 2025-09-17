@@ -67,7 +67,8 @@ class PDV extends Controller
         $data['total'] = $total;
 
         echo view('templates/header');
-        echo view('pdv/index', $data);
+        // Nova UI moderna baseada no layout solicitado
+        echo view('pdv/index_modern', $data);
         echo view('templates/footer');
     }
 

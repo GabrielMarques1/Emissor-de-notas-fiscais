@@ -158,7 +158,15 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a id="7" href="/fornecedores" class="nav-link">
+                            <a id="7" href="/pdv" class="nav-link">
+                                <i class="nav-icon fas fa-cash-register"></i>
+                                <p>
+                                    PDV
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="8" href="/fornecedores" class="nav-link">
                                 <i class="nav-icon fas fa-dolly"></i>
                                 <p>
                                     Fornecedores
@@ -166,7 +174,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a id="8" href="/transportadoras" class="nav-link">
+                            <a id="9" href="/transportadoras" class="nav-link">
                                 <i class="nav-icon fas fa-truck"></i>
                                 <p>
                                     Transportadoras
@@ -175,7 +183,7 @@
                         </li>
                         <li class="nav-header">CONTROLE FISCAL</li>
                         <li class="nav-item">
-                            <a id="9" href="/emissor/listaXMLsNFe" class="nav-link">
+                            <a id="10" href="/emissor/listaXMLsNFe" class="nav-link">
                                 <i class="nav-icon fas fa-code"></i>
                                 <p>
                                     NFe
@@ -183,7 +191,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a id="10" href="/emissor/listaXMLsNFCe" class="nav-link">
+                            <a id="11" href="/emissor/listaXMLsNFCe" class="nav-link">
                                 <i class="nav-icon fas fa-code"></i>
                                 <p>
                                     NFCe

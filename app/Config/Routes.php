@@ -73,8 +73,12 @@ $routes->group('api', ['namespace' => 'App\\Controllers\\Api', 'filter' => 'subs
 	$routes->get('pos/(:num)/receipt/html', 'Pos::receiptHtml/$1');
 	$routes->get('pos/active', 'Pos::active');
 	$routes->get('products/barcode/(:any)', 'Products::barcode/$1');
+	$routes->get('products/search', 'Products::search');
+	$routes->get('products', 'Products::index');
 	$routes->get('cart', 'Cart::index');
 	$routes->post('cart', 'Cart::create');
 	$routes->delete('cart/(:num)', 'Cart::delete/$1');
+	$routes->put('cart/(:num)', 'Cart::update/$1');
+	$routes->patch('cart/(:num)', 'Cart::update/$1');
 	$routes->delete('cart', 'Cart::clear');
 });

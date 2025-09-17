@@ -39,36 +39,7 @@ class PdvAccessFilter implements FilterInterface
             return redirect()->to('/login');
         }
 
-        $stripeStatus = (string) ($empresa['stripe_status'] ?? '');
-        $currentPeriodEnd = (string) ($empresa['current_period_end'] ?? '');
-        $trialEndsAt = (string) ($empresa['trial_ends_at'] ?? '');
-        $allowTrial = (bool) ((getenv('stripe.allow_trial') ?: getenv('STRIPE_ALLOW_TRIAL')));
-
-        $nowTs = time();
-        $periodOk = true;
-        if (!empty($currentPeriodEnd)) {
-            $periodTs = strtotime($currentPeriodEnd) ?: 0;
-            $periodOk = $periodTs >= $nowTs;
-        }
-
-        $trialOk = false;
-        if ($allowTrial && !empty($trialEndsAt)) {
-            $trialTs = strtotime($trialEndsAt) ?: 0;
-            $trialOk = $trialTs >= $nowTs;
-        }
-
-        $statusOk = ($stripeStatus === 'active') || ($allowTrial && $stripeStatus === 'trialing');
-
-        if (!($statusOk && ($periodOk || $trialOk))) {
-            if ($wantsJson) {
-                return service('response')->setStatusCode(402)->setJSON(['error' => 'Assinatura inativa.']);
-            }
-            $session->setFlashdata('alert', [
-                'type'  => 'warning',
-                'title' => 'Acesso restrito a assinantes ativos.'
-            ]);
-            return redirect()->to('/login');
-        }
+        // Liberado: sem verificação de assinatura/Stripe.
 
         return null;
     }

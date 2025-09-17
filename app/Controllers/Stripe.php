@@ -37,6 +37,9 @@ class Stripe extends BaseController
         // Log de debug
         log_message('info', 'Stripe::createCheckoutSession - Request data: ' . json_encode($this->request->getVar()));
         
+        // Inicializa cliente Stripe (necessário para fluxos autenticado e guest)
+        $client = $this->getStripeClient();
+        
         $session = session();
         $idEmpresa = $session->get('id_empresa');
         

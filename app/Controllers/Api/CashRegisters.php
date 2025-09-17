@@ -61,6 +61,28 @@ class CashRegisters extends ResourceController
         }
     }
 
+    public function create()
+    {
+        $session = session();
+        $data = $this->request instanceof \CodeIgniter\HTTP\IncomingRequest
+            ? ($this->request->getJSON(true) ?? $this->request->getPost())
+            : [];
+
+        $payload = [
+            'name' => (string) ($data['name'] ?? 'Caixa 1'),
+            'location' => (string) ($data['location'] ?? 'Loja'),
+            'status' => (string) ($data['status'] ?? 'closed'),
+        ];
+        if ($session->get('id_contador')) $payload['id_contador'] = (int) $session->get('id_contador');
+        if ($session->get('id_empresa')) $payload['id_empresa']  = (int) $session->get('id_empresa');
+
+        if (! $this->model->insert($payload)) {
+            return $this->failValidationErrors($this->model->errors());
+        }
+        $id = $this->model->getInsertID();
+        return $this->respondCreated($this->model->find($id));
+    }
+
     public function show($id = null)
     {
         $data = $this->model->find($id);

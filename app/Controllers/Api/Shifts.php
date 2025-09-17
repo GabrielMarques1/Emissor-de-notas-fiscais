@@ -12,16 +12,20 @@ class Shifts extends ResourceController
 
     public function index()
     {
-        $session = session();
-        $builder = $this->model;
-        if ($session->get('id_contador')) {
-            $builder = $builder->where('id_contador', (int) $session->get('id_contador'));
+        try {
+            $session = session();
+            $builder = $this->model;
+            if ($session->get('id_contador')) {
+                $builder = $builder->where('id_contador', (int) $session->get('id_contador'));
+            }
+            if ($session->get('id_empresa')) {
+                $builder = $builder->where('id_empresa', (int) $session->get('id_empresa'));
+            }
+            $items = $builder->orderBy('id_shift', 'DESC')->findAll(50);
+            return $this->respond($items);
+        } catch (\Throwable $e) {
+            return $this->respond([]);
         }
-        if ($session->get('id_empresa')) {
-            $builder = $builder->where('id_empresa', (int) $session->get('id_empresa'));
-        }
-        $items = $builder->orderBy('id_shift', 'DESC')->findAll(50);
-        return $this->respond($items);
     }
 
     public function open()
