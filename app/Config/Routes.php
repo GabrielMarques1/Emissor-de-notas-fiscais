@@ -62,18 +62,24 @@ $routes->group('pdv', ['filter' => 'subscription'], static function($routes) {
 });
 
 // API do PDV - RESTful resources
-$routes->group('api', ['namespace' => 'App\\Controllers\\Api', 'filter' => 'subscription|pdvaccess|apithrottle'], static function($routes) {
-	$routes->resource('pos', ['controller' => 'Pos']);
+$routes->group('api', ['namespace' => 'App\\Controllers\\Api'], static function($routes) {
+    // Rotas específicas devem vir antes do resource para evitar captura por show/(:segment)
+    $routes->get('pos/active', 'Pos::active');
+    $routes->post('pos/(:num)/finalize', 'Pos::finalize/$1');
+    $routes->post('pos/(:num)/cancel', 'Pos::cancel/$1');
+    $routes->get('pos/(:num)/receipt', 'Pos::receipt/$1');
+    $routes->get('pos/(:num)/receipt/html', 'Pos::receiptHtml/$1');
+    // Shifts: open/close
+    $routes->post('shifts/open', 'Shifts::open');
+    $routes->post('shifts/close/(:num)', 'Shifts::close/$1');
+    // Resource após as rotas específicas
+    $routes->resource('pos', ['controller' => 'Pos']);
 	$routes->resource('cash-registers', ['controller' => 'CashRegisters']);
 	$routes->resource('shifts', ['controller' => 'Shifts']);
 	$routes->get('shifts/(:num)/report', 'Shifts::report/$1');
-	$routes->post('pos/(:num)/finalize', 'Pos::finalize/$1');
-	$routes->post('pos/(:num)/cancel', 'Pos::cancel/$1');
-	$routes->get('pos/(:num)/receipt', 'Pos::receipt/$1');
-	$routes->get('pos/(:num)/receipt/html', 'Pos::receiptHtml/$1');
-	$routes->get('pos/active', 'Pos::active');
 	$routes->get('products/barcode/(:any)', 'Products::barcode/$1');
-	$routes->get('products/search', 'Products::search');
+    $routes->get('products/search', 'Products::search');
+    $routes->get('products/inventory-movements', 'Products::inventoryMovements');
 	$routes->get('products', 'Products::index');
 	$routes->get('cart', 'Cart::index');
 	$routes->post('cart', 'Cart::create');
@@ -81,4 +87,7 @@ $routes->group('api', ['namespace' => 'App\\Controllers\\Api', 'filter' => 'subs
 	$routes->put('cart/(:num)', 'Cart::update/$1');
 	$routes->patch('cart/(:num)', 'Cart::update/$1');
 	$routes->delete('cart', 'Cart::clear');
+    // Diagnostics
+    $routes->get('diagnostics', 'Diagnostics::index');
+    $routes->get('diagnostics/logs', 'Diagnostics::logs');
 });

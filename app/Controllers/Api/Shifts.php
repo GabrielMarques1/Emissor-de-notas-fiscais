@@ -15,12 +15,13 @@ class Shifts extends ResourceController
         try {
             $session = session();
             $builder = $this->model;
-            if ($session->get('id_contador')) {
-                $builder = $builder->where('id_contador', (int) $session->get('id_contador'));
+            $idContador = (int) ($session->get('id_contador') ?? 0);
+            $idEmpresa  = (int) ($session->get('id_empresa') ?? 0);
+            if (($idContador === 0 || $idEmpresa === 0) && function_exists('resolve_tenant_ids')) {
+                [$idContador,$idEmpresa] = resolve_tenant_ids();
             }
-            if ($session->get('id_empresa')) {
-                $builder = $builder->where('id_empresa', (int) $session->get('id_empresa'));
-            }
+            if ($idContador) { $builder = $builder->where('id_contador', $idContador); }
+            if ($idEmpresa)  { $builder = $builder->where('id_empresa',  $idEmpresa); }
             $items = $builder->orderBy('id_shift', 'DESC')->findAll(50);
             return $this->respond($items);
         } catch (\Throwable $e) {
@@ -42,8 +43,13 @@ class Shifts extends ResourceController
             'status' => 'open',
         ];
         $session = session();
-        if ($session->get('id_contador')) $data['id_contador'] = (int) $session->get('id_contador');
-        if ($session->get('id_empresa')) $data['id_empresa'] = (int) $session->get('id_empresa');
+        $idContador = (int) ($session->get('id_contador') ?? 0);
+        $idEmpresa  = (int) ($session->get('id_empresa') ?? 0);
+        if (($idContador === 0 || $idEmpresa === 0) && function_exists('resolve_tenant_ids')) {
+            [$idContador,$idEmpresa] = resolve_tenant_ids();
+        }
+        if ($idContador) $data['id_contador'] = $idContador;
+        if ($idEmpresa)  $data['id_empresa']  = $idEmpresa;
 
         if (!$this->model->insert($data)) {
             return $this->failValidationErrors($this->model->errors());
@@ -62,10 +68,14 @@ class Shifts extends ResourceController
             'closing_amount' => (float) ($payload['closing_amount'] ?? 0),
             'status' => 'closed',
         ];
-        if (!$this->model->update($id, $data)) {
+        try {
+            if (!$this->model->update($id, $data)) {
+                return $this->failValidationErrors($this->model->errors());
+            }
+            return $this->respond($this->model->find($id));
+        } catch (\Throwable $e) {
             return $this->failValidationErrors($this->model->errors());
         }
-        return $this->respond($this->model->find($id));
     }
 
     // Relatório simples do turno: totais por forma de pagamento e total geral

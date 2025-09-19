@@ -10,7 +10,7 @@ class PosSaleItemModel extends Model
     protected $primaryKey = 'id_item';
     protected $returnType = 'array';
     protected $allowedFields = [
-        'id_item','id_pos_sale','nome','codigo_de_barras','unidade','quantidade','valor_unitario','desconto','CFOP_NFe','CFOP_NFCe','CFOP_Externo','NCM','CSOSN'
+        'id_item','id_pos_sale','id_produto','nome','codigo_de_barras','unidade','quantidade','valor_unitario','desconto','CFOP_NFe','CFOP_NFCe','CFOP_Externo','NCM','CSOSN'
     ];
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';

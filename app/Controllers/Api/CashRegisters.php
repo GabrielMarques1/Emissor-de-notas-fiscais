@@ -22,12 +22,13 @@ class CashRegisters extends ResourceController
 
             // Multi-tenant por sessão, quando disponível
             $session = session();
-            if ($session->get('id_contador')) {
-                $builder = $builder->where('id_contador', (int) $session->get('id_contador'));
+            $idContador = (int) ($session->get('id_contador') ?? 0);
+            $idEmpresa  = (int) ($session->get('id_empresa') ?? 0);
+            if (($idContador === 0 || $idEmpresa === 0) && function_exists('resolve_tenant_ids')) {
+                [$idContador,$idEmpresa] = resolve_tenant_ids();
             }
-            if ($session->get('id_empresa')) {
-                $builder = $builder->where('id_empresa', (int) $session->get('id_empresa'));
-            }
+            if ($idContador) { $builder = $builder->where('id_contador', $idContador); }
+            if ($idEmpresa)  { $builder = $builder->where('id_empresa',  $idEmpresa); }
 
             if ($status !== '') {
                 $builder = $builder->where('status', $status);
@@ -73,14 +74,21 @@ class CashRegisters extends ResourceController
             'location' => (string) ($data['location'] ?? 'Loja'),
             'status' => (string) ($data['status'] ?? 'closed'),
         ];
-        if ($session->get('id_contador')) $payload['id_contador'] = (int) $session->get('id_contador');
-        if ($session->get('id_empresa')) $payload['id_empresa']  = (int) $session->get('id_empresa');
+        $idContador = (int) ($session->get('id_contador') ?? 0);
+        $idEmpresa  = (int) ($session->get('id_empresa') ?? 0);
+        if (($idContador === 0 || $idEmpresa === 0) && function_exists('resolve_tenant_ids')) {
+            [$idContador,$idEmpresa] = resolve_tenant_ids();
+        }
+        if ($idContador) $payload['id_contador'] = $idContador;
+        if ($idEmpresa)  $payload['id_empresa']  = $idEmpresa;
 
         if (! $this->model->insert($payload)) {
             return $this->failValidationErrors($this->model->errors());
         }
         $id = $this->model->getInsertID();
-        return $this->respondCreated($this->model->find($id));
+        // Evita problemas de serialização de entidades em JSON
+        $created = $this->model->asArray()->find($id);
+        return $this->respondCreated($created);
     }
 
     public function show($id = null)

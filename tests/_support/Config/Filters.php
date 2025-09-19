@@ -1,12 +1,8 @@
 <?php
 
 /**
- * This file is part of CodeIgniter 4 framework.
- *
- * (c) CodeIgniter Foundation <admin@codeigniter.com>
- *
- * For the full copyright and license information, please view
- * the LICENSE file that was distributed with this source code.
+ * Arquivo de configuração de filtros para ambiente de testes (CI4).
+ * Ajusta aliases reais usados pela API e desabilita CSRF em api/*.
  */
 
 namespace Tests\Support\Config\Filters;
@@ -14,5 +10,11 @@ namespace Tests\Support\Config\Filters;
 /**
  * @psalm-suppress UndefinedGlobalVariable
  */
-$filters->aliases['test-customfilter']   = \Tests\Support\Filters\Customfilter::class;
-$filters->aliases['test-redirectfilter'] = \Tests\Support\Filters\RedirectFilter::class;
+$filters->aliases['subscription']  = \App\Filters\SubscriptionFilter::class;
+$filters->aliases['pdvaccess']     = \App\Filters\PdvAccessFilter::class;
+$filters->aliases['apithrottle']   = \App\Filters\ApiThrottleFilter::class;
+
+// Desabilitar CSRF para endpoints REST nos testes
+$filters->filters['csrf'] = ['except' => ['api/*']];
+// Não aplicar CSRF por método em testes
+$filters->methods = [];

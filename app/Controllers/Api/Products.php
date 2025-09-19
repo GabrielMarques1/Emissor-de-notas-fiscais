@@ -20,6 +20,9 @@ class Products extends ResourceController
             $session = session();
             $idContador = (int) ($session->get('id_contador') ?? 0);
             $idEmpresa  = (int) ($session->get('id_empresa') ?? 0);
+            if ($idContador === 0 || $idEmpresa === 0) {
+                if (function_exists('resolve_tenant_ids')) { [$idContador,$idEmpresa] = resolve_tenant_ids(); }
+            }
 
             $model = new ProdutoModel();
             $builder = $model->builder();
@@ -48,6 +51,9 @@ class Products extends ResourceController
             $session = session();
             $idContador = (int) ($session->get('id_contador') ?? 0);
             $idEmpresa  = (int) ($session->get('id_empresa') ?? 0);
+            if ($idContador === 0 || $idEmpresa === 0) {
+                if (function_exists('resolve_tenant_ids')) { [$idContador,$idEmpresa] = resolve_tenant_ids(); }
+            }
             $ean = trim((string) $ean);
 
             $model = new ProdutoModel();
@@ -82,55 +88,48 @@ class Products extends ResourceController
             }
             return $this->respond($prod);
         } catch (\Throwable $e) {
-            return $this->failServerError('Erro ao buscar produto');
+            // Não vazar erro interno para a UI; retornar 404 para fluxo do PDV
+            return $this->failNotFound('Produto não encontrado');
         }
     }
 
     // GET /api/products/search?q=termo
     public function search()
     {
-        $q = trim((string) ($this->request->getGet('q') ?? ''));
-        if ($q === '') {
-            return $this->failValidationErrors('Parâmetro q é obrigatório');
-        }
+        try {
+            $q = trim((string) ($this->request->getGet('q') ?? ''));
+            if ($q === '') {
+                return $this->failValidationErrors('Parâmetro q é obrigatório');
+            }
 
-        $session = session();
-        $idContador = (int) ($session->get('id_contador') ?? 0);
-        $idEmpresa  = (int) ($session->get('id_empresa') ?? 0);
+            $session = session();
+            $idContador = (int) ($session->get('id_contador') ?? 0);
+            $idEmpresa  = (int) ($session->get('id_empresa') ?? 0);
+            if ($idContador === 0 || $idEmpresa === 0) {
+                if (function_exists('resolve_tenant_ids')) { [$idContador,$idEmpresa] = resolve_tenant_ids(); }
+            }
 
-        // Estratégia: usar novas instâncias para evitar acúmulo de WHEREs
-        $prodModel = new ProdutoModel();
-        $byBarcode = $prodModel->where('id_contador', $idContador)
-                               ->where('id_empresa', $idEmpresa)
-                               ->where('codigo_de_barras', $q)
-                               ->first();
-        if ($byBarcode) return $this->respond([$byBarcode]);
+            // Estratégia: usar novas instâncias para evitar acúmulo de WHEREs
+            $prodModel = new ProdutoModel();
+            $byBarcode = $prodModel->where('id_contador', $idContador)
+                                   ->where('id_empresa', $idEmpresa)
+                                   ->where('codigo_de_barras', $q)
+                                   ->first();
+            if ($byBarcode) return $this->respond([$byBarcode]);
 
-        if (ctype_digit($q)) {
-            $byId = (new ProdutoModel())
-                ->where('id_contador', $idContador)
-                ->where('id_empresa', $idEmpresa)
-                ->where('id_produto', (int) $q)
-                ->first();
-            if ($byId) return $this->respond([$byId]);
-        }
+            if (ctype_digit($q)) {
+                $byId = (new ProdutoModel())
+                    ->where('id_contador', $idContador)
+                    ->where('id_empresa', $idEmpresa)
+                    ->where('id_produto', (int) $q)
+                    ->first();
+                if ($byId) return $this->respond([$byId]);
+            }
 
-        // 1) empresa + contador com OR por nome/codigo
-        $like = (new ProdutoModel())
-            ->where('id_contador', $idContador)
-            ->where('id_empresa', $idEmpresa)
-            ->groupStart()
-                ->like('nome', $q)
-                ->orLike('codigo_de_barras', $q)
-            ->groupEnd()
-            ->orderBy('id_produto', 'DESC')
-            ->findAll(10);
-        if (!empty($like)) return $this->respond($like);
-
-        // 2) somente contador
-        if ($idContador) {
+            // 1) empresa + contador com OR por nome/codigo
             $like = (new ProdutoModel())
                 ->where('id_contador', $idContador)
+                ->where('id_empresa', $idEmpresa)
                 ->groupStart()
                     ->like('nome', $q)
                     ->orLike('codigo_de_barras', $q)
@@ -138,17 +137,55 @@ class Products extends ResourceController
                 ->orderBy('id_produto', 'DESC')
                 ->findAll(10);
             if (!empty($like)) return $this->respond($like);
-        }
 
-        // 3) global fallback
-        $like = (new ProdutoModel())
-            ->groupStart()
-                ->like('nome', $q)
-                ->orLike('codigo_de_barras', $q)
-            ->groupEnd()
-            ->orderBy('id_produto', 'DESC')
-            ->findAll(10);
-        return $this->respond($like ?: []);
+            // 2) somente contador
+            if ($idContador) {
+                $like = (new ProdutoModel())
+                    ->where('id_contador', $idContador)
+                    ->groupStart()
+                        ->like('nome', $q)
+                        ->orLike('codigo_de_barras', $q)
+                    ->groupEnd()
+                    ->orderBy('id_produto', 'DESC')
+                    ->findAll(10);
+                if (!empty($like)) return $this->respond($like);
+            }
+
+            // 3) global fallback
+            $like = (new ProdutoModel())
+                ->groupStart()
+                    ->like('nome', $q)
+                    ->orLike('codigo_de_barras', $q)
+                ->groupEnd()
+                ->orderBy('id_produto', 'DESC')
+                ->findAll(10);
+            return $this->respond($like ?: []);
+        } catch (\Throwable $e) {
+            // Não vazar erro interno para a UI; retornar lista vazia
+            return $this->respond([]);
+        }
+    }
+
+    // GET /api/products/inventory-movements?id_produto&de=YYYY-MM-DD&ate=YYYY-MM-DD
+    public function inventoryMovements()
+    {
+        $id = (int) ($this->request->getGet('id_produto') ?? 0);
+        $de = (string) ($this->request->getGet('de') ?? '');
+        $ate = (string) ($this->request->getGet('ate') ?? '');
+        if ($id <= 0) return $this->failValidationErrors('id_produto é obrigatório');
+
+        $session = session();
+        $idContador = (int) ($session->get('id_contador') ?? 0);
+        $idEmpresa  = (int) ($session->get('id_empresa') ?? 0);
+
+        $mov = new \App\Models\InventoryMovementModel();
+        $builder = $mov->where('id_produto', $id);
+        if ($idContador) $builder = $builder->where('id_contador', $idContador);
+        if ($idEmpresa)  $builder = $builder->where('id_empresa', $idEmpresa);
+        if ($de !== '')  $builder = $builder->where('created_at >=', $de . ' 00:00:00');
+        if ($ate !== '') $builder = $builder->where('created_at <=', $ate . ' 23:59:59');
+        $rows = $builder->orderBy('id_inventory_movement', 'DESC')->findAll(200);
+        return $this->respond($rows ?: []);
     }
 }
 

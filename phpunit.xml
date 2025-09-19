@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="system/Test/bootstrap.php" colors="false">
+    <testsuites>
+        <testsuite name="Application">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <const name="CI_DEBUG" value="1"/>
+    </php>
+</phpunit>
+
+

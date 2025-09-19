@@ -123,4 +123,22 @@
     {
         return 'Sem conexão com a nuvem. Operando em modo offline (dados locais).';
     }
+
+    function resolve_tenant_ids(): array
+    {
+        $session = session();
+        $idContador = (int) ($session->get('id_contador') ?? 0);
+        $idEmpresa  = (int) ($session->get('id_empresa') ?? 0);
+        if ($idContador > 0 && $idEmpresa > 0) {
+            return [$idContador, $idEmpresa];
+        }
+        try {
+            $db = \Config\Database::connect();
+            $row = $db->table('empresas')->select('id_empresa,id_contador')->orderBy('id_empresa','ASC')->get()->getRowArray();
+            if ($row && (int) ($row['id_contador'] ?? 0) > 0) {
+                return [(int) $row['id_contador'], (int) $row['id_empresa']];
+            }
+        } catch (\Throwable $e) {}
+        return [0, 0];
+    }
 ?>

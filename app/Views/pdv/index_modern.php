@@ -27,8 +27,8 @@
 			<button class="pdv-menu-btn" title="Pedidos"><i class="fas fa-file-invoice"></i><span>Pedidos</span></button>
 			<button class="pdv-menu-btn" title="Produtos" onclick="openProductPicker()"><i class="fas fa-box"></i><span>Produtos</span></button>
 			<button class="pdv-menu-btn" title="Abrir/Fechar Caixa" onclick="gerenciarCaixa()"><i class="fas fa-cash-register"></i><span>Caixa</span></button>
-			<button class="pdv-menu-btn" title="Relatórios"><i class="fas fa-chart-line"></i><span>Relatórios</span></button>
-			<button class="pdv-menu-btn" title="Configurações"><i class="fas fa-cog"></i><span>Configurações</span></button>
+			<button class="pdv-menu-btn" title="Relatórios" onclick="openRelatorios()"><i class="fas fa-chart-line"></i><span>Relatórios</span></button>
+			<button class="pdv-menu-btn" title="Configurações" onclick="openConfiguracoes()"><i class="fas fa-cog"></i><span>Configurações</span></button>
 			<div class="pdv-search mt-3">
 				<input type="text" class="form-control form-control-sm" placeholder="Buscar...">
 			</div>
@@ -113,14 +113,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 		const [shifts, cashResp, activeSale] = await Promise.all([
 			fetch('/api/shifts', { headers: { 'Accept': 'application/json' }}).then(r=>r.json()),
 			fetch('/api/cash-registers', { headers: { 'Accept': 'application/json' }}).then(r=>r.json()),
-			fetch('/api/pos/active', { headers: { 'Accept': 'application/json' }}).then(r=>r.json()).catch(()=>null),
+			fetch('/api/pos/active', { headers: { 'Accept': 'application/json' }})
+				.then(async r => {
+					if (r.status === 409) return { _noShift: true };
+					if (!r.ok) return null;
+					try { return await r.json(); } catch { return null; }
+				})
+				.catch(()=>null),
 		]);
 		const cashList = Array.isArray(cashResp?.data) ? cashResp.data : (Array.isArray(cashResp) ? cashResp : []);
 		// Não solicitar abertura automaticamente. Apenas informar status atual.
 		window.PDV = window.PDV || {}; window.PDV.hasOpenShift = Array.isArray(shifts) && shifts.some(s => String(s.status).toLowerCase() === 'open');
 		window.PDV.cashId = cashList.length ? (cashList[0].id_cash_register || cashList[0].id || cashList[0].id_cash) : null;
 		atualizarIndicadorCaixa();
-		if (activeSale && (activeSale.id_pos_sale || activeSale.id)) {
+		if (activeSale && activeSale._noShift) {
+			// Sem turno aberto: apenas informar e habilitar ação manual
+			if (!window.PDV.hasOpenShift) {
+				try { Swal.fire({ type: 'info', title: 'Abra o caixa para iniciar', timer: 1800, showConfirmButton: false }); } catch(e){}
+			}
+		} else if (activeSale && (activeSale.id_pos_sale || activeSale.id)) {
 			window.PDV = window.PDV || {}; window.PDV.saleId = activeSale.id_pos_sale || activeSale.id;
 		}
 		window.PDV = window.PDV || {}; window.PDV.paymentType = 'cash';
@@ -226,19 +237,20 @@ async function alterarQtd(id, delta) {
 		if (!item) return;
 		const nova = Math.max(1, parseInt(item.quantidade||1) + parseInt(delta||0));
 		await fetch('/api/cart/' + id, { method: 'DELETE', headers: { 'Accept': 'application/json' }});
-		const payload = {
-			nome: item.nome,
-			codigo_de_barras: item.codigo_de_barras || 'SEM GTIN',
-			unidade: item.unidade || 'UN',
-			quantidade: nova,
-			valor_unitario: item.valor_unitario,
-			desconto: item.desconto || 0,
-			CFOP_NFCe: item.CFOP_NFCe || '5102',
-			CFOP_NFe: item.CFOP_NFe || '5102',
-			CFOP_Externo: item.CFOP_Externo || '6102',
-			NCM: item.NCM || '00000000',
-			CSOSN: item.CSOSN || '102'
-		};
+        const payload = {
+            id_produto: item.id_produto || null,
+            nome: item.nome,
+            codigo_de_barras: item.codigo_de_barras || 'SEM GTIN',
+            unidade: item.unidade || 'UN',
+            quantidade: nova,
+            valor_unitario: item.valor_unitario,
+            desconto: item.desconto || 0,
+            CFOP_NFCe: item.CFOP_NFCe || '5102',
+            CFOP_NFe: item.CFOP_NFe || '5102',
+            CFOP_Externo: item.CFOP_Externo || '6102',
+            NCM: item.NCM || '00000000',
+            CSOSN: item.CSOSN || '102'
+        };
 		await fetch('/api/cart', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) });
 		await atualizarCarrinho();
 	} catch(e) { console.error(e); }
@@ -347,6 +359,14 @@ async function abrirCaixa() {
 		if (!cashId) { Swal.fire({ type:'error', title:'Nenhum caixa cadastrado' }); return; }
 		await fetch('/api/shifts/open', { method:'POST', headers:{'Accept':'application/json','Content-Type':'application/json'}, body: JSON.stringify({ id_cash_register: cashId, opened_by:'pdv', opening_amount: 0 }) });
 		window.PDV.hasOpenShift = true; atualizarIndicadorCaixa();
+		// Buscar/abrir venda ativa após abrir o turno
+		try {
+			const r = await fetch('/api/pos/active', { headers:{'Accept':'application/json'} });
+			if (r.ok) {
+				const data = await r.json();
+				if (data && (data.id_pos_sale || data.id)) { window.PDV.saleId = data.id_pos_sale || data.id; }
+			}
+		} catch(e) {}
 		Swal.fire({ type:'success', title:'Caixa aberto' });
 	} catch(e) { Swal.fire({ type:'error', title:'Erro ao abrir caixa', text:e.message }); }
 }
@@ -361,6 +381,8 @@ async function fecharCaixaBtn() {
 		if (!amount.isConfirmed) return;
 		await fetch('/api/shifts/close/' + (sel.id_shift || sel.id), { method:'POST', headers:{'Accept':'application/json','Content-Type':'application/json'}, body: JSON.stringify({ closed_by:'pdv', closing_amount: amount.value }) });
 		window.PDV.hasOpenShift = false; atualizarIndicadorCaixa();
+		// Limpa venda ativa após fechar turno
+		delete window.PDV.saleId;
 		Swal.fire({ type:'success', title:'Caixa fechado' });
 	} catch(e) { Swal.fire({ type:'error', title:'Erro ao fechar caixa', text:e.message }); }
 }

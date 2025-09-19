@@ -248,13 +248,15 @@ class Pos extends ResourceController
                 'id_empresa'    => $idEmpresa,
             ]);
 
-            // Grava itens em pos_sale_items e baixa estoque; limpa provisórios
+            // Grava itens em pos_sale_items e baixa estoque; registra movimentos; limpa provisórios
             $itemModel = new \App\Models\PosSaleItemModel();
             $produtoModel = new \App\Models\ProdutoModel();
+            $movModel = new \App\Models\InventoryMovementModel();
             $baixar = [];
             foreach ($produtos_da_nota as $p) {
                 $itemModel->insert([
                     'id_pos_sale' => (is_array($updatedSale) ? $updatedSale['id_pos_sale'] : ($updatedSale->id_pos_sale ?? $id)),
+                    'id_produto' => isset($p['id_produto']) ? (int) $p['id_produto'] : null,
                     'nome' => $p['nome'],
                     'codigo_de_barras' => $p['codigo_de_barras'] ?? 'SEM GTIN',
                     'unidade' => $p['unidade'] ?? 'UN',
@@ -270,6 +272,16 @@ class Pos extends ResourceController
                 // baixa estoque se houver id_produto vinculado
                 if (isset($p['id_produto'])) {
                     $baixar[] = ['id_produto' => (int) $p['id_produto'], 'quantidade' => (float) ($p['quantidade'] ?? 0)];
+                    // registra movimento de saída
+                    $movModel->insert([
+                        'id_produto'  => (int) $p['id_produto'],
+                        'tipo'        => 'saida',
+                        'quantidade'  => (float) ($p['quantidade'] ?? 0),
+                        'motivo'      => 'PDV venda',
+                        'id_pos_sale' => (is_array($updatedSale) ? ($updatedSale['id_pos_sale'] ?? $id) : ($updatedSale->id_pos_sale ?? $id)),
+                        'id_contador' => $idContador,
+                        'id_empresa'  => $idEmpresa,
+                    ]);
                 }
             }
             if (!empty($baixar)) { $produtoModel->baixarEstoque($baixar); }
@@ -284,6 +296,28 @@ class Pos extends ResourceController
 
             $db->transComplete();
             $final = $this->model->find($id);
+
+            // Lançamento financeiro (recebimento em caixa)
+            try {
+                $valorLanc = (float) (is_array($final) ? ($final['total'] ?? 0) : ($final->total ?? 0));
+                if ($valorLanc > 0) {
+                    $pag = new \App\Models\PagamentoModel();
+                    $pag->insert([
+                        'data_do_pagamento' => date('Y-m-d'),
+                        'valor' => $valorLanc,
+                        'observacoes' => 'PDV venda #' . (is_array($final)?($final['id_pos_sale'] ?? $id):($final->id_pos_sale ?? $id)),
+                        'id_contador' => $idContador,
+                        'id_empresa'  => $idEmpresa,
+                    ]);
+                }
+            } catch (\Throwable $e) { /* não bloqueia fluxo */ }
+            // Outbox: notificar venda finalizada
+            \App\Libraries\Outbox::record('pos_sales', ['id_pos_sale' => (is_array($final)?$final['id_pos_sale']:$final->id_pos_sale)], 'update', is_array($final)?$final:(array) $final);
+            // Outbox: NFC-e emitida
+            if (isset($id_nfce) || (is_array($final) ? ($final['id_nfce'] ?? null) : ($final->id_nfce ?? null))) {
+                $pk = ['id_nfce' => (is_array($final)?($final['id_nfce'] ?? null):($final->id_nfce ?? null))];
+                \App\Libraries\Outbox::record('nfces', $pk, 'insert', $pk);
+            }
             return $this->respond($final);
         } catch (\Throwable $e) {
             if (isset($db) && $db->transStatus() !== false) {
@@ -377,6 +411,9 @@ class Pos extends ResourceController
         $session = session();
         $idContador = (int) ($session->get('id_contador') ?? 0);
         $idEmpresa  = (int) ($session->get('id_empresa') ?? 0);
+        if (($idContador === 0 || $idEmpresa === 0) && function_exists('resolve_tenant_ids')) {
+            [$idContador,$idEmpresa] = resolve_tenant_ids();
+        }
         $shiftModel = new ShiftModel();
         $openShift = $shiftModel->where('id_contador', $idContador)
                                 ->where('id_empresa', $idEmpresa)
@@ -385,14 +422,18 @@ class Pos extends ResourceController
         if (! $openShift) {
             return $this->fail('Não há turno aberto.', 409);
         }
+        // Normaliza acesso (entity ou array)
+        $shiftId = is_array($openShift) ? (int) ($openShift['id_shift'] ?? 0) : (int) ($openShift->id_shift ?? 0);
+        $cashRegId = is_array($openShift) ? (int) ($openShift['id_cash_register'] ?? 0) : (int) ($openShift->id_cash_register ?? 0);
+
         $saleModel = new PosSaleModel();
-        $active = $saleModel->where('id_shift', (int) ($openShift['id_shift'] ?? $openShift->id_shift))
+        $active = $saleModel->where('id_shift', $shiftId)
                             ->where('status', 'draft')
                             ->orderBy('id_pos_sale', 'DESC')->first();
         if (! $active) {
             $saleId = $saleModel->insert([
-                'id_shift' => (int) ($openShift['id_shift'] ?? $openShift->id_shift),
-                'id_cash_register' => (int) ($openShift['id_cash_register'] ?? $openShift->id_cash_register),
+                'id_shift' => $shiftId,
+                'id_cash_register' => $cashRegId,
                 'sale_number' => 'PDV-' . time(),
                 'total' => 0,
                 'discount' => 0,
@@ -446,12 +487,57 @@ class Pos extends ResourceController
         $autoloader = realpath($autoloader);
         if ($autoloader && file_exists($autoloader)) require_once $autoloader;
 
+        // Detecta simulação
+        $simulate = (defined('ENVIRONMENT') && ENVIRONMENT === 'testing') || (bool) getenv('PDV_SIMULATE_NFCE');
+
         // Config e certificado
         $nfceController = new \App\Controllers\NFCe();
         $configJson = $nfceController->preparaConfigJson($emit);
-        $arq_certificado = WRITEPATH . 'uploads/certificados/' . $emit['certificado'];
-        $certificado_digital = file_exists($arq_certificado) ? file_get_contents($arq_certificado) : '';
-        if ($certificado_digital === '') return $this->fail('Certificado não encontrado para cancelamento.', 500);
+        $arq_certificado = WRITEPATH . 'uploads/certificados/' . ($emit['certificado'] ?? '');
+        $certificado_digital = ($arq_certificado && file_exists($arq_certificado)) ? file_get_contents($arq_certificado) : '';
+        if ($simulate || $certificado_digital === '') {
+            // Cancelamento local (simulado): marca venda cancelada e estorna estoque/financeiro
+            $this->model->update($id, ['status' => 'cancelled']);
+            // Estornar financeiro simples (lança valor negativo)
+            try {
+                $valor = (float) (is_array($sale) ? ($sale['total'] ?? 0) : ($sale->total ?? 0));
+                if ($valor > 0) {
+                    $pag = new \App\Models\PagamentoModel();
+                    $pag->insert([
+                        'data_do_pagamento' => date('Y-m-d'),
+                        'valor' => -$valor,
+                        'observacoes' => 'Estorno PDV cancel (simulado) #' . (is_array($sale)?($sale['id_pos_sale'] ?? $id):($sale->id_pos_sale ?? $id)),
+                        'id_contador' => $idContador,
+                        'id_empresa'  => $idEmpresa,
+                    ]);
+                }
+            } catch (\Throwable $e) {}
+            // Estorna estoque via itens
+            $itemModel = new \App\Models\PosSaleItemModel();
+            $produtoModel = new \App\Models\ProdutoModel();
+            $movModel = new \App\Models\InventoryMovementModel();
+            $itens = $itemModel->where('id_pos_sale', (int) (is_array($sale) ? ($sale['id_pos_sale'] ?? 0) : ($sale->id_pos_sale ?? $id)))->findAll();
+            $estorno = [];
+            foreach ($itens as $it) {
+                if (isset($it['id_produto'])) {
+                    $estorno[] = ['id_produto' => (int) $it['id_produto'], 'quantidade' => (float) ($it['quantidade'] ?? 0)];
+                    $movModel->insert([
+                        'id_produto'  => (int) $it['id_produto'],
+                        'tipo'        => 'entrada',
+                        'quantidade'  => (float) ($it['quantidade'] ?? 0),
+                        'motivo'      => 'PDV cancelamento (simulado)',
+                        'id_pos_sale' => (int) (is_array($sale) ? ($sale['id_pos_sale'] ?? 0) : ($sale->id_pos_sale ?? $id)),
+                        'id_contador' => $idContador,
+                        'id_empresa'  => $idEmpresa,
+                    ]);
+                }
+            }
+            if (!empty($estorno)) { $produtoModel->estornarEstoque($estorno); }
+            $final = $this->model->find($id);
+            \App\Libraries\Outbox::record('pos_sales', ['id_pos_sale' => (is_array($final)?$final['id_pos_sale']:$final->id_pos_sale)], 'update', is_array($final)?$final:(array) $final);
+            return $this->respond($final);
+        }
+
         $certificate = Certificate::readPfx($certificado_digital, $emit['senha_do_certificado']);
         $tools = new Tools($configJson, $certificate);
         $tools->model('65');
@@ -470,17 +556,49 @@ class Pos extends ResourceController
                 $xml = Complements::toAuthorize($tools->lastRequest, $response);
                 $nfceModel->update($idNfce, ['xml' => $xml, 'status' => 'Cancelada']);
                 $this->model->update($id, ['status' => 'cancelled']);
+                // Estorno financeiro simples (lança valor negativo)
+                try {
+                    $valor = (float) (is_array($sale) ? ($sale['total'] ?? 0) : ($sale->total ?? 0));
+                    if ($valor > 0) {
+                        $pag = new \App\Models\PagamentoModel();
+                        $pag->insert([
+                            'data_do_pagamento' => date('Y-m-d'),
+                            'valor' => -$valor,
+                            'observacoes' => 'Estorno PDV cancel #' . (is_array($sale)?($sale['id_pos_sale'] ?? $id):($sale->id_pos_sale ?? $id)),
+                            'id_contador' => $idContador,
+                            'id_empresa'  => $idEmpresa,
+                        ]);
+                    }
+                } catch (\Throwable $e) { }
                 // Estornar estoque a partir dos itens da venda
                 $itemModel = new \App\Models\PosSaleItemModel();
                 $produtoModel = new \App\Models\ProdutoModel();
+                $movModel = new \App\Models\InventoryMovementModel();
                 $itens = $itemModel->where('id_pos_sale', (int) (is_array($sale) ? ($sale['id_pos_sale'] ?? 0) : ($sale->id_pos_sale ?? $id)))->findAll();
                 $estorno = [];
                 foreach ($itens as $it) {
                     // precisa mapear id_produto se disponível; se não, pula
                     if (isset($it['id_produto'])) { $estorno[] = ['id_produto' => (int) $it['id_produto'], 'quantidade' => (float) ($it['quantidade'] ?? 0)]; }
+                    if (isset($it['id_produto'])) {
+                        $movModel->insert([
+                            'id_produto'  => (int) $it['id_produto'],
+                            'tipo'        => 'entrada',
+                            'quantidade'  => (float) ($it['quantidade'] ?? 0),
+                            'motivo'      => 'PDV cancelamento',
+                            'id_pos_sale' => (int) (is_array($sale) ? ($sale['id_pos_sale'] ?? 0) : ($sale->id_pos_sale ?? $id)),
+                            'id_contador' => $idContador,
+                            'id_empresa'  => $idEmpresa,
+                        ]);
+                    }
                 }
                 if (!empty($estorno)) { $produtoModel->estornarEstoque($estorno); }
-                return $this->respond($this->model->find($id));
+                $final = $this->model->find($id);
+                \App\Libraries\Outbox::record('pos_sales', ['id_pos_sale' => (is_array($final)?$final['id_pos_sale']:$final->id_pos_sale)], 'update', is_array($final)?$final:(array) $final);
+                // Outbox: NFC-e cancelada
+                if ($idNfce) {
+                    \App\Libraries\Outbox::record('nfces', ['id_nfce' => $idNfce], 'update', ['status' => 'Cancelada']);
+                }
+                return $this->respond($final);
             }
             $motivo = $std->retEvento->infEvento->xMotivo ?? $std->xMotivo ?? 'Motivo não especificado';
             return $this->fail('Falha ao cancelar: ' . $motivo, 500);

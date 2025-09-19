@@ -19,8 +19,11 @@ class PosSaleModel extends Model
         'paid_amount',
         'change_amount',
         'payment_type', // cash|debit|credit|pix|voucher
+        'id_cliente',
         'notes',
         'status', // draft|finalized|cancelled
+        'id_nfce',
+        'chave_nfce',
         'id_contador',
         'id_empresa',
         'created_at',
