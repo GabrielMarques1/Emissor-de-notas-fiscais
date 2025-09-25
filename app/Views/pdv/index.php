@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             fetch('/api/pos/active', { headers: { 'Accept': 'application/json' }}).then(r=>r.json()).catch(()=>null),
         ]);
         if (!Array.isArray(shifts) || !shifts.length || (shifts[0].status !== 'open')) {
-            const ok = await Swal.fire({ icon: 'info', title: 'Abrir Caixa', text: 'Abra o caixa para iniciar as vendas.', showCancelButton:true, confirmButtonText:'Abrir agora' });
+            const ok = await Swal.fire({ type: 'info', title: 'Abrir Caixa', text: 'Abra o caixa para iniciar as vendas.', showCancelButton:true, confirmButtonText:'Abrir agora' });
             if (ok.isConfirmed) {
                 await fetch('/api/shifts/open', { method: 'POST', headers: { 'Accept':'application/json','Content-Type':'application/json' }, body: JSON.stringify({ opened_by: 'pdv', opening_amount: 0 }) });
             }
@@ -177,7 +177,7 @@ async function adicionarItemPDV() {
     const codigo = document.getElementById('codigo_de_barras').value.trim();
     const qtd = parseInt(document.getElementById('quantidade').value || '1');
     const desconto = document.getElementById('desconto').value || '0,00';
-    if (!codigo) { Swal.fire({ icon: 'warning', title: 'Informe o código de barras' }); return; }
+    if (!codigo) { Swal.fire({ type: 'warning', title: 'Informe o código de barras' }); return; }
     try {
         const p = await fetch('/api/products/barcode/' + encodeURIComponent(codigo), { headers: { 'Accept': 'application/json' }});
         if (!p.ok) throw new Error('Produto não encontrado');
@@ -199,7 +199,7 @@ async function adicionarItemPDV() {
         if (!r.ok) { const j = await r.json().catch(()=>({error:'Erro ao adicionar'})); throw new Error(j.error || JSON.stringify(j)); }
         await atualizarCarrinho();
         document.getElementById('codigo_de_barras').value = '';
-    } catch(e) { Swal.fire({ icon: 'error', title: 'Falha ao adicionar', text: e.message }); }
+    } catch(e) { Swal.fire({ type: 'error', title: 'Falha ao adicionar', text: e.message }); }
 }
 
 function removerItemPDV(id) {
@@ -210,23 +210,23 @@ function removerItemPDV(id) {
 async function finalizarPDV() {
     try {
         const saleId = (window.PDV && window.PDV.saleId) ? window.PDV.saleId : null;
-        if (!saleId) { Swal.fire({icon:'error', title:'Sem venda ativa'}); return; }
+        if (!saleId) { Swal.fire({type:'error', title:'Sem venda ativa'}); return; }
         const resp = await fetch('/api/pos/' + saleId + '/finalize', { method: 'POST', headers: { 'Accept': 'application/json' }});
         const data = await resp.json();
         if (!resp.ok) throw new Error(data.messages?.error || 'Falha ao finalizar');
-        Swal.fire({ icon: 'success', title: 'Venda finalizada!' });
+        Swal.fire({ type: 'success', title: 'Venda finalizada!' });
         await atualizarCarrinho();
         window.open('/api/pos/' + saleId + '/receipt/html', '_blank');
-    } catch(e) { Swal.fire({ icon: 'error', title: 'Erro ao finalizar', text: e.message }); }
+    } catch(e) { Swal.fire({ type: 'error', title: 'Erro ao finalizar', text: e.message }); }
 }
 
 async function fecharCaixa() {
     try {
         // obter último turno aberto
         const shifts = await fetch('/api/shifts', { headers: {'Accept':'application/json'} }).then(r=>r.json());
-        if (!Array.isArray(shifts) || !shifts.length) { Swal.fire({icon:'error',title:'Sem turnos'}); return; }
+        if (!Array.isArray(shifts) || !shifts.length) { Swal.fire({type:'error',title:'Sem turnos'}); return; }
         const shift = shifts[0];
-        if (shift.status !== 'open') { Swal.fire({icon:'info',title:'Turno já fechado'}); return; }
+        if (shift.status !== 'open') { Swal.fire({type:'info',title:'Turno já fechado'}); return; }
         const amount = await Swal.fire({ title: 'Valor no Caixa', input: 'text', inputValue: '0,00', showCancelButton:true });
         if (!amount.isConfirmed) return;
         // fechar
@@ -238,9 +238,9 @@ async function fecharCaixa() {
             rep.itens.forEach(i=>{ html += `<tr><td>${i.payment_type}</td><td class="text-right">${i.qtd}</td><td class="text-right">${Number(i.valor||0).toLocaleString('pt-BR',{minimumFractionDigits:2})}</td></tr>`; });
             html += '</tbody></table>';
         }
-        Swal.fire({ icon:'success', title:'Caixa fechado', html });
+        Swal.fire({ type:'success', title:'Caixa fechado', html });
     } catch(e) {
-        Swal.fire({ icon:'error', title:'Erro ao fechar', text: e.message });
+        Swal.fire({ type:'error', title:'Erro ao fechar', text: e.message });
     }
 }
 </script>

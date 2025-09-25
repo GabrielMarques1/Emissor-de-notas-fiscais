@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class CashRegisterModel extends Model
+class CashRegisterModel extends BaseAppModel
 {
     protected $table = 'cash_registers';
     protected $primaryKey = 'id_cash_register';

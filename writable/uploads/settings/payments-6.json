@@ -1,0 +1,23 @@
+{
+    "methods": {
+        "cash": {
+            "enabled": true
+        },
+        "credit": {
+            "enabled": true,
+            "fee_percent": 0,
+            "fee_fixed": 0
+        },
+        "debit": {
+            "enabled": true,
+            "fee_percent": 0,
+            "fee_fixed": 0
+        },
+        "pix": {
+            "enabled": true
+        },
+        "voucher": {
+            "enabled": true
+        }
+    }
+}

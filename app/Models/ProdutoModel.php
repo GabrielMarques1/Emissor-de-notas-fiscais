@@ -12,6 +12,7 @@ class ProdutoModel extends BaseAppModel
         'codigo_de_barras',
         'valor_unitario',
         'estoque',
+        'estoque_minimo',
         'CFOP_NFe',
         'CFOP_NFCe',
         'CFOP_Externo',

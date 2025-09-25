@@ -27,6 +27,8 @@ class Filters extends BaseConfig
         'subscription'  => \App\Filters\SubscriptionFilter::class,
         'pdvaccess'     => \App\Filters\PdvAccessFilter::class,
         'apithrottle'   => \App\Filters\ApiThrottleFilter::class,
+        'role'          => \App\Filters\RoleFilter::class,
+        'auth'          => \App\Filters\AuthFilter::class,
     ];
 
     /**

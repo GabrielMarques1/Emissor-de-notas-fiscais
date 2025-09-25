@@ -307,6 +307,27 @@ class Empresas extends Controller
             $this->empresa_model
                 ->insert($dados);
 
+            // Provisionamento automático: cria um Caixa Padrão para a nova empresa
+            try {
+                $novoIdEmpresa = (int) $this->empresa_model->getInsertID();
+                if ($novoIdEmpresa > 0) {
+                    $cashModel = new \App\Models\CashRegisterModel();
+                    // Evitar duplicidade caso já exista algum caixa (situações de reprocesso)
+                    $existe = $cashModel->where('id_contador', (int) $this->id_contador)
+                                        ->where('id_empresa',  $novoIdEmpresa)
+                                        ->first();
+                    if (! $existe) {
+                        $cashModel->insert([
+                            'id_contador' => (int) $this->id_contador,
+                            'id_empresa'  => $novoIdEmpresa,
+                            'name'        => 'Caixa Principal',
+                            'location'    => 'Frente de Loja',
+                            'status'      => 'closed',
+                        ]);
+                    }
+                }
+            } catch (\Throwable $e) { /* provisionamento não deve bloquear criação */ }
+
             $this->session->setFlashdata(
                 'alert',
                 [

@@ -32,10 +32,18 @@ class PDV extends Controller
 
     public function index()
     {
-        // Verifica se o usuário tem permissão de acessar essa url
-        if($retorno = verificaPermissaoDeAcesso($this->tipo)) :
-            return redirect()->to($retorno);
-        endif;
+        // Verifica se o usuário tem permissão - permite tipo 3 (gerentes) e tipo 4 (caixas)
+        $session = session();
+        $tipoUsuario = (int) ($session->get('tipo') ?? 0);
+        $status = $session->get('status');
+        
+        if (!in_array($tipoUsuario, [3, 4]) || $status === "Desativado") {
+            $session->setFlashdata('alert', [
+                'type' => 'error',
+                'title' => 'Você não tem permissão de acessar essa funcionalidade!'
+            ]);
+            return redirect()->to('/login');
+        }
 
         $data['link'] = $this->link;
 

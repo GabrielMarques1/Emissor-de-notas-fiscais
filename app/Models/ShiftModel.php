@@ -4,8 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ShiftModel extends Model
+class ShiftModel extends BaseAppModel
 {
+    // protected $enforceTenant = true; // Herdado do BaseAppModel
     protected $table = 'shifts';
     protected $primaryKey = 'id_shift';
     protected $returnType = 'App\\Entities\\Shift';

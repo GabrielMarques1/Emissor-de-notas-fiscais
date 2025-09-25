@@ -108,10 +108,28 @@
                     <?php elseif($dados['tipo'] == 3): ?>
                         <li class="nav-header"></li>
                         <li class="nav-item">
-                            <a id="1" href="/inicio/emissor" class="nav-link">
+                            <a id="1" href="/painel/empresa" class="nav-link">
                                 <i class="nav-icon fas fa-home"></i>
                                 <p>
-                                    Inicio
+                                    Painel ERP
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-header">GESTÃO DE PESSOAL</li>
+                        <li class="nav-item">
+                            <a id="usuarios-caixa" href="/usuarios-caixa" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Usuários Caixa
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-header">VENDAS</li>
+                        <li class="nav-item">
+                            <a id="pdv" href="/pdv" class="nav-link">
+                                <i class="nav-icon fas fa-cash-register"></i>
+                                <p>
+                                    PDV (Caixa)
                                 </p>
                             </a>
                         </li>
@@ -158,7 +176,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a id="7" href="/pdv" class="nav-link">
+                            <a id="7" href="<?= site_url('pdv') ?>" class="nav-link">
                                 <i class="nav-icon fas fa-cash-register"></i>
                                 <p>
                                     PDV

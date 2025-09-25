@@ -138,6 +138,14 @@
                                         <a href="/produtos" class="btn btn-default">Desfazer</a>
                                     <?php endif; ?>
                                 </div>
+                                <div class="col-lg-2">
+                                    <select id="filtro_estoque" class="form-control" onchange="filtraEstoque()">
+                                        <option value="">Todos</option>
+                                        <option value="baixo">Estoque Baixo</option>
+                                        <option value="ok">Em Estoque</option>
+                                        <option value="zero">Sem Estoque</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -167,6 +175,7 @@
                                 <th>Cod. Barras</th>
                                 <th>Unidade</th>
                                 <th>Valor Unitário</th>
+                                <th>Qtd. em Estoque</th>
                                 <th class="no-print" style="width: 130px">Ações</th>
                             </tr>
                         </thead>
@@ -180,8 +189,19 @@
                                         <td><?= $produto['descricao'] ?></td>
                                         <td><?= number_format($produto['valor_unitario'], 2, ',', '.') ?></td>
                                         <td>
+                                            <?php
+                                                $estoque = (float) ($produto['estoque'] ?? 0);
+                                                $min = (float) ($produto['estoque_minimo'] ?? 0);
+                                                $cls = 'badge-success';
+                                                if ($estoque <= 0) { $cls = 'badge-danger'; }
+                                                elseif ($estoque <= $min) { $cls = 'badge-warning'; }
+                                            ?>
+                                            <span class="badge <?= $cls ?>"><?= number_format($estoque, 0, ',', '.') ?></span>
+                                        </td>
+                                        <td>
                                             <a href="/produtos/show/<?= $produto['id_produto'] ?>" class="btn btn-primary style-action"><i class="fas fa-folder-open"></i></a>
                                             <a href="/produtos/edit/<?= $produto['id_produto'] ?>" class="btn btn-warning style-action"><i class="fas fa-edit"></i></a>
+                                            <button type="button" class="btn btn-info style-action" onclick="openAjusteEstoque(<?= $produto['id_produto'] ?>, '<?= htmlspecialchars($produto['nome'], ENT_QUOTES) ?>', <?= (float) ($produto['estoque'] ?? 0) ?>)"><i class="fas fa-boxes"></i></button>
                                             <button type="button" class="btn btn-danger style-action" onclick="confirmaAcaoExcluir('Deseja realmente excluir esse Produto?', '/produtos/delete/<?= $produto['id_produto'] ?>')"><i class="fas fa-trash"></i></button>
                                         </td>
                                     </tr>
@@ -244,5 +264,56 @@
         document.getElementById("btn-continuar-import-csv").innerHTML = "Aguarde..";
         document.getElementById("btn-continuar-import-csv").disabled = true;
         document.getElementById("form-import-csv").submit();
+    }
+
+    function filtraEstoque() {
+        var v = document.getElementById('filtro_estoque').value;
+        var rows = document.querySelectorAll('table tbody tr');
+        rows.forEach(function(tr){
+            var badge = tr.querySelector('td span.badge');
+            if (!badge) return;
+            var cls = badge.className;
+            var show = true;
+            if (v === 'baixo') show = cls.indexOf('badge-warning') >= 0;
+            else if (v === 'ok') show = cls.indexOf('badge-success') >= 0;
+            else if (v === 'zero') show = cls.indexOf('badge-danger') >= 0;
+            tr.style.display = show ? '' : 'none';
+        });
+    }
+
+    async function openAjusteEstoque(id, nome, atual) {
+        const { value: form } = await Swal.fire({
+            title: 'Ajuste de Estoque',
+            html: `
+                <div class="text-left">
+                    <div><strong>Produto:</strong> ${nome}</div>
+                    <div><strong>Quantidade atual:</strong> ${atual}</div>
+                    <div class="mt-2">
+                        <label>Tipo de Movimento</label>
+                        <select id="aj-tipo" class="swal2-input" style="width:100%">
+                            <option value="entrada">Entrada no Estoque</option>
+                            <option value="saida">Saída do Estoque</option>
+                        </select>
+                    </div>
+                    <div class="mt-2">
+                        <label>Quantidade do Ajuste</label>
+                        <input id="aj-qtd" type="number" step="0.01" class="swal2-input" placeholder="Ex.: 5">
+                    </div>
+                    <div class="mt-2">
+                        <label>Motivo/Observação</label>
+                        <input id="aj-obs" type="text" class="swal2-input" placeholder="Ex.: Balanço inicial">
+                    </div>
+                </div>
+            `,
+            showCancelButton: true,
+            preConfirm: () => ({ tipo: document.getElementById('aj-tipo').value, qtd: parseFloat(document.getElementById('aj-qtd').value||'0'), obs: document.getElementById('aj-obs').value })
+        });
+        if (!form) return;
+        if (!(form.qtd > 0)) { Swal.fire({ icon:'error', title:'Informe uma quantidade válida' }); return; }
+        try {
+            const r = await fetch('/api/products/inventory-movements', { method:'POST', headers:{'Accept':'application/json','Content-Type':'application/json'}, body: JSON.stringify({ id_produto: id, tipo: form.tipo, quantidade: form.qtd, motivo: form.obs }) });
+            if (!r.ok) { let j=null; try{ j=await r.json(); }catch(e){} throw new Error(j?.error||'Falha ao ajustar'); }
+            Swal.fire({ icon:'success', title:'Ajuste realizado' }).then(()=>{ window.location.reload(); });
+        } catch(e) { Swal.fire({ icon:'error', title:e.message||'Erro no ajuste' }); }
     }
 </script>

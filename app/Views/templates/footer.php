@@ -38,7 +38,9 @@
 <!-- Scripts validação CPF e CNPJ -->
 <script src="<?= base_url('assets/js/validador.js') ?>"></script>
 <script>
+    <?php if (isset($link) && !empty($link)): ?>
     document.getElementById('<?= $link ?>').className = "nav-link active";
+    <?php endif; ?>
     
     <?php
         $session = session();

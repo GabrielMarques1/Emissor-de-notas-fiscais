@@ -7,6 +7,40 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 
+// Teste de correções (remover após validação)
+$routes->get('teste-correcoes', 'TesteCorrecoes::index');
+$routes->group('teste-login-pdv', static function($routes) {
+	$routes->get('/', 'TesteLoginPDV::index');
+	$routes->post('testar', 'TesteLoginPDV::testar');
+});
+$routes->get('teste-session', 'TesteSession::index');
+$routes->get('teste-pdv-access', 'TestePDVAccess::verificar');
+$routes->get('pdv-debug', 'PDVDebug::index');
+$routes->get('pdv-direct', 'PDV::index'); // PDV sem filtros para teste
+$routes->get('pdv-simple', 'PDVSimple::index'); // PDV super simples
+
+// Login PDV (específico para caixas)
+$routes->group('login-pdv', static function($routes) {
+	$routes->get('/', 'LoginPDV::index');
+	$routes->post('autenticar', 'LoginPDV::autenticar');
+	$routes->get('logout', 'LoginPDV::logout');
+	$routes->get('verificar-sessao', 'LoginPDV::verificarSessao');
+});
+
+// Painel da Empresa (para gerentes/donos - tipo 3)
+$routes->group('painel/empresa', ['filter' => 'auth'], static function($routes) {
+	$routes->get('/', 'PainelEmpresa::index');
+	$routes->get('pdv', 'PainelEmpresa::pdv');
+});
+
+// Gestão de Usuários Caixa (apenas para gerentes)
+$routes->group('usuarios-caixa', ['filter' => 'auth'], static function($routes) {
+	$routes->get('/', 'UsuariosCaixa::index');
+	$routes->match(['get','post'], 'criar', 'UsuariosCaixa::criar');
+	$routes->match(['get','post'], 'editar/(:num)', 'UsuariosCaixa::editar/$1');
+	$routes->delete('excluir/(:num)', 'UsuariosCaixa::excluir/$1');
+});
+
 // Verificação de usuário existente (para fluxo de cadastro/Stripe)
 $routes->post('login/verificaUsuario', 'Login::verificaUsuario');
 
@@ -51,8 +85,8 @@ $routes->group('auth', static function($routes) {
 	$routes->match(['get','post'], 'reset/(:segment)', 'Auth\Password::reset/$1');
 });
 
-// PDV - protegido por assinatura
-$routes->group('pdv', ['filter' => 'subscription'], static function($routes) {
+// PDV - protegido por acesso PDV
+$routes->group('pdv', ['filter' => 'pdvaccess'], static function($routes) {
 	$routes->get('/', 'PDV::index');
 	$routes->get('adicionar', 'PDV::adicionar');
 	$routes->get('remover/(:num)', 'PDV::remover/$1');
@@ -63,23 +97,42 @@ $routes->group('pdv', ['filter' => 'subscription'], static function($routes) {
 
 // API do PDV - RESTful resources
 $routes->group('api', ['namespace' => 'App\\Controllers\\Api'], static function($routes) {
-    // Rotas específicas devem vir antes do resource para evitar captura por show/(:segment)
-    $routes->get('pos/active', 'Pos::active');
-    $routes->post('pos/(:num)/finalize', 'Pos::finalize/$1');
-    $routes->post('pos/(:num)/cancel', 'Pos::cancel/$1');
-    $routes->get('pos/(:num)/receipt', 'Pos::receipt/$1');
-    $routes->get('pos/(:num)/receipt/html', 'Pos::receiptHtml/$1');
-    // Shifts: open/close
-    $routes->post('shifts/open', 'Shifts::open');
-    $routes->post('shifts/close/(:num)', 'Shifts::close/$1');
-    // Resource após as rotas específicas
-    $routes->resource('pos', ['controller' => 'Pos']);
-	$routes->resource('cash-registers', ['controller' => 'CashRegisters']);
+		// Settings
+		$routes->get('settings/company', 'Settings::company');
+		$routes->post('settings/company', 'Settings::companyUpdate');
+		$routes->get('settings/company/logo', 'Settings::companyLogo');
+		$routes->match(['get','post'], 'settings/printing', 'Settings::printing');
+		$routes->match(['get','post'], 'settings/payments', 'Settings::payments');
+	// Rotas específicas devem vir antes do resource para evitar captura por show/(:segment)
+	$routes->get('pos/active', 'Pos::active');
+	$routes->get('pos/stats', 'Pos::stats');
+	$routes->get('pos/report-sales', 'Pos::reportSales');
+	$routes->get('pos/report-products', 'Pos::reportProducts');
+	$routes->get('pos/report-payments', 'Pos::reportPayments');
+	$routes->get('pos/report-categories', 'Pos::reportCategories');
+	$routes->post('pos/(:num)/finalize', 'Pos::finalize/$1');
+	$routes->post('pos/(:num)/cancel', 'Pos::cancel/$1');
+	$routes->get('pos/(:num)/receipt', 'Pos::receipt/$1');
+	$routes->get('pos/(:num)/receipt/html', 'Pos::receiptHtml/$1');
+	$routes->get('pos/(:num)/items', 'Pos::items/$1');
+	$routes->get('pos/(:num)/receipt/non-fiscal', 'Pos::receiptNonFiscal/$1');
+	// Shifts: open/close + aliases PT-BR
+	$routes->post('shifts/open', 'Shifts::open');
+	$routes->post('shifts/close/(:num)', 'Shifts::close/$1');
+	$routes->post('shifts/abrir', 'Shifts::abrir');
+	$routes->post('shifts/fechar', 'Shifts::fechar');
+	$routes->get('shifts/status', 'Shifts::status');
+	// Resource após as rotas específicas
+	$routes->resource('pos', ['controller' => 'Pos']);
+	// cash-registers consolidado em Shifts
+	$routes->get('cash-registers', 'Shifts::cashRegistersIndex');
+	$routes->post('cash-registers', 'Shifts::cashRegistersCreate');
+	$routes->get('cash-registers/(:num)', 'Shifts::cashRegistersShow/$1');
 	$routes->resource('shifts', ['controller' => 'Shifts']);
 	$routes->get('shifts/(:num)/report', 'Shifts::report/$1');
 	$routes->get('products/barcode/(:any)', 'Products::barcode/$1');
-    $routes->get('products/search', 'Products::search');
-    $routes->get('products/inventory-movements', 'Products::inventoryMovements');
+	$routes->get('products/search', 'Products::search');
+	$routes->match(['get','post'], 'products/inventory-movements', 'Products::inventoryMovements');
 	$routes->get('products', 'Products::index');
 	$routes->get('cart', 'Cart::index');
 	$routes->post('cart', 'Cart::create');
@@ -87,7 +140,10 @@ $routes->group('api', ['namespace' => 'App\\Controllers\\Api'], static function(
 	$routes->put('cart/(:num)', 'Cart::update/$1');
 	$routes->patch('cart/(:num)', 'Cart::update/$1');
 	$routes->delete('cart', 'Cart::clear');
-    // Diagnostics
-    $routes->get('diagnostics', 'Diagnostics::index');
-    $routes->get('diagnostics/logs', 'Diagnostics::logs');
+	// Diagnostics
+	$routes->get('diagnostics', 'Diagnostics::index');
+	$routes->get('diagnostics/logs', 'Diagnostics::logs');
+	// Caixa - reconstruído (mantido por compatibilidade, mas preferir Shifts)
+	$routes->post('caixa/abrir', 'Caixa::abrir');
+	$routes->post('caixa/fechar', 'Caixa::fechar');
 });

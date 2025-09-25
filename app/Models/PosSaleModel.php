@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class PosSaleModel extends Model
+class PosSaleModel extends BaseAppModel
 {
     protected $table = 'pos_sales';
     protected $primaryKey = 'id_pos_sale';
@@ -12,6 +12,7 @@ class PosSaleModel extends Model
     protected $allowedFields = [
         'id_pos_sale',
         'id_shift',
+        'id_caixa_sessao',
         'id_cash_register',
         'sale_number',
         'total',

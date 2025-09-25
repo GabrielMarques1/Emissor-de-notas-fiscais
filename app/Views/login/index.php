@@ -123,6 +123,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
             <!-- /.login-card-body -->
         </div>
+        
+        <!-- Link para PDV -->
+        <div class="text-center mt-3">
+            <p class="mb-2 text-muted">
+                <small>Funcionário do caixa?</small>
+            </p>
+            <a href="/login-pdv" class="btn btn-outline-success btn-sm">
+                <i class="fas fa-cash-register"></i> Acesso ao PDV
+            </a>
+        </div>
     </div>
     <!-- /.login-box -->
 
