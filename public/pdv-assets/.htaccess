@@ -1,0 +1,9 @@
+# Permitir acesso aos arquivos JS e outros assets
+<IfModule mod_rewrite.c>
+    RewriteEngine Off
+</IfModule>
+
+# Permitir acesso aos arquivos
+Order allow,deny
+Allow from all
+

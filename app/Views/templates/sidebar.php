@@ -1,6 +1,8 @@
 <?php
     $session = session();
     $xApp = $session->get('xApp');
+    $tipo = $session->get('tipo');
+    $status = $session->get('status');
 ?>
 
 <aside class="main-sidebar elevation-4 sidebar-light-info">
@@ -12,8 +14,8 @@
 
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column nav-flat" data-widget="treeview" role="menu" data-accordion="false">
-                <?php if(isset($dados['tipo'])): ?>
-                    <?php if($dados['tipo'] == 1): ?>
+                <?php if($tipo): ?>
+                    <?php if($tipo == 1): ?>
                         <li class="nav-header"></li>
                         <li class="nav-item">
                             <a id="1" href="/inicio/admin" class="nav-link">
@@ -56,7 +58,7 @@
                                 </p>
                             </a>
                         </li>
-                    <?php elseif($dados['tipo'] == 2): ?>
+                    <?php elseif($tipo == 2): ?>
                         <li class="nav-header"></li>
                         <li class="nav-item">
                             <a id="1" href="/inicio/contador" class="nav-link">
@@ -67,7 +69,7 @@
                             </a>
                         </li>
 
-                        <?php if($dados['status'] == "Ativo" || $dados['status'] == "Vencido"): ?>
+                        <?php if($status == "Ativo" || $status == "Vencido"): ?>
                             <li class="nav-header">CONTROLE</li>
                             <li class="nav-item">
                                 <a id="2" href="/empresas" class="nav-link">
@@ -105,7 +107,7 @@
                             </li>
                         <?php endif;?>
                     
-                    <?php elseif($dados['tipo'] == 3): ?>
+                    <?php elseif($tipo == 3): ?>
                         <li class="nav-header"></li>
                         <li class="nav-item">
                             <a id="1" href="/painel/empresa" class="nav-link">
@@ -117,7 +119,7 @@
                         </li>
                         <li class="nav-header">GESTÃO DE PESSOAL</li>
                         <li class="nav-item">
-                            <a id="usuarios-caixa" href="/usuarios-caixa" class="nav-link">
+                            <a id="usuarios" href="/usuarios-caixa" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     Usuários Caixa
@@ -160,7 +162,7 @@
                         </li>
                         <li class="nav-header">CONTROLE GERAL</li>
                         <li class="nav-item">
-                            <a id="5" href="/clientes" class="nav-link">
+                            <a id="clientes" href="/clientes" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     Clientes
@@ -168,7 +170,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a id="6" href="/produtos" class="nav-link">
+                            <a id="produtos" href="/produtos" class="nav-link">
                                 <i class="nav-icon fas fa-box-open"></i>
                                 <p>
                                     Produtos
@@ -176,15 +178,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a id="7" href="<?= site_url('pdv') ?>" class="nav-link">
-                                <i class="nav-icon fas fa-cash-register"></i>
-                                <p>
-                                    PDV
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="8" href="/fornecedores" class="nav-link">
+                            <a id="fornecedores" href="/fornecedores" class="nav-link">
                                 <i class="nav-icon fas fa-dolly"></i>
                                 <p>
                                     Fornecedores
@@ -192,10 +186,19 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a id="9" href="/transportadoras" class="nav-link">
+                            <a id="transportadoras" href="/transportadoras" class="nav-link">
                                 <i class="nav-icon fas fa-truck"></i>
                                 <p>
                                     Transportadoras
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-header">RELATÓRIOS</li>
+                        <li class="nav-item">
+                            <a id="relatorios" href="/relatorios-empresa" class="nav-link">
+                                <i class="nav-icon fas fa-chart-line"></i>
+                                <p>
+                                    Relatórios Gerenciais
                                 </p>
                             </a>
                         </li>

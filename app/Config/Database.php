@@ -19,14 +19,14 @@ class Database extends Config
      * Lets you choose which connection group to
      * use if no other is specified.
      */
-    public string $defaultGroup = 'cloud';
+    public string $defaultGroup = 'local_backup';
 
     /**
      * The default database connection.
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
+        'hostname'     => '127.0.0.1',
         'username'     => '',
         'password'     => '',
         'database'     => '',
@@ -50,7 +50,7 @@ class Database extends Config
      */
     public array $cloud = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
+        'hostname'     => '127.0.0.1',
         'username'     => '',
         'password'     => '',
         'database'     => '',

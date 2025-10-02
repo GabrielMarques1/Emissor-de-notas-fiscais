@@ -273,11 +273,58 @@ async function finalizarPDV(emitNfce) {
 		if (!saleId) { Swal.fire({type:'error', title:'Sem venda ativa'}); return; }
 		const totalText = (document.getElementById('sum-total')?.textContent||'0').replace(/[^0-9,.-]/g,'').replace('.','').replace(',','.');
 		const total = parseFloat(totalText||'0');
-        const payload = { total: total, paid_amount: total, change_amount: 0, payment_type: (window.PDV?.paymentType||'cash'), emit_nfce: !!emitNfce };
+		const paymentType = (window.PDV?.paymentType||'cash');
+        const payload = { total: total, paid_amount: total, change_amount: 0, payment_type: paymentType, emit_nfce: !!emitNfce };
+		
+		// Mostrar loading
+		Swal.fire({ title: 'Processando...', text: 'Aguarde', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+		
 		const resp = await fetch('/api/pos/' + saleId + '/finalize', { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type':'application/json' }, body: JSON.stringify(payload) });
 		const data = await resp.json();
+		
 		if (!resp.ok) throw new Error(data.messages?.error || (data.error||'Falha ao finalizar'));
-		Swal.fire({ type: 'success', title: 'Venda finalizada!' });
+		
+		// Tratamento especial para PIX: mostrar QR Code
+		if (paymentType === 'pix' && data.pix) {
+			Swal.fire({
+				title: 'PIX - Aguardando Pagamento',
+				html: `
+					<div style="text-align:center;">
+						<p><strong>Valor: R$ ${total.toFixed(2).replace('.', ',')}</strong></p>
+						<p>Escaneie o QR Code abaixo:</p>
+						<div style="margin: 20px auto; padding: 10px; background: white; display: inline-block;">
+							<img src="${data.pix.qr_code_image || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='}" style="max-width: 300px;" />
+						</div>
+						<p style="font-size: 12px; word-break: break-all; background: #f5f5f5; padding: 10px; border-radius: 5px;">
+							<strong>Código PIX:</strong><br/>
+							<small>${data.pix.qr_code || ''}</small>
+						</p>
+						<p style="color: #666; font-size: 14px;">Expira em: ${data.pix.expires_at || ''}</p>
+					</div>
+				`,
+				icon: 'info',
+				confirmButtonText: 'OK',
+				width: 600
+			});
+			await atualizarCarrinho();
+			return;
+		}
+		
+		// Tratamento para TEF: mostrar status
+		if ((paymentType === 'credit' || paymentType === 'debit') && data.tef_transaction) {
+			Swal.fire({ 
+				type: 'success', 
+				title: 'Pagamento Aprovado!',
+				html: `
+					<p><strong>Cartão ${paymentType === 'credit' ? 'Crédito' : 'Débito'}</strong></p>
+					<p>NSU: ${data.tef_transaction.nsu || 'N/A'}</p>
+					<p>Autorização: ${data.tef_transaction.authorization_code || 'N/A'}</p>
+				`
+			});
+		} else {
+			Swal.fire({ type: 'success', title: 'Venda finalizada!' });
+		}
+		
 		await atualizarCarrinho();
         if (emitNfce) {
             window.open('/api/pos/' + saleId + '/receipt/html', '_blank');
@@ -1047,7 +1094,7 @@ console.log('fecharCaixaBtn disponível:', typeof window.fecharCaixaBtn);
 	</div>
 </div>
 
-<script src="<?= base_url('pdv/js/app.js') ?>"></script>
+<script src="<?= base_url('pdv-assets/js/app.js') ?>"></script>
 
 <!-- Modal Pedidos -->
 <div class="modal fade" id="pdv-orders" tabindex="-1" role="dialog" aria-hidden="true">
@@ -1108,7 +1155,7 @@ console.log('fecharCaixaBtn disponível:', typeof window.fecharCaixaBtn);
 	</div>
 </div>
 
-<script src="<?= base_url('pdv/js/app.js') ?>"></script>
+<script src="<?= base_url('pdv-assets/js/app.js') ?>"></script>
 
 <!-- Modal Configurações -->
 <div class="modal fade" id="pdv-settings" tabindex="-1" role="dialog" aria-hidden="true">
@@ -1216,7 +1263,7 @@ console.log('fecharCaixaBtn disponível:', typeof window.fecharCaixaBtn);
 	</div>
 </div>
 
-<script src="<?= base_url('pdv/js/app.js') ?>"></script>
+<script src="<?= base_url('pdv-assets/js/app.js') ?>"></script>
 <!-- Modal Relatórios -->
 <div class="modal fade" id="pdv-reports" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-xl" role="document">
@@ -1304,5 +1351,5 @@ console.log('fecharCaixaBtn disponível:', typeof window.fecharCaixaBtn);
 	</div>
 </div>
 
-<script src="<?= base_url('pdv/js/app.js') ?>"></script>
+<script src="<?= base_url('pdv-assets/js/app.js') ?>"></script>
 

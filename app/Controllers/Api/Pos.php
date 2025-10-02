@@ -8,6 +8,11 @@ use App\Models\EmpresaModel;
 use App\Models\ProdutoProvisorioModel;
 use App\Models\NFCeModel;
 use App\Models\PosSaleModel;
+use App\Libraries\TefService;
+use App\Libraries\PixService;
+use App\Libraries\MultiPaymentService;
+use App\Libraries\SuspensionService;
+use App\Libraries\DiscountService;
 use NFePHP\NFe\Tools;
 use NFePHP\Common\Certificate;
 use NFePHP\NFe\Common\Standardize;
@@ -193,6 +198,163 @@ class Pos extends ResourceController
         if (isset($payload['paid_amount'])) $data['paid_amount'] = (float) $payload['paid_amount'];
         if (isset($payload['change_amount'])) $data['change_amount'] = (float) $payload['change_amount'];
         if (isset($payload['payment_type'])) $data['payment_type'] = (string) $payload['payment_type'];
+        
+        // PAGAMENTOS: Verificar se é múltiplas formas
+        $paymentType = (string) ($payload['payment_type'] ?? 'cash');
+        $idTefTransaction = null;
+        $idPixTransaction = null;
+        
+        // MÚLTIPLAS FORMAS DE PAGAMENTO
+        if ($paymentType === 'multiple' && isset($payload['payments']) && is_array($payload['payments'])) {
+            try {
+                $multiPaymentService = new MultiPaymentService();
+                
+                // Adicionar cada forma de pagamento
+                foreach ($payload['payments'] as $payment) {
+                    $result = $multiPaymentService->addPayment($id, [
+                        'type' => $payment['type'],
+                        'amount' => (float) $payment['amount'],
+                        'installments' => (int) ($payment['installments'] ?? 1),
+                        'calculate_change' => (bool) ($payment['calculate_change'] ?? false),
+                        'metadata' => $payment['metadata'] ?? [],
+                    ]);
+                    
+                    if (!$result['success']) {
+                        return $this->fail('Erro ao processar pagamento: ' . ($result['error'] ?? 'Erro desconhecido'), 400);
+                    }
+                }
+                
+                // Validar e finalizar
+                $finalizeResult = $multiPaymentService->finalize($id);
+                
+                if (!$finalizeResult['success']) {
+                    return $this->fail('Erro ao finalizar venda: ' . ($finalizeResult['error'] ?? 'Erro desconhecido'), 400);
+                }
+                
+                // Obter resumo
+                $summary = $multiPaymentService->getSummary($id);
+                
+                log_message('info', '[Pos::finalize] Venda finalizada com múltiplas formas', [
+                    'id_sale' => $id,
+                    'payment_count' => $summary['total_payments'],
+                    'total_paid' => $summary['total_paid'],
+                ]);
+                
+                // Processar NFC-e se solicitado
+                if (isset($payload['emit_nfce']) && $payload['emit_nfce']) {
+                    // Lógica de emissão de NFC-e aqui
+                }
+                
+                return $this->respond([
+                    'success' => true,
+                    'message' => 'Venda finalizada com sucesso',
+                    'sale' => $finalizeResult['sale'],
+                    'payments' => $finalizeResult['payments'],
+                    'summary' => $summary,
+                ], 200);
+                
+            } catch (\Exception $e) {
+                log_message('error', '[Pos::finalize] Erro em múltiplas formas', [
+                    'error' => $e->getMessage(),
+                    'id_sale' => $id,
+                ]);
+                return $this->fail('Erro ao processar pagamentos: ' . $e->getMessage(), 500);
+            }
+        }
+        
+        // TEF: Pagamento com cartão
+        if (in_array($paymentType, ['credit', 'debit'])) {
+            try {
+                $tefService = new TefService();
+                
+                $tefData = [
+                    'amount' => (float) ($payload['total'] ?? $data['total'] ?? 0),
+                    'card_type' => $paymentType,
+                    'installments' => (int) ($payload['installments'] ?? 1),
+                    'card_data' => $payload['card_data'] ?? [],
+                ];
+                
+                $tefResult = $tefService->authorize($tefData);
+                
+                if (!$tefResult['success']) {
+                    // TEF falhou - não finalizar venda
+                    return $this->fail('Pagamento negado: ' . ($tefResult['error'] ?? 'Erro desconhecido'), 400);
+                }
+                
+                // TEF autorizado - vincular à venda
+                $idTefTransaction = $tefResult['transaction']['id_tef_transaction'];
+                $data['id_tef_transaction'] = $idTefTransaction;
+                
+                // Confirmar transação (captura)
+                $tefService->confirm($idTefTransaction);
+                
+                log_message('info', '[Pos::finalize] Pagamento TEF processado', [
+                    'id_sale' => $id,
+                    'id_tef_transaction' => $idTefTransaction,
+                    'amount' => $tefData['amount'],
+                ]);
+                
+            } catch (\Exception $e) {
+                log_message('error', '[Pos::finalize] Erro no TEF', [
+                    'error' => $e->getMessage(),
+                    'id_sale' => $id,
+                ]);
+                return $this->fail('Erro ao processar pagamento: ' . $e->getMessage(), 500);
+            }
+        }
+        
+        // PIX: Pagamento via PIX
+        if ($paymentType === 'pix') {
+            try {
+                $pixService = new PixService();
+                
+                $pixData = [
+                    'amount' => (float) ($payload['total'] ?? $data['total'] ?? 0),
+                    'description' => 'Venda PDV #' . $id,
+                ];
+                
+                $pixResult = $pixService->generate($pixData);
+                
+                if (!$pixResult['success']) {
+                    return $this->fail('Erro ao gerar PIX: ' . ($pixResult['error'] ?? 'Erro desconhecido'), 400);
+                }
+                
+                // PIX gerado - vincular à venda e retornar QR Code
+                $idPixTransaction = $pixResult['transaction']['id_pix_transaction'];
+                $data['id_pix_transaction'] = $idPixTransaction;
+                
+                // Atualizar venda com ID da transação PIX
+                $this->model->update($id, ['id_pix_transaction' => $idPixTransaction]);
+                
+                log_message('info', '[Pos::finalize] QR Code PIX gerado', [
+                    'id_sale' => $id,
+                    'id_pix_transaction' => $idPixTransaction,
+                    'txid' => $pixResult['transaction']['txid'],
+                    'amount' => $pixData['amount'],
+                ]);
+                
+                // Para PIX, retornar QR Code imediatamente (venda fica pendente de confirmação)
+                return $this->respond([
+                    'success' => true,
+                    'message' => 'QR Code PIX gerado. Aguardando pagamento.',
+                    'pix' => [
+                        'txid' => $pixResult['transaction']['txid'],
+                        'qr_code' => $pixResult['qr_code'],
+                        'qr_code_image' => $pixResult['qr_code_image'],
+                        'expires_at' => $pixResult['expires_at'],
+                    ],
+                    'id_sale' => $id,
+                    'id_pix_transaction' => $idPixTransaction,
+                ], 200);
+                
+            } catch (\Exception $e) {
+                log_message('error', '[Pos::finalize] Erro no PIX', [
+                    'error' => $e->getMessage(),
+                    'id_sale' => $id,
+                ]);
+                return $this->fail('Erro ao gerar PIX: ' . $e->getMessage(), 500);
+            }
+        }
 
         // Valida turno aberto
         $sale = $this->model->find($id);
@@ -997,6 +1159,222 @@ class Pos extends ResourceController
             return $this->fail('Falha ao cancelar: ' . $motivo, 500);
         } catch (\Throwable $e) {
             return $this->fail('Erro no cancelamento: ' . $e->getMessage(), 500);
+        }
+    }
+    
+    /**
+     * Suspender venda (pausar para retomar depois)
+     * POST /api/pos/{id}/suspend
+     */
+    public function suspend($id = null)
+    {
+        if (!$id) {
+            return $this->fail('ID da venda não fornecido', 400);
+        }
+        
+        try {
+            $payload = $this->request->getJSON(true) ?? $this->request->getPost();
+            $reason = (string) ($payload['reason'] ?? 'Sem motivo especificado');
+            
+            $suspensionService = new SuspensionService();
+            $result = $suspensionService->suspend((int) $id, $reason);
+            
+            if (!$result['success']) {
+                return $this->fail($result['error'], 400);
+            }
+            
+            return $this->respond([
+                'success' => true,
+                'message' => 'Venda suspensa com sucesso',
+                'sale' => $result['sale'],
+            ], 200);
+            
+        } catch (\Exception $e) {
+            log_message('error', '[Pos::suspend] Erro', [
+                'error' => $e->getMessage(),
+                'id_sale' => $id,
+            ]);
+            
+            return $this->fail('Erro ao suspender venda: ' . $e->getMessage(), 500);
+        }
+    }
+    
+    /**
+     * Retomar venda suspensa
+     * POST /api/pos/{id}/resume
+     */
+    public function resume($id = null)
+    {
+        if (!$id) {
+            return $this->fail('ID da venda não fornecido', 400);
+        }
+        
+        try {
+            $suspensionService = new SuspensionService();
+            $result = $suspensionService->resume((int) $id);
+            
+            if (!$result['success']) {
+                return $this->fail($result['error'], 400);
+            }
+            
+            return $this->respond([
+                'success' => true,
+                'message' => 'Venda retomada com sucesso',
+                'sale' => $result['sale'],
+            ], 200);
+            
+        } catch (\Exception $e) {
+            log_message('error', '[Pos::resume] Erro', [
+                'error' => $e->getMessage(),
+                'id_sale' => $id,
+            ]);
+            
+            return $this->fail('Erro ao retomar venda: ' . $e->getMessage(), 500);
+        }
+    }
+    
+    /**
+     * Listar vendas suspensas
+     * GET /api/pos/suspended
+     */
+    public function suspended()
+    {
+        try {
+            $filters = [
+                'operator_id' => $this->request->getGet('operator_id'),
+                'date_from' => $this->request->getGet('date_from'),
+                'date_to' => $this->request->getGet('date_to'),
+            ];
+            
+            // Remover filtros vazios
+            $filters = array_filter($filters);
+            
+            $suspensionService = new SuspensionService();
+            $suspended = $suspensionService->listSuspended($filters);
+            
+            return $this->respond([
+                'success' => true,
+                'count' => count($suspended),
+                'sales' => $suspended,
+            ], 200);
+            
+        } catch (\Exception $e) {
+            log_message('error', '[Pos::suspended] Erro', [
+                'error' => $e->getMessage(),
+            ]);
+            
+            return $this->fail('Erro ao listar vendas suspensas: ' . $e->getMessage(), 500);
+        }
+    }
+    
+    /**
+     * Aplicar desconto manual em venda
+     * POST /api/pos/{id}/discount
+     */
+    public function applyDiscount($id = null)
+    {
+        if (!$id) {
+            return $this->fail('ID da venda não fornecido', 400);
+        }
+        
+        try {
+            $payload = $this->request->getJSON(true) ?? $this->request->getPost();
+            
+            $discountData = [
+                'type' => (string) ($payload['type'] ?? ''),
+                'value' => (float) ($payload['value'] ?? 0),
+                'reason' => (string) ($payload['reason'] ?? 'Desconto manual'),
+            ];
+            
+            $discountService = new DiscountService();
+            $result = $discountService->applyDiscount((int) $id, $discountData);
+            
+            if (!$result['success']) {
+                return $this->fail($result['error'], 400);
+            }
+            
+            return $this->respond([
+                'success' => true,
+                'message' => 'Desconto aplicado com sucesso',
+                'discount_amount' => $result['discount_amount'],
+                'new_total' => $result['new_total'],
+            ], 200);
+            
+        } catch (\Exception $e) {
+            log_message('error', '[Pos::applyDiscount] Erro', [
+                'error' => $e->getMessage(),
+                'id_sale' => $id,
+            ]);
+            
+            return $this->fail('Erro ao aplicar desconto: ' . $e->getMessage(), 500);
+        }
+    }
+    
+    /**
+     * Aplicar cupom de desconto
+     * POST /api/pos/{id}/coupon
+     */
+    public function applyCoupon($id = null)
+    {
+        if (!$id) {
+            return $this->fail('ID da venda não fornecido', 400);
+        }
+        
+        try {
+            $payload = $this->request->getJSON(true) ?? $this->request->getPost();
+            $code = (string) ($payload['code'] ?? '');
+            
+            if (empty($code)) {
+                return $this->fail('Código do cupom é obrigatório', 400);
+            }
+            
+            $discountService = new DiscountService();
+            $result = $discountService->applyCoupon((int) $id, $code);
+            
+            if (!$result['success']) {
+                return $this->fail($result['error'], 400);
+            }
+            
+            return $this->respond([
+                'success' => true,
+                'message' => 'Cupom aplicado com sucesso',
+                'coupon' => $result['coupon'],
+                'discount_amount' => $result['discount_amount'],
+                'new_total' => $result['new_total'],
+            ], 200);
+            
+        } catch (\Exception $e) {
+            log_message('error', '[Pos::applyCoupon] Erro', [
+                'error' => $e->getMessage(),
+                'id_sale' => $id,
+            ]);
+            
+            return $this->fail('Erro ao aplicar cupom: ' . $e->getMessage(), 500);
+        }
+    }
+    
+    /**
+     * Listar cupons ativos
+     * GET /api/pos/coupons
+     */
+    public function coupons()
+    {
+        try {
+            $discountService = new DiscountService();
+            $coupons = $discountService->getActiveCoupons();
+            
+            return $this->respond([
+                'success' => true,
+                'count' => count($coupons),
+                'coupons' => $coupons,
+            ], 200);
+            
+        } catch (\Exception $e) {
+            log_message('error', '[Pos::coupons] Erro', [
+                'error' => $e->getMessage(),
+            ]);
+            
+            return $this->fail('Erro ao listar cupons: ' . $e->getMessage(), 500);
         }
     }
 }

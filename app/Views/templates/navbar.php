@@ -1,21 +1,28 @@
 <?php
 use App\Models\CobrancaModel;
 
+// Pega dados da sessão diretamente
+$session = session();
+$tipo = $session->get('tipo');
+$id_empresa = $session->get('id_empresa');
+$id_contador = $session->get('id_contador');
+$xFant = $session->get('xFant');
+
 // Calcula quantidade de cobranças vencidas para contador (tipo 2) e empresa (tipo 3)
 $qtdCobrancasVencidas = 0;
 $linkCobrancas = '#';
 
-if (isset($dados['tipo'])) {
+if ($tipo) {
 	$cobrancaModel = new CobrancaModel();
-	if ($dados['tipo'] == 3 && isset($dados['id_empresa'])) {
+	if ($tipo == 3 && $id_empresa) {
 		$qtdCobrancasVencidas = $cobrancaModel
-			->where('id_empresa', $dados['id_empresa'])
+			->where('id_empresa', $id_empresa)
 			->where('status', 'Vencido')
 			->countAllResults();
 		$linkCobrancas = base_url('cobranca/minhas');
-	} elseif ($dados['tipo'] == 2 && isset($dados['id_contador'])) {
+	} elseif ($tipo == 2 && $id_contador) {
 		$qtdCobrancasVencidas = $cobrancaModel
-			->where('id_contador', $dados['id_contador'])
+			->where('id_contador', $id_contador)
 			->where('status', 'Vencido')
 			->countAllResults();
 		$linkCobrancas = base_url('cobranca/empresas');
@@ -42,8 +49,8 @@ if (isset($dados['tipo'])) {
     </li>
     <?php endif; ?>
     <li class="nav-item" style="font-size: 20px; font-weight: bold; color: rgba(23, 162, 184)">
-      <?php if(isset($dados['tipo'])):
-        echo $dados['xFant'];
+      <?php if($xFant):
+        echo $xFant;
       endif; ?>
     </li>
   </ul>

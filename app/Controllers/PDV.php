@@ -9,7 +9,7 @@ use CodeIgniter\Controller;
 class PDV extends Controller
 {
     private $tipo = 3;
-    private $link = '7';
+    private $link = 'pdv';
 
     private $session;
     private $id_contador;
@@ -32,18 +32,36 @@ class PDV extends Controller
 
     public function index()
     {
+        log_message('debug', '=== PDV Controller INÍCIO ===');
+        
         // Verifica se o usuário tem permissão - permite tipo 3 (gerentes) e tipo 4 (caixas)
         $session = session();
         $tipoUsuario = (int) ($session->get('tipo') ?? 0);
         $status = $session->get('status');
+        $usuario = $session->get('usuario');
+        $idEmpresa = $session->get('id_empresa');
+        $idContador = $session->get('id_contador');
+        
+        log_message('debug', 'PDV Controller - Dados da sessão:');
+        log_message('debug', '  - tipo: ' . $tipoUsuario);
+        log_message('debug', '  - status: ' . ($status ?? 'null'));
+        log_message('debug', '  - usuario: ' . ($usuario ?? 'null'));
+        log_message('debug', '  - id_empresa: ' . ($idEmpresa ?? 'null'));
+        log_message('debug', '  - id_contador: ' . ($idContador ?? 'null'));
         
         if (!in_array($tipoUsuario, [3, 4]) || $status === "Desativado") {
+            log_message('error', 'PDV Controller - ACESSO NEGADO!');
+            log_message('error', '  - Tipo inválido: ' . (!in_array($tipoUsuario, [3, 4]) ? 'SIM' : 'NÃO'));
+            log_message('error', '  - Status desativado: ' . ($status === "Desativado" ? 'SIM' : 'NÃO'));
+            
             $session->setFlashdata('alert', [
                 'type' => 'error',
                 'title' => 'Você não tem permissão de acessar essa funcionalidade!'
             ]);
-            return redirect()->to('/login');
+            return redirect()->to('/index.php/login-pdv');
         }
+        
+        log_message('debug', 'PDV Controller - Permissões OK, carregando dados...');
 
         $data['link'] = $this->link;
 
@@ -74,6 +92,11 @@ class PDV extends Controller
         }
         $data['total'] = $total;
 
+        log_message('debug', 'PDV Controller - Dados preparados:');
+        log_message('debug', '  - Total de itens: ' . count($itens));
+        log_message('debug', '  - Total geral: R$ ' . number_format($total, 2, ',', '.'));
+        log_message('debug', '=== PDV Controller SUCESSO === Renderizando view');
+
         echo view('templates/header');
         // Nova UI moderna baseada no layout solicitado
         echo view('pdv/index_modern', $data);
@@ -92,7 +115,7 @@ class PDV extends Controller
             ]
         );
 
-        return redirect()->to('/pdv');
+        return redirect()->to('/index.php/pdv');
     }
 
     public function remover($id_produto_provisorio)
@@ -111,7 +134,7 @@ class PDV extends Controller
             ]
         );
 
-        return redirect()->to('/pdv');
+        return redirect()->to('/index.php/pdv');
     }
 
     public function limpar()
@@ -129,7 +152,7 @@ class PDV extends Controller
             ]
         );
 
-        return redirect()->to('/pdv');
+        return redirect()->to('/index.php/pdv');
     }
 
     public function finalizar()
@@ -143,7 +166,7 @@ class PDV extends Controller
                 'message' => 'Integração com emissão NFC-e será adicionada nos próximos passos.'
             ]
         );
-        return redirect()->to('/pdv');
+        return redirect()->to('/index.php/pdv');
     }
 
     public function buscarPorBarras($codigo_de_barras)

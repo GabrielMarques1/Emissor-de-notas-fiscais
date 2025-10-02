@@ -1,0 +1,510 @@
+{
+	"info": {
+		"name": "PDV Multi-Tenant - Testes Completos",
+		"description": "Collection completa para testar TEF, PIX, Multi-Payment, Suspensão, Descontos e Devoluções",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Autenticação",
+			"item": [
+				{
+					"name": "Login PDV",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Salvar cookie de sessão",
+									"if (pm.response.headers.get('Set-Cookie')) {",
+									"    pm.environment.set('session_cookie', pm.response.headers.get('Set-Cookie'));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"usuario\": \"admin\",\n  \"senha\": \"sua_senha_aqui\",\n  \"id_empresa\": 100\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/pdv/login",
+							"host": ["{{base_url}}"],
+							"path": ["pdv", "login"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "2. PIX - Teste Completo",
+			"item": [
+				{
+					"name": "2.1 Criar Venda",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set('sale_id', jsonData.id_pos_sale);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"items\": [\n    {\n      \"id_produto\": 999,\n      \"quantity\": 2,\n      \"unit_price\": 50.00\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pos",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pos"]
+						}
+					}
+				},
+				{
+					"name": "2.2 Finalizar com PIX",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('PIX QR Code gerado', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"    pm.expect(jsonData.pix).to.exist;",
+									"    pm.expect(jsonData.pix.qr_code).to.exist;",
+									"    pm.expect(jsonData.pix.txid).to.exist;",
+									"    console.log('TXID:', jsonData.pix.txid);",
+									"    console.log('QR Code:', jsonData.pix.qr_code);",
+									"    pm.environment.set('pix_txid', jsonData.pix.txid);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"payment_type\": \"pix\",\n  \"total\": 100.00\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pos/{{sale_id}}/finalize",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pos", "{{sale_id}}", "finalize"]
+						}
+					}
+				},
+				{
+					"name": "2.3 Simular Webhook PIX (Confirmar Pagamento)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"txid\": \"{{pix_txid}}\",\n  \"e2e_id\": \"E12345678202510021234567890AB\",\n  \"status\": \"paid\",\n  \"amount\": 100.00\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pix/webhook/100",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pix", "webhook", "100"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "3. TEF - Teste Completo",
+			"item": [
+				{
+					"name": "3.1 Criar Venda",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set('sale_id_tef', jsonData.id_pos_sale);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"items\": [\n    {\n      \"id_produto\": 999,\n      \"quantity\": 3,\n      \"unit_price\": 50.00\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pos",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pos"]
+						}
+					}
+				},
+				{
+					"name": "3.2 Finalizar com TEF (Crédito)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('TEF autorizado', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"    if (jsonData.tef_transaction) {",
+									"        pm.expect(jsonData.tef_transaction.status).to.eql('confirmed');",
+									"        console.log('NSU:', jsonData.tef_transaction.nsu);",
+									"        console.log('Autorização:', jsonData.tef_transaction.authorization_code);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"payment_type\": \"credit\",\n  \"total\": 150.00,\n  \"installments\": 3,\n  \"card_data\": {\n    \"number\": \"4111111111111111\",\n    \"holder\": \"JOSE SILVA\",\n    \"expiry\": \"12/2030\",\n    \"cvv\": \"123\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pos/{{sale_id_tef}}/finalize",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pos", "{{sale_id_tef}}", "finalize"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "4. Múltiplas Formas",
+			"item": [
+				{
+					"name": "4.1 Criar Venda",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set('sale_id_multi', jsonData.id_pos_sale);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"items\": [\n    {\n      \"id_produto\": 999,\n      \"quantity\": 4,\n      \"unit_price\": 50.00\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pos",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pos"]
+						}
+					}
+				},
+				{
+					"name": "4.2 Finalizar com Múltiplas Formas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Multi-payment processado', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"    pm.expect(jsonData.payments).to.have.lengthOf(3);",
+									"    pm.expect(jsonData.summary.total_paid).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"payment_type\": \"multiple\",\n  \"total\": 200.00,\n  \"payments\": [\n    {\n      \"type\": \"cash\",\n      \"amount\": 50.00,\n      \"calculate_change\": true\n    },\n    {\n      \"type\": \"credit\",\n      \"amount\": 100.00,\n      \"installments\": 2\n    },\n    {\n      \"type\": \"pix\",\n      \"amount\": 50.00\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pos/{{sale_id_multi}}/finalize",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pos", "{{sale_id_multi}}", "finalize"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "5. Suspensão de Vendas",
+			"item": [
+				{
+					"name": "5.1 Criar Venda",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set('sale_id_suspend', jsonData.id_pos_sale);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"items\": [\n    {\n      \"id_produto\": 999,\n      \"quantity\": 1,\n      \"unit_price\": 50.00\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pos",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pos"]
+						}
+					}
+				},
+				{
+					"name": "5.2 Suspender Venda",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reason\": \"Cliente foi ao caixa eletrônico\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pos/{{sale_id_suspend}}/suspend",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pos", "{{sale_id_suspend}}", "suspend"]
+						}
+					}
+				},
+				{
+					"name": "5.3 Listar Vendas Suspensas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/pos/suspended",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pos", "suspended"]
+						}
+					}
+				},
+				{
+					"name": "5.4 Retomar Venda",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/pos/{{sale_id_suspend}}/resume",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pos", "{{sale_id_suspend}}", "resume"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "6. Descontos e Cupons",
+			"item": [
+				{
+					"name": "6.1 Criar Venda",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set('sale_id_discount', jsonData.id_pos_sale);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"items\": [\n    {\n      \"id_produto\": 999,\n      \"quantity\": 2,\n      \"unit_price\": 50.00\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pos",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pos"]
+						}
+					}
+				},
+				{
+					"name": "6.2 Aplicar Desconto Percentual",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"percentage\",\n  \"value\": 15.00,\n  \"reason\": \"Cliente VIP\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pos/{{sale_id_discount}}/discount",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pos", "{{sale_id_discount}}", "discount"]
+						}
+					}
+				},
+				{
+					"name": "6.3 Listar Cupons Ativos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/pos/coupons",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pos", "coupons"]
+						}
+					}
+				},
+				{
+					"name": "6.4 Aplicar Cupom",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"code\": \"PROMO10\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pos/{{sale_id_discount}}/coupon",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pos", "{{sale_id_discount}}", "coupon"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "7. Devoluções",
+			"item": [
+				{
+					"name": "7.1 Processar Devolução Total",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id_sale\": 1,\n  \"type\": \"full_return\",\n  \"reason\": \"Produto com defeito\",\n  \"refund_method\": \"same_method\",\n  \"approved_by\": 1,\n  \"restock\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pos/returns/process",
+							"host": ["{{base_url}}"],
+							"path": ["api", "pos", "returns", "process"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost/erp.local/public"
+		}
+	]
+}
+

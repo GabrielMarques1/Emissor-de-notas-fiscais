@@ -2,7 +2,7 @@
 
 use CodeIgniter\Database\Migration;
 
-class AddEstoqueToProdutos extends Migration
+class AddEstoqueToProdutos2 extends Migration
 {
     public function up()
     {

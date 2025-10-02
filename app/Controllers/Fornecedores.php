@@ -11,7 +11,7 @@ class Fornecedores extends Controller
 {
     private $tipo = 3;
 
-    private $link = '7';
+    private $link = 'fornecedores';
 
     private $session;
     private $id_contador;

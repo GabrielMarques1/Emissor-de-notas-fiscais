@@ -325,6 +325,26 @@ class Empresas extends Controller
                             'status'      => 'closed',
                         ]);
                     }
+
+                    // ==================== SETUP AUTOMÁTICO DE RELATÓRIOS ==================== //
+                    // Cria agendamentos padrão e configurações para a nova empresa
+                    try {
+                        $setupService = new \App\Libraries\EmpresaSetupService();
+                        $emailEmpresa = $dados['usuario'] ?? 'noreply@empresa.com';
+                        
+                        $setupService->setupNovaEmpresa(
+                            $novoIdEmpresa,
+                            (int) $this->id_contador,
+                            $emailEmpresa,
+                            $id_login
+                        );
+                        
+                        log_message('info', "✓ Agendamentos automáticos criados para empresa #{$novoIdEmpresa}");
+                    } catch (\Throwable $e) {
+                        log_message('error', "Erro ao criar agendamentos para empresa #{$novoIdEmpresa}: " . $e->getMessage());
+                        // Não bloqueia a criação da empresa
+                    }
+                    // ========================================================================= //
                 }
             } catch (\Throwable $e) { /* provisionamento não deve bloquear criação */ }
 

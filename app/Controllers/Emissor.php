@@ -39,7 +39,7 @@ class Emissor extends Controller
             return redirect()->to($retorno);
         endif;
 
-        $data['link'] = '9';
+        $data['link'] = '10';
 
         $data['titulo'] = [
             'modulo' => 'NFEs',
@@ -99,7 +99,7 @@ class Emissor extends Controller
             return redirect()->to($retorno);
         endif;
 
-        $data['link'] = '10';
+        $data['link'] = '11';
         
         $data['titulo'] = [
             'modulo' => 'NFCEs',

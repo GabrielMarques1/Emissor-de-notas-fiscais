@@ -181,7 +181,7 @@ class Login extends Controller
                         'title' => 'Use o login específico do PDV'
                     ]
                 );
-                return redirect()->to('/login-pdv');
+                return redirect()->to('/index.php/login-pdv');
             endif;
 
         else :

@@ -19,6 +19,15 @@ $routes->get('pdv-debug', 'PDVDebug::index');
 $routes->get('pdv-direct', 'PDV::index'); // PDV sem filtros para teste
 $routes->get('pdv-simple', 'PDVSimple::index'); // PDV super simples
 
+// ==================== CRON JOBS (HTTP) ==================== //
+// Para hospedagens sem acesso a cron via SSH
+// Configure webcron em: easycron.com, cron-job.org, etc
+$routes->group('cron', static function($routes) {
+	$routes->get('process-reports', 'Cron::processReports');
+	$routes->get('status', 'Cron::status');
+});
+// =========================================================== //
+
 // Login PDV (específico para caixas)
 $routes->group('login-pdv', static function($routes) {
 	$routes->get('/', 'LoginPDV::index');
@@ -43,6 +52,43 @@ $routes->group('usuarios-caixa', ['filter' => 'auth'], static function($routes) 
 
 // Verificação de usuário existente (para fluxo de cadastro/Stripe)
 $routes->post('login/verificaUsuario', 'Login::verificaUsuario');
+
+// Rotas para NFe e NFCe
+$routes->get('nfe', 'Emissor::listaXMLsNFe');
+$routes->get('nfce', 'Emissor::listaXMLsNFCe');
+
+// Redirect para relatórios (atalho)
+$routes->get('relatorios', function() {
+    return redirect()->to('/relatorios-empresa');
+});
+
+// Rotas de Relatórios para Empresas (tipo 3)
+$routes->group('relatorios-empresa', ['filter' => 'auth'], static function($routes) {
+	$routes->get('/', 'RelatoriosEmpresa::index');
+	$routes->get('vendas', 'RelatoriosEmpresa::vendas');
+	$routes->get('produtos', 'RelatoriosEmpresa::produtos');
+	$routes->get('turnos', 'RelatoriosEmpresa::turnos');
+	$routes->get('fiscal', 'RelatoriosEmpresa::fiscal');
+	$routes->get('comparativo', 'RelatoriosEmpresa::comparativo');
+	$routes->get('evolucao', 'RelatoriosEmpresa::evolucao');
+	$routes->get('clientes', 'RelatoriosEmpresa::clientes');
+	$routes->get('alertas-estoque', 'RelatoriosEmpresa::alertasEstoque');
+	$routes->get('agendamentos', 'RelatoriosEmpresa::agendamentos');
+	$routes->post('agendamentos/salvar', 'RelatoriosEmpresa::salvarAgendamento');
+	$routes->get('agendamentos/excluir/(:num)', 'RelatoriosEmpresa::excluirAgendamento/$1');
+	$routes->match(['get','post'], 'customizar', 'RelatoriosEmpresa::customizarDashboard');
+	// Exportações
+	$routes->get('exportar-vendas-excel', 'RelatoriosEmpresa::exportarVendasExcel');
+	$routes->get('exportar-vendas-pdf', 'RelatoriosEmpresa::exportarVendasPDF');
+	$routes->get('exportar-produtos-excel', 'RelatoriosEmpresa::exportarProdutosExcel');
+	$routes->get('exportar-produtos-pdf', 'RelatoriosEmpresa::exportarProdutosPDF');
+	$routes->get('exportar-turnos-excel', 'RelatoriosEmpresa::exportarTurnosExcel');
+	$routes->get('exportar-turnos-pdf', 'RelatoriosEmpresa::exportarTurnosPDF');
+	$routes->get('exportar-fiscal-excel', 'RelatoriosEmpresa::exportarFiscalExcel');
+	$routes->get('exportar-fiscal-pdf', 'RelatoriosEmpresa::exportarFiscalPDF');
+	$routes->get('exportar-clientes-excel', 'RelatoriosEmpresa::exportarClientesExcel');
+	$routes->get('exportar-clientes-pdf', 'RelatoriosEmpresa::exportarClientesPDF');
+});
 
 // Rotas de cobrança - apenas ADMIN (tipo 1) terá acesso via verificaPermissaoDeAcesso no controller
 $routes->group('cobranca', static function($routes) {

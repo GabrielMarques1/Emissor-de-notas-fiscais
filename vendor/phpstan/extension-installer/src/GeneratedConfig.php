@@ -12,7 +12,7 @@ final class GeneratedConfig
 	public const EXTENSIONS = array (
   'codeigniter/phpstan-codeigniter' => 
   array (
-    'install_path' => 'C:\\xampp\\htdocs\\erp.test\\vendor/codeigniter/phpstan-codeigniter',
+    'install_path' => 'C:\\xampp\\htdocs\\erp.local\\vendor/codeigniter/phpstan-codeigniter',
     'relative_install_path' => '../../../codeigniter/phpstan-codeigniter',
     'extra' => 
     array (
@@ -26,7 +26,7 @@ final class GeneratedConfig
   ),
   'composer/pcre' => 
   array (
-    'install_path' => 'C:\\xampp\\htdocs\\erp.test\\vendor/composer/pcre',
+    'install_path' => 'C:\\xampp\\htdocs\\erp.local\\vendor/composer/pcre',
     'relative_install_path' => '../../../composer/pcre',
     'extra' => 
     array (
@@ -40,7 +40,7 @@ final class GeneratedConfig
   ),
   'phpstan/phpstan-strict-rules' => 
   array (
-    'install_path' => 'C:\\xampp\\htdocs\\erp.test\\vendor/phpstan/phpstan-strict-rules',
+    'install_path' => 'C:\\xampp\\htdocs\\erp.local\\vendor/phpstan/phpstan-strict-rules',
     'relative_install_path' => '../../phpstan-strict-rules',
     'extra' => 
     array (

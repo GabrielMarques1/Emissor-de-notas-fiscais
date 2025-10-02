@@ -20,7 +20,7 @@ class LoginPDV extends Controller
     {
         // Se já está logado como caixa, redireciona para PDV
         if ($this->session->get('tipo') === 4) {
-            return redirect()->to('/pdv');
+            return redirect()->to('/index.php/pdv');
         }
 
         // Se está logado como outro tipo, faz logout
@@ -123,6 +123,7 @@ class LoginPDV extends Controller
             'usuario' => $login['usuario'],
             'nome_completo' => $login['nome_completo'],
             'tipo' => 4, // Tipo caixa
+            'status' => $login['status_caixa'], // Status do usuário caixa
             'xFant' => $empresa['xFant'],
             'xApp' => 'PDV System'
         ];
@@ -136,14 +137,14 @@ class LoginPDV extends Controller
         return $this->response->setJSON([
             'success' => true,
             'message' => 'Login realizado com sucesso!',
-            'redirect' => '/pdv'
+            'redirect' => '/index.php/pdv'
         ]);
     }
 
     public function logout()
     {
         $this->session->destroy();
-        return redirect()->to('/login-pdv');
+        return redirect()->to('/index.php/login-pdv');
     }
 
     // Verificar status da sessão (para AJAX)

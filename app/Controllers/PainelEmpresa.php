@@ -35,7 +35,7 @@ class PainelEmpresa extends BaseController
             'empresa' => $empresa,
             'usuario' => $session->get('usuario'),
             'nome_fantasia' => $empresa['xFant'],
-            'link' => 'inicio'
+            'link' => '1'
         ];
 
         return view('painel_empresa/index', $data);
@@ -53,6 +53,6 @@ class PainelEmpresa extends BaseController
         }
 
         // Redireciona para o PDV moderno
-        return redirect()->to('/pdv');
+        return redirect()->to('/index.php/pdv');
     }
 }

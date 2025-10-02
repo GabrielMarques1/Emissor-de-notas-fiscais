@@ -31,7 +31,7 @@ class UsuariosCaixa extends BaseController
         
         // Busca usuários caixa da empresa
         $usuariosCaixa = $this->loginModel
-            ->select('logins.*, usuarios_caixa.nome_completo, usuarios_caixa.status as status_caixa')
+            ->select('logins.*, usuarios_caixa.nome_completo, usuarios_caixa.status as status_caixa, usuarios_caixa.ultimo_acesso')
             ->join('usuarios_caixa', 'usuarios_caixa.id_login = logins.id_login', 'left')
             ->where('usuarios_caixa.id_empresa', $idEmpresa)
             ->where('logins.tipo', 4)
@@ -115,7 +115,7 @@ class UsuariosCaixa extends BaseController
         
         // Busca usuário caixa
         $usuario = $this->loginModel
-            ->select('logins.*, usuarios_caixa.nome_completo, usuarios_caixa.status as status_caixa, usuarios_caixa.id as id_caixa')
+            ->select('logins.*, usuarios_caixa.nome_completo, usuarios_caixa.status as status_caixa, usuarios_caixa.id as id_caixa, usuarios_caixa.ultimo_acesso')
             ->join('usuarios_caixa', 'usuarios_caixa.id_login = logins.id_login')
             ->where('logins.id_login', $id)
             ->where('usuarios_caixa.id_empresa', $idEmpresa)
