@@ -1036,7 +1036,57 @@ function printReceiptNonFiscal(id) {
 // Log de carregamento do script principal
 console.log('PDV index_modern.php script carregado');
 console.log('fecharCaixaBtn disponível:', typeof window.fecharCaixaBtn);
+
+// ==================== MODO OFFLINE ====================
+// Registrar Service Worker
+if ('serviceWorker' in navigator) {
+	window.addEventListener('load', () => {
+		navigator.serviceWorker.register('/offline-service-worker.js')
+			.then(registration => {
+				console.log('[Service Worker] Registrado com sucesso:', registration.scope);
+			})
+			.catch(error => {
+				console.error('[Service Worker] Erro no registro:', error);
+			});
+	});
+}
+
+// Inicializar IndexedDB (OfflineManager)
+(async () => {
+	try {
+		// Obter tenant da sessão
+		const idEmpresa = <?= json_encode(session('id_empresa') ?? 0) ?>;
+		const idContador = <?= json_encode(session('id_contador') ?? 0) ?>;
+		
+		if (idEmpresa && idContador) {
+			await window.offlineManager.init(idEmpresa, idContador);
+			console.log('[OfflineManager] Inicializado para tenant:', idEmpresa, idContador);
+			
+			// Cachear produtos se online
+			if (navigator.onLine) {
+				try {
+					const response = await fetch('/api/products');
+					if (response.ok) {
+						const data = await response.json();
+						const produtos = Array.isArray(data) ? data : (data.data || []);
+						await window.offlineManager.saveProdutos(produtos);
+						console.log('[OfflineManager] Produtos cacheados:', produtos.length);
+					}
+				} catch (e) {
+					console.warn('[OfflineManager] Não foi possível cachear produtos:', e.message);
+				}
+			}
+		}
+	} catch (error) {
+		console.error('[OfflineManager] Erro na inicialização:', error);
+	}
+})();
+// ======================================================
 </script>
+
+<!-- Scripts de Modo Offline -->
+<script src="<?= base_url('pdv-assets/js/offline-manager.js') ?>"></script>
+<script src="<?= base_url('pdv-assets/js/connection-monitor.js') ?>"></script>
 
 <style>
 .pdv-wrapper { background: #f5f6f8; }

@@ -76,6 +76,22 @@ class TefService
     }
     
     /**
+     * Executar operação com retry automático
+     */
+    protected function executeWithRetry(callable $operation, string $operationType): array
+    {
+        [$idContador, $idEmpresa] = $this->getTenantIds();
+        
+        $retryHandler = new PaymentRetryHandler();
+        
+        return $retryHandler->execute($operation, [
+            'timeout' => $this->timeout,
+            'context' => "TEF:{$operationType}",
+            'tenant' => "{$idContador}:{$idEmpresa}",
+        ]);
+    }
+    
+    /**
      * Autorizar transação TEF
      * 
      * @param array $data [
@@ -124,8 +140,11 @@ class TefService
             
             $idTransaction = $this->tefModel->insert($transactionData);
             
-            // Chamar adapter da adquirente
-            $result = $this->adapter->authorize($data);
+            // Chamar adapter com retry automático
+            $result = $this->executeWithRetry(
+                fn() => $this->adapter->authorize($data),
+                'authorize'
+            );
             
             // Atualizar transação com resultado
             $updateData = [

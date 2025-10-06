@@ -3,7 +3,9 @@
 namespace App\Controllers\Api;
 
 use CodeIgniter\RESTful\ResourceController;
+use CodeIgniter\HTTP\ResponseInterface;
 use App\Libraries\PixService;
+use App\Libraries\WebhookSecurityValidator;
 use App\Models\PixTransactionModel;
 use App\Models\PosSaleModel;
 
@@ -32,10 +34,51 @@ class PixWebhook extends ResourceController
             }
             
             // Obter payload do webhook
-            $payload = $this->request->getJSON(true);
+            $rawPayload = $this->request->getBody();
+            $payload = json_decode($rawPayload, true);
             
             if (empty($payload)) {
                 return $this->fail('Payload inválido', 400);
+            }
+            
+            // SEGURANÇA: Validar HMAC signature
+            $signature = $this->request->getHeaderLine('X-Webhook-Signature') 
+                      ?? $this->request->getHeaderLine('X-Signature') 
+                      ?? '';
+            
+            // Buscar webhook secret da empresa
+            $db = \Config\Database::connect();
+            $empresa = $db->table('empresas')
+                         ->where('id_empresa', $idEmpresa)
+                         ->get()
+                         ->getRowArray();
+            
+            if (!$empresa) {
+                return $this->fail('Empresa não encontrada', 404);
+            }
+            
+            $webhookSecret = $empresa['pix_webhook_secret'] ?? '';
+            
+            // Se há secret configurado, validar HMAC
+            if (!empty($webhookSecret) && !empty($signature)) {
+                $validator = new WebhookSecurityValidator();
+                
+                $validation = $validator->validate($rawPayload, $signature, $webhookSecret, [
+                    'max_age' => 300, // 5 minutos
+                    'client_ip' => $this->request->getIPAddress(),
+                    'log' => true,
+                    'tenant' => $empresa['id_contador'] . ':' . $idEmpresa,
+                ]);
+                
+                if (!$validation['valid']) {
+                    log_message('warning', '[PIX Webhook] Validação de segurança falhou', [
+                        'id_empresa' => $idEmpresa,
+                        'error' => $validation['error'],
+                        'ip' => $this->request->getIPAddress(),
+                    ]);
+                    
+                    return $this->fail('Webhook inválido: ' . $validation['error'], 403);
+                }
             }
             
             // Extrair dados do pagamento

@@ -110,27 +110,58 @@ class Pos extends ResourceController
 
     public function show($id = null)
     {
-        // CORREÇÃO CRÍTICA: Usar BaseAppModel que já aplica filtragem multi-tenant
+        // SEGURANÇA CRÍTICA: Validação de ownership obrigatória
+        helper(['tenant', 'audit']);
+        
         $data = $this->model->find($id);
         if (!$data) {
+            // Log de tentativa de acesso a recurso inexistente
+            audit_access_denied('Resource not found', [
+                'resource_type' => 'pos_sale',
+                'resource_id' => $id,
+                'action' => 'show'
+            ]);
             return $this->failNotFound('Recurso não encontrado');
         }
+        
+        // VALIDAR OWNERSHIP: Registro deve pertencer ao tenant atual
+        validateOwnershipOrFail($data, ['id_contador', 'id_empresa'], 'pos_sale');
+        
+        // Log de acesso bem-sucedido
+        audit_crud('read', 'pos_sale', $id, [
+            'sale_number' => $data['sale_number'] ?? null,
+            'total' => $data['total'] ?? null
+        ]);
+        
         return $this->respond($data);
     }
 
     public function create()
     {
+        helper('audit');
+        
         $payload = $this->request->getJSON(true) ?? $this->request->getPost();
         if (!$payload) {
+            audit_access_denied('Empty payload on create', [
+                'resource_type' => 'pos_sale',
+                'action' => 'create'
+            ]);
             return $this->failValidationErrors('Payload vazio');
         }
+        
         // validações básicas
         $required = ['sale_number', 'id_cash_register', 'id_shift'];
         foreach ($required as $f) {
             if (!isset($payload[$f]) || $payload[$f] === '') {
+                audit_access_denied('Missing required field', [
+                    'resource_type' => 'pos_sale',
+                    'action' => 'create',
+                    'missing_field' => $f
+                ]);
                 return $this->failValidationErrors("Campo obrigatório: {$f}");
             }
         }
+        
         // IDs de empresa/contador da sessão, se existirem
         $session = session();
         if (!isset($payload['id_empresa']) && $session->get('id_empresa')) {
@@ -139,44 +170,148 @@ class Pos extends ResourceController
         if (!isset($payload['id_contador']) && $session->get('id_contador')) {
             $payload['id_contador'] = (int) $session->get('id_contador');
         }
+        
         if (!$this->model->insert($payload)) {
+            audit_crud('create_failed', 'pos_sale', null, [
+                'errors' => $this->model->errors(),
+                'payload_size' => strlen(json_encode($payload))
+            ]);
             return $this->failValidationErrors($this->model->errors());
         }
+        
         $id = $this->model->getInsertID();
         $created = $this->model->find($id);
+        
+        // Log de criação bem-sucedida
+        audit_crud('create', 'pos_sale', $id, [
+            'sale_number' => $created['sale_number'] ?? null,
+            'total' => $created['total'] ?? 0,
+            'status' => $created['status'] ?? null
+        ]);
+        
         return $this->respondCreated($created);
     }
 
     public function update($id = null)
     {
+        // SEGURANÇA CRÍTICA: Validação de ownership obrigatória
+        helper(['tenant', 'audit']);
+        
         if ($id === null) {
+            audit_access_denied('Missing ID on update', [
+                'resource_type' => 'pos_sale',
+                'action' => 'update'
+            ]);
             return $this->failValidationErrors('ID é obrigatório');
         }
+        
+        // VALIDAR OWNERSHIP ANTES DE QUALQUER OPERAÇÃO
+        $existing = $this->model->find($id);
+        if (!$existing) {
+            audit_access_denied('Resource not found for update', [
+                'resource_type' => 'pos_sale',
+                'resource_id' => $id,
+                'action' => 'update'
+            ]);
+            return $this->failNotFound('Recurso não encontrado');
+        }
+        
+        validateOwnershipOrFail($existing, ['id_contador', 'id_empresa'], 'pos_sale');
+        
         $payload = [];
         if ($this->request instanceof \CodeIgniter\HTTP\IncomingRequest) {
             $json = $this->request->getJSON(true);
             $payload = $json ?? ($this->request->getRawInput() ?? []);
         }
         if (!$payload) {
+            audit_access_denied('Empty payload on update', [
+                'resource_type' => 'pos_sale',
+                'resource_id' => $id,
+                'action' => 'update'
+            ]);
             return $this->failValidationErrors('Payload vazio');
         }
+        
+        // Capturar dados antes da alteração para auditoria
+        $changesBefore = [
+            'total' => $existing['total'] ?? null,
+            'status' => $existing['status'] ?? null,
+            'notes' => $existing['notes'] ?? null
+        ];
+        
+        // Impedir alteração dos campos de tenant
+        unset($payload['id_contador'], $payload['id_empresa']);
+        
         if (!$this->model->update($id, $payload)) {
+            audit_crud('update_failed', 'pos_sale', $id, [
+                'errors' => $this->model->errors(),
+                'payload_size' => strlen(json_encode($payload))
+            ]);
             return $this->failValidationErrors($this->model->errors());
         }
+        
         $updated = $this->model->find($id);
+        
+        // Capturar dados após alteração
+        $changesAfter = [
+            'total' => $updated['total'] ?? null,
+            'status' => $updated['status'] ?? null,
+            'notes' => $updated['notes'] ?? null
+        ];
+        
+        // Log de atualização bem-sucedida
+        audit_crud('update', 'pos_sale', $id, [
+            'sale_number' => $updated['sale_number'] ?? null,
+            'changes_before' => $changesBefore,
+            'changes_after' => $changesAfter,
+            'modified_fields' => array_keys($payload)
+        ]);
+        
         return $this->respond($updated);
     }
 
     public function delete($id = null)
     {
+        // SEGURANÇA CRÍTICA: Validação de ownership obrigatória
+        helper(['tenant', 'audit']);
+        
         if ($id === null) {
+            audit_access_denied('Missing ID on delete', [
+                'resource_type' => 'pos_sale',
+                'action' => 'delete'
+            ]);
             return $this->failValidationErrors('ID é obrigatório');
         }
+        
+        // VALIDAR OWNERSHIP ANTES DE DELETAR
         $existing = $this->model->find($id);
         if (!$existing) {
+            audit_access_denied('Resource not found for delete', [
+                'resource_type' => 'pos_sale',
+                'resource_id' => $id,
+                'action' => 'delete'
+            ]);
             return $this->failNotFound('Recurso não encontrado');
         }
+        
+        validateOwnershipOrFail($existing, ['id_contador', 'id_empresa'], 'pos_sale');
+        
+        // Capturar dados antes da deleção para auditoria
+        $deletedData = [
+            'sale_number' => $existing['sale_number'] ?? null,
+            'total' => $existing['total'] ?? null,
+            'status' => $existing['status'] ?? null,
+            'created_at' => $existing['created_at'] ?? null
+        ];
+        
         $this->model->delete($id);
+        
+        // Log de deleção bem-sucedida
+        audit_crud('delete', 'pos_sale', $id, [
+            'deleted_data' => $deletedData,
+            'reason' => 'API delete request'
+        ]);
+        
         return $this->respondDeleted(['id' => $id]);
     }
 

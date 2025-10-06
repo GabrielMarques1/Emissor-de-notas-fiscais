@@ -860,3 +860,461 @@ ERROR - 2025-10-02 00:32:21 --> [Pos::finalize] Erro no PIX
 INFO - 2025-10-02 02:22:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 INFO - 2025-10-02 02:22:46 --> [PIX] QR Code gerado
 ERROR - 2025-10-02 02:22:46 --> [Pos::finalize] Erro no PIX
+INFO - 2025-10-02 03:48:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:48:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:48:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:48:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:48:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:48:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:48:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:48:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:48:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:48:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:48:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:48:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:48:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:48:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:48:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:49:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 03:49:07 --> === PdvAccessFilter INÍCIO === URI: /pdv
+INFO - 2025-10-02 03:49:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 03:49:07 --> PdvAccessFilter - Dados da sessão:
+DEBUG - 2025-10-02 03:49:07 -->   - tipo: 3
+DEBUG - 2025-10-02 03:49:07 -->   - id_empresa: 3
+DEBUG - 2025-10-02 03:49:07 -->   - id_contador: 1
+DEBUG - 2025-10-02 03:49:07 -->   - usuario: teste
+DEBUG - 2025-10-02 03:49:07 -->   - session_id: 0247aj9gnn21nvrdhl7bbk0avf4tnsvn
+DEBUG - 2025-10-02 03:49:07 --> PdvAccessFilter - Validação de acesso:
+DEBUG - 2025-10-02 03:49:07 -->   - tipos permitidos: [1,3,4]
+DEBUG - 2025-10-02 03:49:07 -->   - tipo do usuário: 3 (válido: SIM)
+DEBUG - 2025-10-02 03:49:07 -->   - id_empresa: 3 (válido: SIM)
+DEBUG - 2025-10-02 03:49:07 -->   - wants JSON: NÃO
+DEBUG - 2025-10-02 03:49:07 --> PdvAccessFilter - Verificando empresa no banco...
+DEBUG - 2025-10-02 03:49:07 --> PdvAccessFilter - Empresa encontrada: Stage (ID: 3)
+DEBUG - 2025-10-02 03:49:07 --> === PdvAccessFilter SUCESSO === Acesso liberado para teste
+DEBUG - 2025-10-02 03:49:07 --> === PDV Controller INÍCIO ===
+DEBUG - 2025-10-02 03:49:07 --> PDV Controller - Dados da sessão:
+DEBUG - 2025-10-02 03:49:07 -->   - tipo: 3
+DEBUG - 2025-10-02 03:49:07 -->   - status: null
+DEBUG - 2025-10-02 03:49:07 -->   - usuario: teste
+DEBUG - 2025-10-02 03:49:07 -->   - id_empresa: 3
+DEBUG - 2025-10-02 03:49:07 -->   - id_contador: 1
+DEBUG - 2025-10-02 03:49:07 --> PDV Controller - Permissões OK, carregando dados...
+DEBUG - 2025-10-02 03:49:07 --> PDV Controller - Dados preparados:
+DEBUG - 2025-10-02 03:49:07 -->   - Total de itens: 0
+DEBUG - 2025-10-02 03:49:07 -->   - Total geral: R$ 0,00
+DEBUG - 2025-10-02 03:49:07 --> === PDV Controller SUCESSO === Renderizando view
+INFO - 2025-10-02 03:49:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:49:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:49:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:49:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:49:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:49:30 --> Shifts::open - Caixa sessão aberta via model centralizado.
+INFO - 2025-10-02 03:49:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:49:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:49:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:49:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:49:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 03:50:24 --> === PdvAccessFilter INÍCIO === URI: /pdv
+INFO - 2025-10-02 03:50:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 03:50:25 --> PdvAccessFilter - Dados da sessão:
+DEBUG - 2025-10-02 03:50:25 -->   - tipo: 3
+DEBUG - 2025-10-02 03:50:25 -->   - id_empresa: 3
+DEBUG - 2025-10-02 03:50:25 -->   - id_contador: 1
+DEBUG - 2025-10-02 03:50:25 -->   - usuario: teste
+DEBUG - 2025-10-02 03:50:25 -->   - session_id: 0247aj9gnn21nvrdhl7bbk0avf4tnsvn
+DEBUG - 2025-10-02 03:50:25 --> PdvAccessFilter - Validação de acesso:
+DEBUG - 2025-10-02 03:50:25 -->   - tipos permitidos: [1,3,4]
+DEBUG - 2025-10-02 03:50:25 -->   - tipo do usuário: 3 (válido: SIM)
+DEBUG - 2025-10-02 03:50:25 -->   - id_empresa: 3 (válido: SIM)
+DEBUG - 2025-10-02 03:50:25 -->   - wants JSON: NÃO
+DEBUG - 2025-10-02 03:50:25 --> PdvAccessFilter - Verificando empresa no banco...
+DEBUG - 2025-10-02 03:50:25 --> PdvAccessFilter - Empresa encontrada: Stage (ID: 3)
+DEBUG - 2025-10-02 03:50:25 --> === PdvAccessFilter SUCESSO === Acesso liberado para teste
+DEBUG - 2025-10-02 03:50:25 --> === PDV Controller INÍCIO ===
+DEBUG - 2025-10-02 03:50:25 --> PDV Controller - Dados da sessão:
+DEBUG - 2025-10-02 03:50:25 -->   - tipo: 3
+DEBUG - 2025-10-02 03:50:25 -->   - status: null
+DEBUG - 2025-10-02 03:50:25 -->   - usuario: teste
+DEBUG - 2025-10-02 03:50:25 -->   - id_empresa: 3
+DEBUG - 2025-10-02 03:50:25 -->   - id_contador: 1
+DEBUG - 2025-10-02 03:50:25 --> PDV Controller - Permissões OK, carregando dados...
+DEBUG - 2025-10-02 03:50:25 --> PDV Controller - Dados preparados:
+DEBUG - 2025-10-02 03:50:25 -->   - Total de itens: 0
+DEBUG - 2025-10-02 03:50:25 -->   - Total geral: R$ 0,00
+DEBUG - 2025-10-02 03:50:25 --> === PDV Controller SUCESSO === Renderizando view
+INFO - 2025-10-02 03:50:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 03:50:27 --> Products::barcode - Buscando EAN: 123, Contador: 1, Empresa: 3
+DEBUG - 2025-10-02 03:50:27 --> Products::barcode - Tentativa 1 (empresa+contador exato): ENCONTRADO ID=27
+DEBUG - 2025-10-02 03:50:27 --> Products::barcode - Produto encontrado: {"id_produto":"27","nome":"IPHONE ","codigo_de_barras":"123","valor_unitario":"1","CFOP_NFe":"5403","CFOP_NFCe":"5102","CFOP_Externo":"6104","NCM":"12312323","CSOSN":"103","id_unidade":"1","id_contador":"1","id_empresa":"3","created_at":"2025-10-02 03:50:10","updated_at":"2025-10-02 03:50:10","deleted_at":"0000-00-00 00:00:00","estoque":"1.000","estoque_minimo":"0.000"}
+DEBUG - 2025-10-02 03:50:27 --> Products::barcode - Dados antes do mapeamento: {"id_produto":"27","nome":"IPHONE ","codigo_de_barras":"123","valor_unitario":"1","CFOP_NFe":"5403","CFOP_NFCe":"5102","CFOP_Externo":"6104","NCM":"12312323","CSOSN":"103","id_unidade":"1","id_contador":"1","id_empresa":"3","created_at":"2025-10-02 03:50:10","updated_at":"2025-10-02 03:50:10","deleted_at":"0000-00-00 00:00:00","estoque":"1.000","estoque_minimo":"0.000"}
+DEBUG - 2025-10-02 03:50:27 --> Products::barcode - Dados após mapeamento: {"id_produto":"27","nome":"IPHONE ","codigo_de_barras":"123","valor_unitario":"1","CFOP_NFe":"5403","CFOP_NFCe":"5102","CFOP_Externo":"6104","NCM":"12312323","CSOSN":"103","id_unidade":"1","id_contador":"1","id_empresa":"3","created_at":"2025-10-02 03:50:10","updated_at":"2025-10-02 03:50:10","deleted_at":"0000-00-00 00:00:00","estoque":"1.000","estoque_minimo":"0.000","quantidade_estoque":1,"id":"27","codigo_barras":"123","preco_unitario":"1.00"}
+INFO - 2025-10-02 03:50:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 03:50:55 --> === PdvAccessFilter INÍCIO === URI: /pdv
+INFO - 2025-10-02 03:50:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 03:50:55 --> PdvAccessFilter - Dados da sessão:
+DEBUG - 2025-10-02 03:50:55 -->   - tipo: 3
+DEBUG - 2025-10-02 03:50:55 -->   - id_empresa: 3
+DEBUG - 2025-10-02 03:50:55 -->   - id_contador: 1
+DEBUG - 2025-10-02 03:50:55 -->   - usuario: teste
+DEBUG - 2025-10-02 03:50:55 -->   - session_id: 0247aj9gnn21nvrdhl7bbk0avf4tnsvn
+DEBUG - 2025-10-02 03:50:55 --> PdvAccessFilter - Validação de acesso:
+DEBUG - 2025-10-02 03:50:55 -->   - tipos permitidos: [1,3,4]
+DEBUG - 2025-10-02 03:50:55 -->   - tipo do usuário: 3 (válido: SIM)
+DEBUG - 2025-10-02 03:50:55 -->   - id_empresa: 3 (válido: SIM)
+DEBUG - 2025-10-02 03:50:55 -->   - wants JSON: NÃO
+DEBUG - 2025-10-02 03:50:55 --> PdvAccessFilter - Verificando empresa no banco...
+DEBUG - 2025-10-02 03:50:55 --> PdvAccessFilter - Empresa encontrada: Stage (ID: 3)
+DEBUG - 2025-10-02 03:50:55 --> === PdvAccessFilter SUCESSO === Acesso liberado para teste
+DEBUG - 2025-10-02 03:50:55 --> === PDV Controller INÍCIO ===
+DEBUG - 2025-10-02 03:50:55 --> PDV Controller - Dados da sessão:
+DEBUG - 2025-10-02 03:50:55 -->   - tipo: 3
+DEBUG - 2025-10-02 03:50:55 -->   - status: null
+DEBUG - 2025-10-02 03:50:55 -->   - usuario: teste
+DEBUG - 2025-10-02 03:50:55 -->   - id_empresa: 3
+DEBUG - 2025-10-02 03:50:55 -->   - id_contador: 1
+DEBUG - 2025-10-02 03:50:55 --> PDV Controller - Permissões OK, carregando dados...
+DEBUG - 2025-10-02 03:50:55 --> PDV Controller - Dados preparados:
+DEBUG - 2025-10-02 03:50:55 -->   - Total de itens: 0
+DEBUG - 2025-10-02 03:50:55 -->   - Total geral: R$ 0,00
+DEBUG - 2025-10-02 03:50:55 --> === PDV Controller SUCESSO === Renderizando view
+INFO - 2025-10-02 03:50:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:50:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:51:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 03:51:00 --> Products::barcode - Buscando EAN: 123, Contador: 1, Empresa: 3
+DEBUG - 2025-10-02 03:51:00 --> Products::barcode - Tentativa 1 (empresa+contador exato): ENCONTRADO ID=27
+DEBUG - 2025-10-02 03:51:00 --> Products::barcode - Produto encontrado: {"id_produto":"27","nome":"IPHONE ","codigo_de_barras":"123","valor_unitario":"1","CFOP_NFe":"5403","CFOP_NFCe":"5102","CFOP_Externo":"6104","NCM":"12312323","CSOSN":"103","id_unidade":"1","id_contador":"1","id_empresa":"3","created_at":"2025-10-02 03:50:10","updated_at":"2025-10-02 03:50:10","deleted_at":"0000-00-00 00:00:00","estoque":"4.000","estoque_minimo":"0.000"}
+DEBUG - 2025-10-02 03:51:00 --> Products::barcode - Dados antes do mapeamento: {"id_produto":"27","nome":"IPHONE ","codigo_de_barras":"123","valor_unitario":"1","CFOP_NFe":"5403","CFOP_NFCe":"5102","CFOP_Externo":"6104","NCM":"12312323","CSOSN":"103","id_unidade":"1","id_contador":"1","id_empresa":"3","created_at":"2025-10-02 03:50:10","updated_at":"2025-10-02 03:50:10","deleted_at":"0000-00-00 00:00:00","estoque":"4.000","estoque_minimo":"0.000"}
+DEBUG - 2025-10-02 03:51:00 --> Products::barcode - Dados após mapeamento: {"id_produto":"27","nome":"IPHONE ","codigo_de_barras":"123","valor_unitario":"1","CFOP_NFe":"5403","CFOP_NFCe":"5102","CFOP_Externo":"6104","NCM":"12312323","CSOSN":"103","id_unidade":"1","id_contador":"1","id_empresa":"3","created_at":"2025-10-02 03:50:10","updated_at":"2025-10-02 03:50:10","deleted_at":"0000-00-00 00:00:00","estoque":"4.000","estoque_minimo":"0.000","quantidade_estoque":4,"id":"27","codigo_barras":"123","preco_unitario":"1.00"}
+INFO - 2025-10-02 03:51:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:51:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:51:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:51:04 --> [PIX] QR Code gerado
+ERROR - 2025-10-02 03:51:04 --> [Pos::finalize] Erro no PIX
+DEBUG - 2025-10-02 03:51:13 --> === PdvAccessFilter INÍCIO === URI: /pdv
+INFO - 2025-10-02 03:51:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 03:51:13 --> PdvAccessFilter - Dados da sessão:
+DEBUG - 2025-10-02 03:51:13 -->   - tipo: 3
+DEBUG - 2025-10-02 03:51:13 -->   - id_empresa: 3
+DEBUG - 2025-10-02 03:51:13 -->   - id_contador: 1
+DEBUG - 2025-10-02 03:51:13 -->   - usuario: teste
+DEBUG - 2025-10-02 03:51:13 -->   - session_id: 0247aj9gnn21nvrdhl7bbk0avf4tnsvn
+DEBUG - 2025-10-02 03:51:13 --> PdvAccessFilter - Validação de acesso:
+DEBUG - 2025-10-02 03:51:13 -->   - tipos permitidos: [1,3,4]
+DEBUG - 2025-10-02 03:51:13 -->   - tipo do usuário: 3 (válido: SIM)
+DEBUG - 2025-10-02 03:51:13 -->   - id_empresa: 3 (válido: SIM)
+DEBUG - 2025-10-02 03:51:13 -->   - wants JSON: NÃO
+DEBUG - 2025-10-02 03:51:13 --> PdvAccessFilter - Verificando empresa no banco...
+DEBUG - 2025-10-02 03:51:13 --> PdvAccessFilter - Empresa encontrada: Stage (ID: 3)
+DEBUG - 2025-10-02 03:51:13 --> === PdvAccessFilter SUCESSO === Acesso liberado para teste
+DEBUG - 2025-10-02 03:51:13 --> === PDV Controller INÍCIO ===
+DEBUG - 2025-10-02 03:51:13 --> PDV Controller - Dados da sessão:
+DEBUG - 2025-10-02 03:51:13 -->   - tipo: 3
+DEBUG - 2025-10-02 03:51:13 -->   - status: null
+DEBUG - 2025-10-02 03:51:13 -->   - usuario: teste
+DEBUG - 2025-10-02 03:51:13 -->   - id_empresa: 3
+DEBUG - 2025-10-02 03:51:13 -->   - id_contador: 1
+DEBUG - 2025-10-02 03:51:13 --> PDV Controller - Permissões OK, carregando dados...
+DEBUG - 2025-10-02 03:51:13 --> PDV Controller - Dados preparados:
+DEBUG - 2025-10-02 03:51:13 -->   - Total de itens: 1
+DEBUG - 2025-10-02 03:51:13 -->   - Total geral: R$ 1,00
+DEBUG - 2025-10-02 03:51:13 --> === PDV Controller SUCESSO === Renderizando view
+INFO - 2025-10-02 03:51:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 03:52:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-10-02 11:44:54 --> mysqli_sql_exception: Table 'unidades' already exists in C:\xampp\htdocs\erp.local\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.local\system\Database\MySQLi\Connection.php(306): mysqli->query('CREATE TABLE `u...', 0)
+#1 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('CREATE TABLE `u...')
+#2 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('CREATE TABLE `u...')
+#3 C:\xampp\htdocs\erp.local\system\Database\Forge.php(555): CodeIgniter\Database\BaseConnection->query('CREATE TABLE `u...')
+#4 C:\xampp\htdocs\erp.local\app\Database\Migrations\2020-06-04-124242_unidades.php(41): CodeIgniter\Database\Forge->createTable('unidades')
+#5 C:\xampp\htdocs\erp.local\system\Database\MigrationRunner.php(865): App\Database\Migrations\Unidades->up()
+#6 C:\xampp\htdocs\erp.local\system\Database\MigrationRunner.php(181): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#7 C:\xampp\htdocs\erp.local\system\Test\DatabaseTestTrait.php(160): CodeIgniter\Database\MigrationRunner->latest('tests')
+#8 C:\xampp\htdocs\erp.local\system\Test\DatabaseTestTrait.php(109): Tests\Support\MultiTenantTestCase->migrateDatabase()
+#9 C:\xampp\htdocs\erp.local\system\Test\DatabaseTestTrait.php(55): Tests\Support\MultiTenantTestCase->setUpMigrate()
+#10 C:\xampp\htdocs\erp.local\system\Test\CIUnitTestCase.php(249): Tests\Support\MultiTenantTestCase->setUpDatabase()
+#11 C:\xampp\htdocs\erp.local\tests\Support\MultiTenantTestCase.php(26): CodeIgniter\Test\CIUnitTestCase->setUp()
+#12 C:\xampp\htdocs\erp.local\tests\multitenant\PosSaleItemMultiTenantTest.php(19): Tests\Support\MultiTenantTestCase->setUp()
+#13 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\Framework\TestCase.php(1216): Tests\MultiTenant\PosSaleItemMultiTenantTest->setUp()
+#14 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\Framework\TestResult.php(729): PHPUnit\Framework\TestCase->runBare()
+#15 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\Framework\TestCase.php(973): PHPUnit\Framework\TestResult->run(Object(Tests\MultiTenant\PosSaleItemMultiTenantTest))
+#16 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\Framework\TestSuite.php(685): PHPUnit\Framework\TestCase->run(Object(PHPUnit\Framework\TestResult))
+#17 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\Framework\TestSuite.php(685): PHPUnit\Framework\TestSuite->run(Object(PHPUnit\Framework\TestResult))
+#18 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\Framework\TestSuite.php(685): PHPUnit\Framework\TestSuite->run(Object(PHPUnit\Framework\TestResult))
+#19 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(651): PHPUnit\Framework\TestSuite->run(Object(PHPUnit\Framework\TestResult))
+#20 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\TextUI\Command.php(146): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\Framework\TestSuite), Array, Array, true)
+#21 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\TextUI\Command.php(99): PHPUnit\TextUI\Command->run(Array, true)
+#22 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\phpunit(107): PHPUnit\TextUI\Command::main()
+#23 {main}
+ERROR - 2025-10-02 11:44:54 --> mysqli_sql_exception: Table 'unidades' already exists in C:\xampp\htdocs\erp.local\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\xampp\htdocs\erp.local\system\Database\MySQLi\Connection.php(306): mysqli->query('CREATE TABLE `u...', 0)
+#1 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('CREATE TABLE `u...')
+#2 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(607): CodeIgniter\Database\BaseConnection->simpleQuery('CREATE TABLE `u...')
+#3 C:\xampp\htdocs\erp.local\system\Database\Forge.php(555): CodeIgniter\Database\BaseConnection->query('CREATE TABLE `u...')
+#4 C:\xampp\htdocs\erp.local\app\Database\Migrations\2020-06-04-124242_unidades.php(41): CodeIgniter\Database\Forge->createTable('unidades')
+#5 C:\xampp\htdocs\erp.local\system\Database\MigrationRunner.php(865): App\Database\Migrations\Unidades->up()
+#6 C:\xampp\htdocs\erp.local\system\Database\MigrationRunner.php(181): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#7 C:\xampp\htdocs\erp.local\system\Test\DatabaseTestTrait.php(160): CodeIgniter\Database\MigrationRunner->latest('tests')
+#8 C:\xampp\htdocs\erp.local\system\Test\DatabaseTestTrait.php(109): Tests\Support\MultiTenantTestCase->migrateDatabase()
+#9 C:\xampp\htdocs\erp.local\system\Test\DatabaseTestTrait.php(55): Tests\Support\MultiTenantTestCase->setUpMigrate()
+#10 C:\xampp\htdocs\erp.local\system\Test\CIUnitTestCase.php(249): Tests\Support\MultiTenantTestCase->setUpDatabase()
+#11 C:\xampp\htdocs\erp.local\tests\Support\MultiTenantTestCase.php(26): CodeIgniter\Test\CIUnitTestCase->setUp()
+#12 C:\xampp\htdocs\erp.local\tests\multitenant\PosSaleItemMultiTenantTest.php(19): Tests\Support\MultiTenantTestCase->setUp()
+#13 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\Framework\TestCase.php(1216): Tests\MultiTenant\PosSaleItemMultiTenantTest->setUp()
+#14 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\Framework\TestResult.php(729): PHPUnit\Framework\TestCase->runBare()
+#15 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\Framework\TestCase.php(973): PHPUnit\Framework\TestResult->run(Object(Tests\MultiTenant\PosSaleItemMultiTenantTest))
+#16 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\Framework\TestSuite.php(685): PHPUnit\Framework\TestCase->run(Object(PHPUnit\Framework\TestResult))
+#17 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\Framework\TestSuite.php(685): PHPUnit\Framework\TestSuite->run(Object(PHPUnit\Framework\TestResult))
+#18 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\Framework\TestSuite.php(685): PHPUnit\Framework\TestSuite->run(Object(PHPUnit\Framework\TestResult))
+#19 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(651): PHPUnit\Framework\TestSuite->run(Object(PHPUnit\Framework\TestResult))
+#20 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\TextUI\Command.php(146): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\Framework\TestSuite), Array, Array, true)
+#21 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\src\TextUI\Command.php(99): PHPUnit\TextUI\Command->run(Array, true)
+#22 C:\xampp\htdocs\erp.local\vendor\phpunit\phpunit\phpunit(107): PHPUnit\TextUI\Command::main()
+#23 {main}
+ERROR - 2025-10-02 13:00:00 --> Error connecting to the database: mysqli_sql_exception: Access denied for user ''@'localhost' (using password: NO) in C:\xampp\htdocs\erp.local\system\Database\MySQLi\Connection.php:184
+Stack trace:
+#0 C:\xampp\htdocs\erp.local\system\Database\MySQLi\Connection.php(184): mysqli->real_connect('localhost', '', Object(SensitiveParameterValue), '', 3306, '', 32)
+#1 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(392): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(1410): CodeIgniter\Database\BaseConnection->query('SHOW TABLES FRO...')
+#4 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(1429): CodeIgniter\Database\BaseConnection->listTables()
+#5 C:\xampp\htdocs\erp.local\system\Database\MigrationRunner.php(757): CodeIgniter\Database\BaseConnection->tableExists('migrations')
+#6 C:\xampp\htdocs\erp.local\system\Database\MigrationRunner.php(161): CodeIgniter\Database\MigrationRunner->ensureTable()
+#7 C:\xampp\htdocs\erp.local\system\Commands\Database\Migrate.php(84): CodeIgniter\Database\MigrationRunner->latest(NULL)
+#8 C:\xampp\htdocs\erp.local\system\CLI\Commands.php(65): CodeIgniter\Commands\Database\Migrate->run(Array)
+#9 C:\xampp\htdocs\erp.local\system\CLI\Console.php(46): CodeIgniter\CLI\Commands->run('migrate', Array)
+#10 C:\xampp\htdocs\erp.local\spark(102): CodeIgniter\CLI\Console->run()
+#11 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user ''@'localhost' (using password: NO) in C:\xampp\htdocs\erp.local\system\Database\MySQLi\Connection.php:229
+Stack trace:
+#0 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(392): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(1410): CodeIgniter\Database\BaseConnection->query('SHOW TABLES FRO...')
+#3 C:\xampp\htdocs\erp.local\system\Database\BaseConnection.php(1429): CodeIgniter\Database\BaseConnection->listTables()
+#4 C:\xampp\htdocs\erp.local\system\Database\MigrationRunner.php(757): CodeIgniter\Database\BaseConnection->tableExists('migrations')
+#5 C:\xampp\htdocs\erp.local\system\Database\MigrationRunner.php(161): CodeIgniter\Database\MigrationRunner->ensureTable()
+#6 C:\xampp\htdocs\erp.local\system\Commands\Database\Migrate.php(84): CodeIgniter\Database\MigrationRunner->latest(NULL)
+#7 C:\xampp\htdocs\erp.local\system\CLI\Commands.php(65): CodeIgniter\Commands\Database\Migrate->run(Array)
+#8 C:\xampp\htdocs\erp.local\system\CLI\Console.php(46): CodeIgniter\CLI\Commands->run('migrate', Array)
+#9 C:\xampp\htdocs\erp.local\spark(102): CodeIgniter\CLI\Console->run()
+#10 {main}
+INFO - 2025-10-02 13:01:56 --> Slow Query Log habilitado com sucesso
+INFO - 2025-10-02 13:01:56 --> Queries > 1s serão logadas
+INFO - 2025-10-02 13:01:56 --> Queries sem índices serão logadas
+INFO - 2025-10-02 13:02:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 13:02:45 --> === PdvAccessFilter INÍCIO === URI: /pdv
+INFO - 2025-10-02 13:02:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 13:02:45 --> PdvAccessFilter - Dados da sessão:
+DEBUG - 2025-10-02 13:02:45 -->   - tipo: 3
+DEBUG - 2025-10-02 13:02:45 -->   - id_empresa: 3
+DEBUG - 2025-10-02 13:02:45 -->   - id_contador: 1
+DEBUG - 2025-10-02 13:02:45 -->   - usuario: teste
+DEBUG - 2025-10-02 13:02:45 -->   - session_id: rk1n3ihvtfv71tifijoqjg54ajm30nf3
+DEBUG - 2025-10-02 13:02:45 --> PdvAccessFilter - Validação de acesso:
+DEBUG - 2025-10-02 13:02:45 -->   - tipos permitidos: [1,3,4]
+DEBUG - 2025-10-02 13:02:45 -->   - tipo do usuário: 3 (válido: SIM)
+DEBUG - 2025-10-02 13:02:45 -->   - id_empresa: 3 (válido: SIM)
+DEBUG - 2025-10-02 13:02:45 -->   - wants JSON: NÃO
+DEBUG - 2025-10-02 13:02:45 --> PdvAccessFilter - Verificando empresa no banco...
+DEBUG - 2025-10-02 13:02:45 --> PdvAccessFilter - Empresa encontrada: Stage (ID: 3)
+DEBUG - 2025-10-02 13:02:45 --> === PdvAccessFilter SUCESSO === Acesso liberado para teste
+DEBUG - 2025-10-02 13:02:45 --> === PDV Controller INÍCIO ===
+DEBUG - 2025-10-02 13:02:45 --> PDV Controller - Dados da sessão:
+DEBUG - 2025-10-02 13:02:45 -->   - tipo: 3
+DEBUG - 2025-10-02 13:02:45 -->   - status: null
+DEBUG - 2025-10-02 13:02:45 -->   - usuario: teste
+DEBUG - 2025-10-02 13:02:45 -->   - id_empresa: 3
+DEBUG - 2025-10-02 13:02:45 -->   - id_contador: 1
+DEBUG - 2025-10-02 13:02:45 --> PDV Controller - Permissões OK, carregando dados...
+DEBUG - 2025-10-02 13:02:45 --> PDV Controller - Dados preparados:
+DEBUG - 2025-10-02 13:02:45 -->   - Total de itens: 1
+DEBUG - 2025-10-02 13:02:45 -->   - Total geral: R$ 1,00
+DEBUG - 2025-10-02 13:02:45 --> === PDV Controller SUCESSO === Renderizando view
+INFO - 2025-10-02 13:02:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2025-10-02 13:02:53 --> [Cielo] Credenciais não configuradas, usando modo de teste
+INFO - 2025-10-02 13:02:53 --> [TEF] Autorização processada
+INFO - 2025-10-02 13:02:53 --> [TEF] Confirmação processada
+INFO - 2025-10-02 13:02:53 --> [Pos::finalize] Pagamento TEF processado
+INFO - 2025-10-02 13:02:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:02:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:03:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:03:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:03:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 13:03:07 --> Products::search - Termo: , Contador: 1, Empresa: 3, Page: 1, Limit: 50
+INFO - 2025-10-02 13:03:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 13:03:10 --> Products::search - Termo: 27, Contador: 1, Empresa: 3, Page: 1, Limit: 50
+DEBUG - 2025-10-02 13:03:10 --> Products::search - Resultados encontrados: 1
+DEBUG - 2025-10-02 13:03:10 --> Products::search - Primeiro resultado: {"id_produto":"27","nome":"IPHONE ","codigo_de_barras":"123","valor_unitario":"1","CFOP_NFe":"5403","CFOP_NFCe":"5102","CFOP_Externo":"6104","NCM":"12312323","CSOSN":"103","id_unidade":"1","id_contador":"1","id_empresa":"3","created_at":"2025-10-02 03:50:10","updated_at":"2025-10-02 03:50:10","deleted_at":"0000-00-00 00:00:00","estoque":"3.000","estoque_minimo":"0.000"}
+DEBUG - 2025-10-02 13:03:10 --> Products::search - Primeiro resultado mapeado: {"id_produto":"27","nome":"IPHONE ","codigo_de_barras":"123","valor_unitario":"1","CFOP_NFe":"5403","CFOP_NFCe":"5102","CFOP_Externo":"6104","NCM":"12312323","CSOSN":"103","id_unidade":"1","id_contador":"1","id_empresa":"3","created_at":"2025-10-02 03:50:10","updated_at":"2025-10-02 03:50:10","deleted_at":"0000-00-00 00:00:00","estoque":"3.000","estoque_minimo":"0.000","quantidade_estoque":3,"id":"27","codigo_barras":"123","preco_unitario":"1.00"}
+INFO - 2025-10-02 13:03:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:03:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:03:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:03:16 --> [PIX] QR Code gerado
+ERROR - 2025-10-02 13:03:16 --> [Pos::finalize] Erro no PIX
+INFO - 2025-10-02 13:11:30 --> [PaymentRetry] Tentativa 1/3
+INFO - 2025-10-02 13:11:30 --> [PaymentRetry] Tentativa 1/3
+INFO - 2025-10-02 13:11:30 --> [PaymentRetry] Aguardando 1s antes de retry
+INFO - 2025-10-02 13:11:31 --> [PaymentRetry] Tentativa 2/3
+INFO - 2025-10-02 13:11:31 --> [PaymentRetry] Aguardando 2s antes de retry
+INFO - 2025-10-02 13:11:33 --> [PaymentRetry] Tentativa 3/3
+ERROR - 2025-10-02 13:11:33 --> [PaymentRetry] Falhou após 3 tentativas
+INFO - 2025-10-02 13:11:33 --> [PaymentRetry] Tentativa 1/3
+INFO - 2025-10-02 13:11:33 --> [PaymentRetry] Aguardando 1s antes de retry
+INFO - 2025-10-02 13:11:34 --> [PaymentRetry] Tentativa 2/3
+INFO - 2025-10-02 13:11:34 --> [PaymentRetry] Tentativa 1/3
+INFO - 2025-10-02 13:11:34 --> [PaymentRetry] Aguardando 1s antes de retry
+INFO - 2025-10-02 13:11:35 --> [PaymentRetry] Tentativa 2/3
+INFO - 2025-10-02 13:11:35 --> [PaymentRetry] Aguardando 2s antes de retry
+INFO - 2025-10-02 13:11:37 --> [PaymentRetry] Tentativa 3/3
+ERROR - 2025-10-02 13:11:37 --> [PaymentRetry] Falhou após 3 tentativas
+INFO - 2025-10-02 13:11:37 --> [PaymentRetry] Tentativa 1/3
+WARNING - 2025-10-02 13:11:37 --> [PaymentRetry] Erro não-recuperável - abortando
+INFO - 2025-10-02 13:11:37 --> [PaymentRetry] Tentativa 1/3
+INFO - 2025-10-02 13:11:37 --> [PaymentRetry] Aguardando 1s antes de retry
+INFO - 2025-10-02 13:11:38 --> [PaymentRetry] Tentativa 2/3
+INFO - 2025-10-02 13:11:38 --> [PaymentRetry] Aguardando 2s antes de retry
+INFO - 2025-10-02 13:11:40 --> [PaymentRetry] Tentativa 3/3
+ERROR - 2025-10-02 13:11:40 --> [PaymentRetry] Falhou após 3 tentativas
+DEBUG - 2025-10-02 13:17:28 --> === PdvAccessFilter INÍCIO === URI: /pdv
+INFO - 2025-10-02 13:17:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 13:17:28 --> PdvAccessFilter - Dados da sessão:
+DEBUG - 2025-10-02 13:17:28 -->   - tipo: 3
+DEBUG - 2025-10-02 13:17:28 -->   - id_empresa: 3
+DEBUG - 2025-10-02 13:17:28 -->   - id_contador: 1
+DEBUG - 2025-10-02 13:17:28 -->   - usuario: teste
+DEBUG - 2025-10-02 13:17:28 -->   - session_id: f6mh5alinoqote961fgb8m1d8jr7h6s1
+DEBUG - 2025-10-02 13:17:28 --> PdvAccessFilter - Validação de acesso:
+DEBUG - 2025-10-02 13:17:28 -->   - tipos permitidos: [1,3,4]
+DEBUG - 2025-10-02 13:17:28 -->   - tipo do usuário: 3 (válido: SIM)
+DEBUG - 2025-10-02 13:17:28 -->   - id_empresa: 3 (válido: SIM)
+DEBUG - 2025-10-02 13:17:28 -->   - wants JSON: NÃO
+DEBUG - 2025-10-02 13:17:28 --> PdvAccessFilter - Verificando empresa no banco...
+DEBUG - 2025-10-02 13:17:28 --> PdvAccessFilter - Empresa encontrada: Stage (ID: 3)
+DEBUG - 2025-10-02 13:17:28 --> === PdvAccessFilter SUCESSO === Acesso liberado para teste
+DEBUG - 2025-10-02 13:17:28 --> === PDV Controller INÍCIO ===
+DEBUG - 2025-10-02 13:17:28 --> PDV Controller - Dados da sessão:
+DEBUG - 2025-10-02 13:17:28 -->   - tipo: 3
+DEBUG - 2025-10-02 13:17:28 -->   - status: null
+DEBUG - 2025-10-02 13:17:28 -->   - usuario: teste
+DEBUG - 2025-10-02 13:17:28 -->   - id_empresa: 3
+DEBUG - 2025-10-02 13:17:28 -->   - id_contador: 1
+DEBUG - 2025-10-02 13:17:28 --> PDV Controller - Permissões OK, carregando dados...
+DEBUG - 2025-10-02 13:17:28 --> PDV Controller - Dados preparados:
+DEBUG - 2025-10-02 13:17:28 -->   - Total de itens: 1
+DEBUG - 2025-10-02 13:17:28 -->   - Total geral: R$ 1,00
+DEBUG - 2025-10-02 13:17:28 --> === PDV Controller SUCESSO === Renderizando view
+INFO - 2025-10-02 13:17:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:17:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:17:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:17:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 13:17:29 --> === PdvAccessFilter INÍCIO === URI: /pdv
+INFO - 2025-10-02 13:17:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 13:17:29 --> PdvAccessFilter - Dados da sessão:
+DEBUG - 2025-10-02 13:17:29 -->   - tipo: 3
+DEBUG - 2025-10-02 13:17:29 -->   - id_empresa: 3
+DEBUG - 2025-10-02 13:17:29 -->   - id_contador: 1
+DEBUG - 2025-10-02 13:17:29 -->   - usuario: teste
+DEBUG - 2025-10-02 13:17:29 -->   - session_id: f6mh5alinoqote961fgb8m1d8jr7h6s1
+DEBUG - 2025-10-02 13:17:29 --> PdvAccessFilter - Validação de acesso:
+DEBUG - 2025-10-02 13:17:29 -->   - tipos permitidos: [1,3,4]
+DEBUG - 2025-10-02 13:17:29 -->   - tipo do usuário: 3 (válido: SIM)
+DEBUG - 2025-10-02 13:17:29 -->   - id_empresa: 3 (válido: SIM)
+DEBUG - 2025-10-02 13:17:29 -->   - wants JSON: NÃO
+DEBUG - 2025-10-02 13:17:29 --> PdvAccessFilter - Verificando empresa no banco...
+DEBUG - 2025-10-02 13:17:29 --> PdvAccessFilter - Empresa encontrada: Stage (ID: 3)
+DEBUG - 2025-10-02 13:17:29 --> === PdvAccessFilter SUCESSO === Acesso liberado para teste
+DEBUG - 2025-10-02 13:17:29 --> === PDV Controller INÍCIO ===
+DEBUG - 2025-10-02 13:17:29 --> PDV Controller - Dados da sessão:
+DEBUG - 2025-10-02 13:17:29 -->   - tipo: 3
+DEBUG - 2025-10-02 13:17:29 -->   - status: null
+DEBUG - 2025-10-02 13:17:29 -->   - usuario: teste
+DEBUG - 2025-10-02 13:17:29 -->   - id_empresa: 3
+DEBUG - 2025-10-02 13:17:29 -->   - id_contador: 1
+DEBUG - 2025-10-02 13:17:29 --> PDV Controller - Permissões OK, carregando dados...
+DEBUG - 2025-10-02 13:17:29 --> PDV Controller - Dados preparados:
+DEBUG - 2025-10-02 13:17:29 -->   - Total de itens: 1
+DEBUG - 2025-10-02 13:17:29 -->   - Total geral: R$ 1,00
+DEBUG - 2025-10-02 13:17:29 --> === PDV Controller SUCESSO === Renderizando view
+INFO - 2025-10-02 13:17:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:17:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:17:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:17:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:17:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-10-02 13:17:36 --> ATENÇÃO: Shifts::close() FOI EXECUTADO. id=2
+DEBUG - 2025-10-02 13:17:36 --> Shifts::close - Início. ID turno=2, payload={"closed_by":"pdv","closing_amount":"1","id_cash_register":"1"}
+DEBUG - 2025-10-02 13:17:36 --> Shifts::close - closing_amount normalizado=1
+INFO - 2025-10-02 13:17:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-10-02 13:17:36 --> Shifts::close - Turno atual carregado: {"id_shift":"2","id_cash_register":"1","opened_by":"pdv","closed_by":"","opened_at":"2025-10-02 03:49:30","closed_at":"0000-00-00 00:00:00","opening_amount":"0.00","closing_amount":"0.00","status":"open","id_contador":"1","id_empresa":"3","created_at":"2025-10-02 03:49:30","updated_at":"2025-10-02 03:49:30","deleted_at":"0000-00-00 00:00:00"}
+DEBUG - 2025-10-02 13:17:36 --> Shifts::close - Totais por pagamento: [{"payment_type":"cash","valor":"1.00","qtd":"1"},{"payment_type":"debit","valor":"1.00","qtd":"1"}]
+DEBUG - 2025-10-02 13:17:36 --> Shifts::close - Dados para update: {"closed_by":"pdv","closed_at":"2025-10-02 13:17:36","closing_amount":1,"status":"closed","id_cash_register":1}
+DEBUG - 2025-10-02 13:17:36 --> Shifts::close - Sucesso. Registro atualizado: {"id_shift":"2","id_cash_register":"1","opened_by":"pdv","closed_by":"pdv","opened_at":"2025-10-02 03:49:30","closed_at":"2025-10-02 13:17:36","opening_amount":"0.00","closing_amount":"1.00","status":"closed","id_contador":"1","id_empresa":"3","created_at":"2025-10-02 03:49:30","updated_at":"2025-10-02 13:17:36","deleted_at":"0000-00-00 00:00:00"}
+DEBUG - 2025-10-02 13:17:36 --> Shifts::close - Tentando fechar caixa com: contador=1, empresa=3, usuario=0, valor=1
+DEBUG - 2025-10-02 13:17:36 --> CaixaSessaoModel::closeOpenSession - Início: contador=1, empresa=3, usuario=0, valor=1
+DEBUG - 2025-10-02 13:17:36 --> CaixaSessaoModel::closeOpenSession - Resultado query: {"id":"2","id_contador":"1","id_empresa":"3","id_usuario_abertura":null,"data_abertura":"2025-10-02 03:49:30","valor_inicial":"0.00","id_usuario_fechamento":null,"data_fechamento":null,"valor_final_contado_dinheiro":"0.00","valor_final_calculado_dinheiro":"0.00","total_vendas_cartao":"0.00","total_vendas_pix":"0.00","total_vendas_outros":"0.00","diferenca_dinheiro":"0.00","status":"aberto","created_at":"2025-10-02 03:49:30","updated_at":"2025-10-02 03:49:30","deleted_at":null}
+DEBUG - 2025-10-02 13:17:36 --> CaixaSessaoModel::closeOpenSession - Caixa encontrado: id=2, valor_inicial=0
+DEBUG - 2025-10-02 13:17:36 --> CaixaSessaoModel::closeOpenSession - Fazendo update: id=2, dados={"id_usuario_fechamento":null,"data_fechamento":"2025-10-02 13:17:36","valor_final_contado_dinheiro":1,"valor_final_calculado_dinheiro":1,"total_vendas_cartao":1,"total_vendas_pix":0,"total_vendas_outros":0,"diferenca_dinheiro":0,"status":"fechado"}
+DEBUG - 2025-10-02 13:17:36 --> CaixaSessaoModel::closeOpenSession - Update result: ok=true, affected=1
+INFO - 2025-10-02 13:17:36 --> CaixaSessaoModel::closeOpenSession - Sucesso! Sessão fechada: id=2
+INFO - 2025-10-02 13:17:36 --> Shifts::close - Caixa sessão fechada via model centralizado. id=2
+INFO - 2025-10-02 13:17:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:17:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:17:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:17:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:17:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:17:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:17:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:18:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:18:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:18:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:18:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:18:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:18:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:18:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:18:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:18:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:18:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:18:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-10-02 13:18:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

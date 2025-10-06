@@ -1,0 +1,37 @@
+---
+alwaysApply: true
+---
+@arquitetura-pdv:
+
+text
+# ARQUITETURA DO PDV
+
+## Estrutura de Diretórios
+src/
+├── modules/
+│   ├── sales/       # Vendas
+│   ├── payments/    # Integrações de pagamento
+│   ├── fiscal/      # NFC-e, NF-e
+│   ├── cashier/     # Controle de caixa
+│   ├── inventory/   # Já existe no ERP
+│   └── reports/     # Relatórios
+├── shared/
+│   ├── middlewares/ # Tenant, auth, etc
+│   ├── utils/
+│   └── database/
+
+## Padrões de Projeto
+- Strategy: Meios de pagamento
+- Factory: Criação de transações
+- Observer: Eventos de venda
+- Repository: Acesso a dados
+
+## Fluxo de Venda
+1. Adicionar itens ao carrinho
+2. Aplicar descontos (se houver)
+3. Selecionar forma(s) de pagamento
+4. Processar pagamento(s)
+5. Atualizar estoque (via ERP)
+6. Emitir NFC-e
+7. Registrar no caixa
+8. Finalizar venda

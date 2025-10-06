@@ -1,0 +1,30 @@
+[
+  {
+    "id_produto": 1,
+    "codigo_de_barras": "7891234567890",
+    "nome": "Produto Teste A",
+    "valor_unitario": 10.00,
+    "unidade": "UN",
+    "id_contador": 1,
+    "id_empresa": 100
+  },
+  {
+    "id_produto": 2,
+    "codigo_de_barras": "7891234567891",
+    "nome": "Produto Teste B",
+    "valor_unitario": 15.00,
+    "unidade": "UN",
+    "id_contador": 1,
+    "id_empresa": 100
+  },
+  {
+    "id_produto": 3,
+    "codigo_de_barras": "7891234567892",
+    "nome": "Produto Teste C",
+    "valor_unitario": 25.00,
+    "unidade": "KG",
+    "id_contador": 2,
+    "id_empresa": 200
+  }
+]
+

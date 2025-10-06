@@ -58,6 +58,39 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-header">DASHBOARDS ADMINISTRATIVOS</li>
+                        <li class="nav-item">
+                            <a id="dashboard_master" href="/inicio/admin" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Dashboard Master
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="backup_dashboard" href="/admin/backup-dashboard" class="nav-link">
+                                <i class="nav-icon fas fa-shield-alt"></i>
+                                <p>
+                                    Monitor de Backup
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="cache_monitor" href="/admin/cache-monitor" class="nav-link">
+                                <i class="nav-icon fas fa-memory"></i>
+                                <p>
+                                    Monitor de Cache
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="audit_dashboard" href="/admin/audit-dashboard" class="nav-link">
+                                <i class="nav-icon fas fa-search"></i>
+                                <p>
+                                    Dashboard de Auditoria
+                                </p>
+                            </a>
+                        </li>
                     <?php elseif($tipo == 2): ?>
                         <li class="nav-header"></li>
                         <li class="nav-item">

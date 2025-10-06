@@ -10,6 +10,9 @@ class Settings extends ResourceController
 
     public function company()
     {
+        // SEGURANÇA CRÍTICA: Validação de ownership obrigatória
+        helper('tenant');
+        
         $session = session();
         $idEmpresa = (int) ($session->get('id_empresa') ?? 0);
         $idContador = (int) ($session->get('id_contador') ?? 0);
@@ -23,6 +26,9 @@ class Settings extends ResourceController
             ->where('id_contador', $idContador)
             ->first();
         if (! $empresa) return $this->failNotFound('Empresa não encontrada');
+        
+        // VALIDAR OWNERSHIP: Empresa deve pertencer ao tenant atual
+        validateOwnershipOrFail($empresa, ['id_contador', 'id_empresa'], 'empresa');
 
         $logoPath = WRITEPATH . 'uploads/logos/logo-' . $idEmpresa . '.png';
         $logoUrl = file_exists($logoPath) ? (base_url('api/settings/company/logo') . '?_=' . filemtime($logoPath)) : null;
@@ -46,6 +52,9 @@ class Settings extends ResourceController
 
     public function companyUpdate()
     {
+        // SEGURANÇA CRÍTICA: Validação de ownership obrigatória
+        helper('tenant');
+        
         $session = session();
         $idEmpresa = (int) ($session->get('id_empresa') ?? 0);
         $idContador = (int) ($session->get('id_contador') ?? 0);
@@ -55,6 +64,15 @@ class Settings extends ResourceController
         if ($idEmpresa === 0) return $this->failValidationErrors('Sessão inválida');
 
         $empresaModel = new \App\Models\EmpresaModel();
+        
+        // Buscar empresa para validação de ownership
+        $empresa = $empresaModel->where('id_empresa', $idEmpresa)
+                                ->where('id_contador', $idContador)
+                                ->first();
+        if (!$empresa) return $this->failNotFound('Empresa não encontrada');
+        
+        // VALIDAR OWNERSHIP: Empresa deve pertencer ao tenant atual
+        validateOwnershipOrFail($empresa, ['id_contador', 'id_empresa'], 'empresa');
 
         if ($this->request->getMethod() === 'post' && $this->request->getFile('logo')) {
             // Upload do logo
@@ -104,6 +122,9 @@ class Settings extends ResourceController
     // Servir logo do disco (writable)
     public function companyLogo()
     {
+        // SEGURANÇA CRÍTICA: Validação de ownership obrigatória
+        helper('tenant');
+        
         $session = session();
         $idEmpresa = (int) ($session->get('id_empresa') ?? 0);
         if ($idEmpresa === 0 && function_exists('resolve_tenant_ids')) { [, $idEmpresa] = resolve_tenant_ids(); }
@@ -117,6 +138,9 @@ class Settings extends ResourceController
     // Impressão: obter e salvar configuração
     public function printing()
     {
+        // SEGURANÇA CRÍTICA: Validação de ownership obrigatória
+        helper('tenant');
+        
         $session = session();
         $idEmpresa = (int) ($session->get('id_empresa') ?? 0);
         if ($idEmpresa === 0 && function_exists('resolve_tenant_ids')) { [, $idEmpresa] = resolve_tenant_ids(); }
@@ -149,6 +173,9 @@ class Settings extends ResourceController
     // Meios de pagamento: listar/salvar (ativação e taxas)
     public function payments()
     {
+        // SEGURANÇA CRÍTICA: Validação de ownership obrigatória
+        helper('tenant');
+        
         $session = session();
         $idEmpresa = (int) ($session->get('id_empresa') ?? 0);
         if ($idEmpresa === 0 && function_exists('resolve_tenant_ids')) { [, $idEmpresa] = resolve_tenant_ids(); }
@@ -201,6 +228,9 @@ class Settings extends ResourceController
     // Usuários e Permissões (por empresa) - armazenamento simples em JSON + tabela logins
     public function users()
     {
+        // SEGURANÇA CRÍTICA: Validação de ownership obrigatória
+        helper('tenant');
+        
         $session = session();
         $idEmpresa = (int) ($session->get('id_empresa') ?? 0);
         if ($idEmpresa === 0 && function_exists('resolve_tenant_ids')) { [, $idEmpresa] = resolve_tenant_ids(); }
@@ -269,6 +299,9 @@ class Settings extends ResourceController
 
     public function usersMe()
     {
+        // SEGURANÇA CRÍTICA: Validação de ownership obrigatória
+        helper('tenant');
+        
         $session = session();
         $username = (string) ($session->get('usuario') ?? '');
         $idEmpresa = (int) ($session->get('id_empresa') ?? 0);

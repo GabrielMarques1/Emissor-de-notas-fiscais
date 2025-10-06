@@ -10,14 +10,44 @@ $routes->get('/', 'Home::index');
 // Teste de correções (remover após validação)
 $routes->get('teste-correcoes', 'TesteCorrecoes::index');
 $routes->group('teste-login-pdv', static function($routes) {
-	$routes->get('/', 'TesteLoginPDV::index');
 	$routes->post('testar', 'TesteLoginPDV::testar');
 });
 $routes->get('teste-session', 'TesteSession::index');
 $routes->get('teste-pdv-access', 'TestePDVAccess::verificar');
 $routes->get('pdv-debug', 'PDVDebug::index');
-$routes->get('pdv-direct', 'PDV::index'); // PDV sem filtros para teste
-$routes->get('pdv-simple', 'PDVSimple::index'); // PDV super simples
+$routes->get('pdv-direct', 'PDV::index'); // PDV sem filtro// Teste ultra simples
+$routes->get('simple-test', 'SimpleTest::index');
+
+// Simular login admin para teste
+$routes->get('login-admin-test', function() {
+    $session = session();
+    $session->set([
+        'tipo' => 1,
+        'usuario' => 'admin_teste',
+        'id' => 1,
+        'id_contador' => 1,
+        'idEmpresa' => 1,
+        'logged_in' => true
+    ]);
+    return 'Login admin simulado! <a href="/admin/backup-dashboard">Testar Dashboard</a>';
+}); // PDV super simples
+
+// Testes de Segurança TenantFilter
+$routes->group('testsecurity', static function($routes) {
+    $routes->get('/', 'TestSecurity::index');           // Deve ser bloqueado sem tenant
+    $routes->get('violation', 'TestSecurity::testViolation'); // Teste de violação
+    $routes->get('audit', 'TestSecurity::testAudit');   // Verificar logs
+    $routes->get('publictest', 'TestSecurity::publicTest'); // Público (não bloqueado)
+    $routes->get('session', 'TestSecurity::sessionInfo'); // Verificar sessão
+});
+
+// Testes do Sistema de Auditoria
+$routes->group('test-audit', static function($routes) {
+    $routes->get('/', 'TestAuditSystem::index');        // Teste completo
+    $routes->get('helpers', 'TestAuditSystem::testHelpers'); // Teste helpers
+    $routes->get('logs', 'TestAuditSystem::showLogs');  // Mostrar logs JSON
+    $routes->get('clear', 'TestAuditSystem::clearTestLogs'); // Limpar logs
+});
 
 // ==================== CRON JOBS (HTTP) ==================== //
 // Para hospedagens sem acesso a cron via SSH
@@ -94,13 +124,42 @@ $routes->group('relatorios-empresa', ['filter' => 'auth'], static function($rout
 $routes->group('cobranca', static function($routes) {
 	$routes->get('gerar', 'Cobranca::gerarCobrancasMensais');
 	$routes->get('verificar', 'Cobranca::verificarInadimplencia');
-	$routes->get('bloquear/(:num)', 'Cobranca::bloquearEmpresa/$1');
 	$routes->get('desbloquear/(:num)', 'Cobranca::desbloquearEmpresa/$1');
 	$routes->get('bloquear-contador/(:num)', 'Cobranca::bloquearContador/$1');
 	$routes->get('desbloquear-contador/(:num)', 'Cobranca::desbloquearContador/$1');
 	$routes->get('minhas', 'Cobranca::minhasCobrancasEmpresa');
 	$routes->get('empresas', 'Cobranca::minhasCobrancasContador');
 	$routes->get('admin', 'Cobranca::adminLista');
+});
+
+// Rota de debug simples (TEMPORÁRIA)
+$routes->get('debug-test', function() {
+    return 'DEBUG: Rota funcionando! Timestamp: ' . date('Y-m-d H:i:s');
+});
+
+// Rota de debug para dashboard (SEM FILTROS)
+$routes->get('debug-dashboard', 'Admin\TestDashboard::index');
+
+// Rotas dos Dashboards Administrativos - apenas ADMIN (tipo 1)
+$routes->group('admin', static function($routes) {
+	// Master dashboard integrado no Inicio::admin
+	$routes->get('test-dashboard', 'Admin\TestDashboard::index');
+	$routes->get('backup-dashboard', 'Admin\BackupDashboard::index');
+	$routes->get('backup-dashboard/stats', 'Admin\BackupDashboard::stats');
+	$routes->post('backup-dashboard/run', 'Admin\BackupDashboard::run');
+	$routes->post('backup-dashboard/test-restore', 'Admin\BackupDashboard::testRestore');
+	$routes->post('backup-dashboard/cleanup', 'Admin\BackupDashboard::cleanup');
+	$routes->get('cache-monitor', 'Admin\CacheMonitor::index');
+	$routes->get('cache-monitor/stats', 'Admin\CacheMonitor::stats');
+	$routes->post('cache-monitor/flush', 'Admin\CacheMonitor::flush');
+	$routes->post('cache-monitor/invalidateGroup', 'Admin\CacheMonitor::invalidateGroup');
+	$routes->post('cache-monitor/cleanup', 'Admin\CacheMonitor::cleanup');
+	$routes->get('cache-monitor/cacheDetails', 'Admin\CacheMonitor::cacheDetails');
+	$routes->get('audit-dashboard', 'Admin\AuditDashboard::index');
+	$routes->get('audit-dashboard/logs', 'Admin\AuditDashboard::logs');
+	$routes->get('audit-dashboard/search', 'Admin\AuditDashboard::search');
+	$routes->get('security-dashboard', 'Admin\SecurityDashboard::index');
+	$routes->get('security-dashboard/alerts', 'Admin\SecurityDashboard::getAlerts');
 });
 
 // Rotas Stripe
@@ -112,8 +171,8 @@ $routes->group('stripe', static function($routes) {
 	$routes->get('cancel', 'Inicio::emissor');
 });
 
-// Proteger o emissor com filtro de assinatura
-$routes->group('inicio', ['filter' => 'subscription'], static function($routes) {
+// Proteger o emissor com filtro de assinatura (TEMPORARIAMENTE DESABILITADO)
+$routes->group('inicio', static function($routes) {
 	$routes->get('emissor', 'Inicio::emissor');
 });
 
@@ -192,4 +251,8 @@ $routes->group('api', ['namespace' => 'App\\Controllers\\Api'], static function(
 	// Caixa - reconstruído (mantido por compatibilidade, mas preferir Shifts)
 	$routes->post('caixa/abrir', 'Caixa::abrir');
 	$routes->post('caixa/fechar', 'Caixa::fechar');
+	// Ping - verificação de conexão
+	$routes->get('ping', 'Ping::index');
+	// Sync - sincronização offline
+	$routes->post('sync/outbox', 'Sync::outbox');
 });

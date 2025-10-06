@@ -256,7 +256,8 @@ class RelatoriosEmpresa extends Controller
                           ELSE ""
                       END as cliente_documento', false)
             ->join('clientes', 'clientes.id_cliente = pos_sales.id_cliente', 'left')
-            ->where('pos_sales.id_empresa', $this->id_empresa);
+            ->where('pos_sales.id_empresa', $this->id_empresa)
+            ->where('pos_sales.id_contador', $this->id_contador);
 
         if (!empty($filtros['data_inicio'])) {
             $query->where('DATE(pos_sales.created_at) >=', $filtros['data_inicio']);
@@ -299,7 +300,10 @@ class RelatoriosEmpresa extends Controller
             ->join('cash_registers', 'cash_registers.id_cash_register = shifts.id_cash_register')
             ->join('logins l1', 'l1.id_login = shifts.opened_by', 'left')
             ->join('logins l2', 'l2.id_login = shifts.closed_by', 'left')
-            ->where('shifts.id_empresa', $this->id_empresa);
+            ->where('shifts.id_empresa', $this->id_empresa)
+            ->where('shifts.id_contador', $this->id_contador)
+            ->where('cash_registers.id_empresa', $this->id_empresa)
+            ->where('cash_registers.id_contador', $this->id_contador);
 
         if (!empty($filtros['data_inicio'])) {
             $query->where('DATE(shifts.opened_at) >=', $filtros['data_inicio']);

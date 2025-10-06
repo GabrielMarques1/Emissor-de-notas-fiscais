@@ -102,10 +102,7 @@ class BaseAppModel extends Model
         }
         return self::$tableFieldsCache[$this->table];
     }
-
-    /**
-     * Override findAll para garantir filtragem multi-tenant
-     */
+    
     public function findAll(int $limit = 0, int $offset = 0)
     {
         if ($this->enforceTenant) {
@@ -264,6 +261,53 @@ class BaseAppModel extends Model
             $this->outboxRecord('delete', [$pkName => $id]);
         }
         return $data;
+    }
+    
+    /**
+     * Busca otimizada com prepared statements e cache
+     */
+    public function findOptimized($id, bool $useCache = true)
+    {
+        if ($useCache) {
+            $cache = new \App\Libraries\TenantCache();
+            $cacheKey = "{$this->table}:find:{$id}";
+            
+            return $cache->remember($cacheKey, function() use ($id) {
+                return $this->find($id);
+            }, 600); // 10 minutos
+        }
+        
+        return $this->find($id);
+    }
+    
+    /**
+     * Busca múltiplos registros otimizada (elimina N+1)
+     */
+    public function findMultipleOptimized(array $ids, bool $useCache = true): array
+    {
+        if (empty($ids)) {
+            return [];
+        }
+        
+        if ($useCache) {
+            $cache = new \App\Libraries\TenantCache();
+            $cacheKey = "{$this->table}:findMultiple:" . md5(serialize($ids));
+            
+            return $cache->remember($cacheKey, function() use ($ids) {
+                return $this->whereIn($this->primaryKey, $ids)->findAll();
+            }, 600);
+        }
+        
+        return $this->whereIn($this->primaryKey, $ids)->findAll();
+    }
+    
+    /**
+     * Invalidar cache relacionado ao model
+     */
+    public function invalidateCache($entityId = null): void
+    {
+        $cache = new \App\Libraries\TenantCache();
+        $cache->invalidateEntity($this->table, $entityId);
     }
 }
 

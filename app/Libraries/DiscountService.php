@@ -71,6 +71,32 @@ class DiscountService
             return ['success' => false, 'error' => 'Desconto não pode ser maior que o total da venda'];
         }
         
+        // Obter operador
+        $operatorId = (int) (session()->get('id_login') ?? $_SESSION['id_login'] ?? 0);
+        
+        // NOVO: Validar limite do operador (por perfil)
+        $operatorValidation = $this->validateOperatorLimits($operatorId, $type, $value, $discountAmount);
+        
+        if (!$operatorValidation['valid']) {
+            // Verificar se há aprovador
+            $approvedBy = isset($discountData['approved_by']) ? (int) $discountData['approved_by'] : null;
+            
+            if ($approvedBy) {
+                // Validar se aprovador tem permissão
+                $approverValidation = $this->validateApprover($approvedBy);
+                
+                if (!$approverValidation['valid']) {
+                    return ['success' => false, 'error' => 'Aprovador não tem permissão para autorizar este desconto'];
+                }
+            } else {
+                return [
+                    'success' => false, 
+                    'error' => $operatorValidation['reason'],
+                    'requires_approval' => true,
+                ];
+            }
+        }
+        
         // Validar limite do tenant
         $validation = $this->validateTenantLimits($type, $value, $discountAmount);
         
@@ -78,16 +104,16 @@ class DiscountService
             return ['success' => false, 'error' => $validation['reason']];
         }
         
-        // Obter operador
-        $operatorId = (int) (session()->get('id_login') ?? $_SESSION['id_login'] ?? 0);
-        
         // Registrar desconto (auditoria)
+        $approvedBy = isset($discountData['approved_by']) ? (int) $discountData['approved_by'] : null;
+        
         $this->discountModel->insert([
             'id_pos_sale' => $idSale,
             'type' => $type,
             'value' => $value,
             'amount' => $discountAmount,
             'applied_by' => $operatorId,
+            'approved_by' => $approvedBy,
             'reason' => $reason,
             'id_contador' => $idContador,
             'id_empresa' => $idEmpresa,
@@ -276,6 +302,92 @@ class DiscountService
                     'reason' => sprintf('Desconto acima de %.2f%% requer aprovação de gerente', $threshold),
                 ];
             }
+        }
+        
+        return ['valid' => true];
+    }
+    
+    /**
+     * Validar limites de desconto do operador (por perfil)
+     * 
+     * @param int $operatorId
+     * @param string $type
+     * @param float $value
+     * @param float $discountAmount
+     * @return array
+     */
+    protected function validateOperatorLimits(int $operatorId, string $type, float $value, float $discountAmount): array
+    {
+        if (!$operatorId) {
+            return ['valid' => false, 'reason' => 'Operador não identificado'];
+        }
+        
+        // Buscar limites do operador
+        $db = \Config\Database::connect();
+        $operator = $db->table('logins')
+                       ->where('id_login', $operatorId)
+                       ->get()
+                       ->getRowArray();
+        
+        if (!$operator) {
+            return ['valid' => false, 'reason' => 'Operador não encontrado'];
+        }
+        
+        // Validar desconto em percentual
+        if ($type === 'percentage') {
+            $maxPercentage = (float) ($operator['max_discount_percentage'] ?? 10.00);
+            
+            if ($value > $maxPercentage) {
+                return [
+                    'valid' => false,
+                    'reason' => sprintf(
+                        'Você só pode aplicar até %.0f%% de desconto. Para mais, solicite aprovação do gerente.',
+                        $maxPercentage
+                    ),
+                ];
+            }
+        }
+        
+        // Validar desconto em valor fixo
+        $maxAmount = isset($operator['max_discount_amount']) && $operator['max_discount_amount'] !== null
+                     ? (float) $operator['max_discount_amount']
+                     : PHP_FLOAT_MAX;
+        
+        if ($discountAmount > $maxAmount) {
+            return [
+                'valid' => false,
+                'reason' => sprintf(
+                    'Você só pode aplicar até R$ %.2f de desconto. Para mais, solicite aprovação do gerente.',
+                    $maxAmount
+                ),
+            ];
+        }
+        
+        return ['valid' => true];
+    }
+    
+    /**
+     * Validar se aprovador tem permissão
+     * 
+     * @param int $approverId
+     * @return array
+     */
+    protected function validateApprover(int $approverId): array
+    {
+        $db = \Config\Database::connect();
+        $approver = $db->table('logins')
+                       ->where('id_login', $approverId)
+                       ->get()
+                       ->getRowArray();
+        
+        if (!$approver) {
+            return ['valid' => false, 'reason' => 'Aprovador não encontrado'];
+        }
+        
+        $canApprove = (bool) ($approver['can_approve_discounts'] ?? false);
+        
+        if (!$canApprove) {
+            return ['valid' => false, 'reason' => 'Este usuário não pode aprovar descontos'];
         }
         
         return ['valid' => true];

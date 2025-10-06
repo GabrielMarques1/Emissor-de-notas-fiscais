@@ -64,86 +64,92 @@ class Products extends ResourceController
     // GET /api/products/barcode/{ean}
     public function barcode($ean)
     {
+        // SEGURANÇA CRÍTICA: Validação de ownership obrigatória
+        helper('tenant');
+        
         try {
             $session = session();
             $idContador = (int) ($session->get('id_contador') ?? 0);
             $idEmpresa  = (int) ($session->get('id_empresa') ?? 0);
+            
             if ($idContador === 0 || $idEmpresa === 0) {
-                if (function_exists('resolve_tenant_ids')) { [$idContador,$idEmpresa] = resolve_tenant_ids(); }
+                if (function_exists('resolve_tenant_ids')) { 
+                    [$idContador,$idEmpresa] = resolve_tenant_ids(); 
+                }
             }
+            
+            // SEGURANÇA: Validar tenant obrigatório
+            if (!$idContador || !$idEmpresa) {
+                log_message('error', '[Products::barcode] Tentativa de busca sem tenant válido', [
+                    'ean' => $ean,
+                    'id_contador' => $idContador,
+                    'id_empresa' => $idEmpresa,
+                ]);
+                return $this->fail('Sessão inválida', 401);
+            }
+            
             $ean = trim((string) $ean);
             
-            // DEBUG: Log da busca por código de barras
-            log_message('debug', 'Products::barcode - Buscando EAN: {ean}, Contador: {contador}, Empresa: {empresa}', [
-                'ean' => $ean, 'contador' => $idContador, 'empresa' => $idEmpresa
+            // VALIDAÇÃO: Código de barras não pode ser vazio
+            if ($ean === '' || $ean === 'SEM GTIN') {
+                return $this->failValidationErrors('Código de barras inválido');
+            }
+            
+            log_message('debug', '[Products::barcode] Buscando produto', [
+                'ean' => $ean,
+                'id_contador' => $idContador,
+                'id_empresa' => $idEmpresa,
             ]);
 
+            // CACHE: Verificar se produto está em cache (30 minutos)
+            $cache = \Config\Services::cache();
+            $cacheKey = "produto_barcode_{$idEmpresa}_{$idContador}_{$ean}";
+            $cached = $cache->get($cacheKey);
+            
+            if ($cached !== null) {
+                log_message('debug', '[Products::barcode] Produto encontrado em cache', [
+                    'id_produto' => $cached['id_produto'] ?? null,
+                ]);
+                return $this->respond($cached);
+            }
+
+            // BUSCA: APENAS no tenant atual (sem fallback global)
             $model = new ProdutoModel();
-            // 1) empresa + contador exato
             $prod = $model->where('id_contador', $idContador)
-                          ->where('id_empresa', $idEmpresa)
                           ->where('codigo_de_barras', $ean)
                           ->first();
-            log_message('debug', 'Products::barcode - Tentativa 1 (empresa+contador exato): {result}', [
-                'result' => $prod ? 'ENCONTRADO ID=' . (is_array($prod) ? ($prod['id_produto'] ?? 'N/A') : ($prod->id_produto ?? 'N/A')) : 'NAO_ENCONTRADO'
-            ]);
-            if ($prod) {
-                log_message('debug', 'Products::barcode - Produto encontrado: {data}', [
-                    'data' => json_encode(is_array($prod) ? $prod : (array) $prod)
-                ]);
-            }
             
-            // 2) empresa + contador LIKE (prefixo)
-            if (! $prod) {
-                $prod = (new ProdutoModel())
-                    ->where('id_contador', $idContador)
-                    ->where('id_empresa', $idEmpresa)
-                    ->like('codigo_de_barras', $ean)
-                    ->orderBy('id_produto', 'DESC')->first();
-                log_message('debug', 'Products::barcode - Tentativa 2 (empresa+contador LIKE): {result}', [
-                    'result' => $prod ? 'ENCONTRADO ID=' . ($prod->id_produto ?? 'N/A') : 'NAO_ENCONTRADO'
+            if (!$prod) {
+                log_message('info', '[Products::barcode] Produto não encontrado', [
+                    'ean' => $ean,
+                    'tenant' => "{$idContador}:{$idEmpresa}",
                 ]);
-            }
-            
-            // 3) somente contador
-            if (! $prod && $idContador) {
-                $prod = (new ProdutoModel())
-                    ->where('id_contador', $idContador)
-                    ->where('codigo_de_barras', $ean)
-                    ->first();
-                log_message('debug', 'Products::barcode - Tentativa 3 (somente contador): {result}', [
-                    'result' => $prod ? 'ENCONTRADO ID=' . ($prod->id_produto ?? 'N/A') : 'NAO_ENCONTRADO'
-                ]);
-            }
-            
-            // 4) global (fallback controlado)
-            if (! $prod) {
-                $prod = (new ProdutoModel())
-                    ->where('codigo_de_barras', $ean)
-                    ->first();
-                log_message('debug', 'Products::barcode - Tentativa 4 (global): {result}', [
-                    'result' => $prod ? 'ENCONTRADO ID=' . ($prod->id_produto ?? 'N/A') : 'NAO_ENCONTRADO'
-                ]);
-            }
-            
-            if (! $prod) {
-                log_message('warning', 'Products::barcode - Produto não encontrado para EAN: {ean}', ['ean' => $ean]);
                 return $this->failNotFound('Produto não encontrado');
             }
             
-            // Converter para array antes de mapear
-            $prodArray = is_array($prod) ? $prod : (array) $prod;
-            log_message('debug', 'Products::barcode - Dados antes do mapeamento: {data}', [
-                'data' => json_encode($prodArray)
-            ]);
+            // VALIDAR OWNERSHIP: Produto deve pertencer ao tenant atual
+            validateOwnershipOrFail($prod, ['id_contador', 'id_empresa'], 'produto');
             
-            $mappedProduct = $this->mapProductRow($prodArray);
-            log_message('debug', 'Products::barcode - Dados após mapeamento: {data}', [
-                'data' => json_encode($mappedProduct)
+            $mappedProduct = $this->mapProductRow($prod);
+            
+            // CACHE: Armazenar por 30 minutos
+            $cache->save($cacheKey, $mappedProduct, 1800);
+            
+            log_message('debug', '[Products::barcode] Produto encontrado e cacheado', [
+                'id_produto' => $mappedProduct['id_produto'] ?? null,
+                'nome' => $mappedProduct['nome'] ?? null,
             ]);
             
             return $this->respond($mappedProduct);
+            
         } catch (\Throwable $e) {
+            log_message('error', '[Products::barcode] Erro na busca', [
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'ean' => $ean ?? null,
+            ]);
+            
             // Não vazar erro interno para a UI; retornar 404 para fluxo do PDV
             return $this->failNotFound('Produto não encontrado');
         }
@@ -279,6 +285,131 @@ class Products extends ResourceController
         $db->transComplete();
         if ($db->transStatus() === false) return $this->failServerError('Falha ao ajustar estoque');
         return $this->respond(['ok' => true]);
+    }
+
+    /**
+     * GET /api/products/{id} - Buscar produto específico
+     */
+    public function show($id = null)
+    {
+        // SEGURANÇA CRÍTICA: Validação de ownership obrigatória
+        helper('tenant');
+        
+        if ($id === null) {
+            return $this->failValidationErrors('ID é obrigatório');
+        }
+        
+        $model = new ProdutoModel();
+        $produto = $model->find($id);
+        
+        if (!$produto) {
+            return $this->failNotFound('Produto não encontrado');
+        }
+        
+        // VALIDAR OWNERSHIP: Produto deve pertencer ao tenant atual
+        validateOwnershipOrFail($produto, ['id_contador', 'id_empresa'], 'produto');
+        
+        return $this->respond($this->mapProductRow($produto));
+    }
+
+    /**
+     * POST /api/products - Criar novo produto
+     */
+    public function create()
+    {
+        helper('tenant');
+        
+        $payload = $this->request->getJSON(true) ?? $this->request->getPost();
+        if (!$payload) {
+            return $this->failValidationErrors('Payload vazio');
+        }
+
+        // Validações básicas
+        $required = ['nome', 'preco'];
+        foreach ($required as $field) {
+            if (!isset($payload[$field]) || $payload[$field] === '') {
+                return $this->failValidationErrors("Campo obrigatório: {$field}");
+            }
+        }
+
+        // Adicionar dados do tenant atual
+        $tenantData = getCurrentTenantData();
+        $payload['id_contador'] = $tenantData['id_contador'];
+        $payload['id_empresa'] = $tenantData['id_empresa'];
+
+        $model = new ProdutoModel();
+        if (!$model->insert($payload)) {
+            return $this->failValidationErrors($model->errors());
+        }
+
+        $id = $model->getInsertID();
+        $created = $model->find($id);
+        
+        return $this->respondCreated($this->mapProductRow($created));
+    }
+
+    /**
+     * PUT /api/products/{id} - Atualizar produto
+     */
+    public function update($id = null)
+    {
+        // SEGURANÇA CRÍTICA: Validação de ownership obrigatória
+        helper('tenant');
+        
+        if ($id === null) {
+            return $this->failValidationErrors('ID é obrigatório');
+        }
+
+        // VALIDAR OWNERSHIP ANTES DE QUALQUER OPERAÇÃO
+        $model = new ProdutoModel();
+        $existing = $model->find($id);
+        
+        if (!$existing) {
+            return $this->failNotFound('Produto não encontrado');
+        }
+
+        validateOwnershipOrFail($existing, ['id_contador', 'id_empresa'], 'produto');
+
+        $payload = $this->request->getJSON(true) ?? $this->request->getRawInput();
+        if (!$payload) {
+            return $this->failValidationErrors('Payload vazio');
+        }
+
+        // Impedir alteração dos campos de tenant
+        unset($payload['id_contador'], $payload['id_empresa']);
+
+        if (!$model->update($id, $payload)) {
+            return $this->failValidationErrors($model->errors());
+        }
+
+        $updated = $model->find($id);
+        return $this->respond($this->mapProductRow($updated));
+    }
+
+    /**
+     * DELETE /api/products/{id} - Deletar produto
+     */
+    public function delete($id = null)
+    {
+        // SEGURANÇA CRÍTICA: Validação de ownership obrigatória
+        helper('tenant');
+        
+        if ($id === null) {
+            return $this->failValidationErrors('ID é obrigatório');
+        }
+
+        // VALIDAR OWNERSHIP ANTES DE DELETAR
+        $model = new ProdutoModel();
+        $existing = $model->find($id);
+        
+        if (!$existing) {
+            return $this->failNotFound('Produto não encontrado');
+        }
+
+        validateOwnershipOrFail($existing, ['id_contador', 'id_empresa'], 'produto');
+
+        $model->delete($id);
+        return $this->respondDeleted(['id' => $id]);
     }
 }
 

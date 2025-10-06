@@ -12,6 +12,9 @@ class Caixa extends ResourceController
     // GET /api/caixa/status
     public function status()
     {
+        // SEGURANÇA CRÍTICA: Validação de ownership obrigatória
+        helper('tenant');
+        
         try {
             $session = session();
             $idContador = (int) ($session->get('id_contador') ?? 0);
@@ -24,6 +27,11 @@ class Caixa extends ResourceController
             $current = null;
             if ($openId) {
                 $current = $model->find((int) $openId);
+                
+                // VALIDAR OWNERSHIP: Sessão deve pertencer ao tenant atual
+                if ($current) {
+                    validateOwnershipOrFail($current, ['id_contador', 'id_empresa'], 'caixa_sessao');
+                }
             } else {
                 // Última sessão (fechada) para referência
                 $current = $model->asArray()

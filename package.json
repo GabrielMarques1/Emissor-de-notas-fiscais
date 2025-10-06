@@ -1,0 +1,30 @@
+{
+  "name": "erp-pdv-multitenant",
+  "version": "1.0.0",
+  "description": "PDV Multi-Tenant SaaS - Sistema de Ponto de Venda",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:run:chrome": "cypress run --browser chrome",
+    "cypress:run:firefox": "cypress run --browser firefox",
+    "cypress:run:headless": "cypress run --headless",
+    "test:e2e": "cypress run --headless --browser chrome",
+    "test:e2e:video": "cypress run --browser chrome --video",
+    "test:e2e:spec": "cypress run --spec",
+    "cypress:record": "cypress run --record --key",
+    "cypress:parallel": "cypress run --record --parallel"
+  },
+  "keywords": [
+    "pdv",
+    "pos",
+    "multi-tenant",
+    "saas",
+    "erp"
+  ],
+  "author": "xFiscal ERP",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^13.6.0"
+  }
+}
+
