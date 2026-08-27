@@ -76,8 +76,62 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <!-- /.col -->
                     </div>
                 </form>
+                <hr>
+
+                <div>
+                    <p class="login-box-msg" style="margin-bottom: .75rem;">Novo por aqui? Crie sua conta após o pagamento</p>
+                    <div class="input-group mb-2">
+                        <input type="email" class="form-control" style="height: 42px" id="signup_email_empresa" placeholder="E-mail da empresa" autocomplete="email">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" style="height: 42px" id="signup_nome_fantasia" placeholder="Nome fantasia da empresa">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-building"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-2">
+                        <input type="email" class="form-control" style="height: 42px" id="signup_contador_email" placeholder="E-mail do contador (opcional)">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user-tie"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" style="height: 42px" id="signup_cnpj" placeholder="CNPJ (opcional)" maxlength="18">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-id-card"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="button" id="btn_ir_pagamento" class="btn btn-outline-primary btn-block" onclick="iniciarAssinatura()">Continuar para pagamento <i class="fas fa-credit-card"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form oculto não é mais necessário; requisição será AJAX para receber a URL e redirecionar -->
             </div>
             <!-- /.login-card-body -->
+        </div>
+        
+        <!-- Link para PDV -->
+        <div class="text-center mt-3">
+            <p class="mb-2 text-muted">
+                <small>Funcionário do caixa?</small>
+            </p>
+            <a href="/login-pdv" class="btn btn-outline-success btn-sm">
+                <i class="fas fa-cash-register"></i> Acesso ao PDV
+            </a>
         </div>
     </div>
     <!-- /.login-box -->
@@ -113,6 +167,68 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         <?php endif;
         ?>
+
+        // Paywall removido: não exibir mais pop-up de assinatura
+
+        function startCheckout(email, nome, contadorEmail, cnpj) {
+            if (!email || !nome) {
+                Swal.fire({ icon: 'warning', title: 'Informe e-mail e nome fantasia.' });
+                return;
+            }
+            const payload = {
+                email_empresa: email,
+                nome_fantasia: nome,
+                contador_email: contadorEmail,
+                cnpj: cnpj,
+            };
+            payload['<?= csrf_token() ?>'] = '<?= csrf_hash() ?>';
+            $.ajax({
+                url: '/stripe/checkout',
+                type: 'POST',
+                data: payload,
+                dataType: 'json'
+            }).done(function(data) {
+                if (data && data.url) {
+                    window.location.href = data.url;
+                } else {
+                    Swal.fire({ icon: 'error', title: (data && data.error) ? data.error : 'Falha ao iniciar checkout.' });
+                }
+            }).fail(function(xhr) {
+                let msg = 'Falha ao iniciar checkout';
+                try { const j = JSON.parse(xhr.responseText); if (j && j.error) msg = j.error; } catch(e){}
+                Swal.fire({ icon: 'error', title: msg });
+            });
+        }
+
+        function iniciarAssinatura() {
+            const email = $('#signup_email_empresa').val().trim();
+            const nome = $('#signup_nome_fantasia').val().trim();
+            const contadorEmail = $('#signup_contador_email').val().trim();
+            const cnpj = $('#signup_cnpj').val().trim();
+
+            if (!email || !nome) {
+                Swal.fire({ icon: 'warning', title: 'Informe e-mail e nome fantasia.' });
+                return;
+            }
+            const re = /^\S+@\S+\.[\S]+$/;
+            if (!re.test(email)) {
+                Swal.fire({ icon: 'warning', title: 'E-mail inválido.' });
+                return;
+            }
+
+            $.post('/login/verificaUsuario', { usuario: email, '<?= csrf_token() ?>': '<?= csrf_hash() ?>' })
+                .done(function(resp) {
+                    if (String(resp).trim() === '0') {
+                        // Não existe: inicia checkout
+                        startCheckout(email, nome, contadorEmail, cnpj);
+                    } else {
+                        Swal.fire({ icon: 'info', title: 'Usuário já cadastrado. Faça login.' });
+                    }
+                })
+                .fail(function() {
+                    Swal.fire({ icon: 'error', title: 'Falha ao verificar usuário. Tente novamente.' });
+                });
+        }
     </script>
 </body>
 

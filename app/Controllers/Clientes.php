@@ -12,7 +12,7 @@ class Clientes extends Controller
 {
     private $tipo = 3;
 
-    private $link = '5';
+    private $link = 'clientes';
 
     private $session;
     private $id_contador;

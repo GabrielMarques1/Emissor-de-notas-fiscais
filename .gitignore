@@ -1,0 +1,50 @@
+# CodeIgniter 4
+/writable/logs/
+/writable/cache/
+/writable/debugbar/
+/writable/session/
+/writable/uploads/
+/vendor/
+/.env
+/.env.local
+
+# Node.js & NPM
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Composer
+composer.phar
+composer.lock
+
+# Backup files
+*.bak
+*.backup
+*.sql~
+*.sql.bak
+
+# Test results
+phpunit-report.xml
+.phpunit.result.cache
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+~*
+

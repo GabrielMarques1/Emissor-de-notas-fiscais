@@ -11,7 +11,7 @@ class Transportadoras extends Controller
 {
     private $tipo = 3;
 
-    private $link = '8';
+    private $link = 'transportadoras';
 
     private $session;
     private $id_contador;

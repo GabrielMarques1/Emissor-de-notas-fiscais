@@ -9,6 +9,14 @@ class BaseAppModel extends Model
 {
     use OutboxTrait;
 
+    // Multi-tenant automático
+    protected $enforceTenant = true;
+    protected $tenantEmpresaField = 'id_empresa';
+    protected $tenantContadorField = 'id_contador';
+
+    protected $beforeFind   = ['applyTenantOnFind'];
+    protected $beforeInsert = ['applyTenantOnInsert'];
+
     protected $afterInsert = ['outboxAfterInsert'];
     protected $afterUpdate = ['outboxAfterUpdate'];
     protected $afterDelete = ['outboxAfterDelete'];
@@ -24,6 +32,174 @@ class BaseAppModel extends Model
         } catch (\Throwable $e) {
             return true;
         }
+    }
+
+    /**
+     * Obtém ids de tenant da sessão (ou resolve_tenant_ids)
+     */
+    protected function resolveTenantIds(): array
+    {
+        $session = session();
+        $idContador = (int) ($session->get('id_contador') ?? 0);
+        $idEmpresa  = (int) ($session->get('id_empresa') ?? 0);
+        if (($idContador === 0 || $idEmpresa === 0) && function_exists('resolve_tenant_ids')) {
+            [$idContador,$idEmpresa] = resolve_tenant_ids();
+        }
+        return [$idContador, $idEmpresa];
+    }
+
+    protected function applyTenantOnFind(array $data)
+    {
+        if (! $this->enforceTenant) return $data;
+        if (! isset($data['builder']) || ! is_object($data['builder'])) return $data;
+        [$idContador,$idEmpresa] = $this->resolveTenantIds();
+        
+        // Verifica se a tabela possui as colunas antes de aplicar filtros
+        $tableFields = $this->getTableFields();
+        
+        if ($this->tenantContadorField && $idContador > 0 && in_array($this->tenantContadorField, $tableFields)) {
+            $data['builder']->where($this->tenantContadorField, $idContador);
+        }
+        if ($this->tenantEmpresaField && $idEmpresa > 0 && in_array($this->tenantEmpresaField, $tableFields)) {
+            $data['builder']->where($this->tenantEmpresaField, $idEmpresa);
+        }
+        return $data;
+    }
+
+    protected function applyTenantOnInsert(array $data)
+    {
+        if (! $this->enforceTenant) return $data;
+        [$idContador,$idEmpresa] = $this->resolveTenantIds();
+        if (! isset($data['data']) || ! is_array($data['data'])) return $data;
+        
+        // Verifica se a tabela possui as colunas antes de aplicar valores
+        $tableFields = $this->getTableFields();
+        
+        if ($this->tenantContadorField && empty($data['data'][$this->tenantContadorField]) && $idContador > 0 && in_array($this->tenantContadorField, $tableFields)) {
+            $data['data'][$this->tenantContadorField] = $idContador;
+        }
+        if ($this->tenantEmpresaField && empty($data['data'][$this->tenantEmpresaField]) && $idEmpresa > 0 && in_array($this->tenantEmpresaField, $tableFields)) {
+            $data['data'][$this->tenantEmpresaField] = $idEmpresa;
+        }
+        return $data;
+    }
+
+    /**
+     * Obtém os campos da tabela atual (com cache)
+     */
+    private static $tableFieldsCache = [];
+    
+    protected function getTableFields(): array
+    {
+        if (!isset(self::$tableFieldsCache[$this->table])) {
+            try {
+                $fields = $this->db->getFieldNames($this->table);
+                self::$tableFieldsCache[$this->table] = $fields;
+            } catch (\Exception $e) {
+                // Se houver erro ao obter campos, assume que não tem campos tenant
+                self::$tableFieldsCache[$this->table] = [];
+            }
+        }
+        return self::$tableFieldsCache[$this->table];
+    }
+    
+    public function findAll(int $limit = 0, int $offset = 0)
+    {
+        if ($this->enforceTenant) {
+            [$idContador,$idEmpresa] = $this->resolveTenantIds();
+            $builder = $this->builder();
+            
+            // Verifica se a tabela possui as colunas antes de aplicar filtros
+            $tableFields = $this->getTableFields();
+            
+            if ($this->tenantContadorField && $idContador > 0 && in_array($this->tenantContadorField, $tableFields)) {
+                $builder->where($this->table . '.' . $this->tenantContadorField, $idContador);
+            }
+            if ($this->tenantEmpresaField && $idEmpresa > 0 && in_array($this->tenantEmpresaField, $tableFields)) {
+                $builder->where($this->table . '.' . $this->tenantEmpresaField, $idEmpresa);
+            }
+            
+            if ($limit > 0) {
+                $builder->limit($limit, $offset);
+            }
+            
+            return $builder->get()->getResultArray();
+        }
+        
+        return parent::findAll($limit, $offset);
+    }
+
+    /**
+     * Override find para garantir filtragem multi-tenant
+     */
+    public function find($id = null)
+    {
+        if ($this->enforceTenant && $id !== null) {
+            [$idContador,$idEmpresa] = $this->resolveTenantIds();
+            $builder = $this->builder();
+            
+            // Verifica se a tabela possui as colunas antes de aplicar filtros
+            $tableFields = $this->getTableFields();
+            
+            if ($this->tenantContadorField && $idContador > 0 && in_array($this->tenantContadorField, $tableFields)) {
+                $builder->where($this->table . '.' . $this->tenantContadorField, $idContador);
+            }
+            if ($this->tenantEmpresaField && $idEmpresa > 0 && in_array($this->tenantEmpresaField, $tableFields)) {
+                $builder->where($this->table . '.' . $this->tenantEmpresaField, $idEmpresa);
+            }
+            
+            if (is_array($id)) {
+                $builder->whereIn($this->primaryKey, $id);
+                return $builder->get()->getResultArray();
+            } else {
+                $builder->where($this->primaryKey, $id);
+                $result = $builder->get()->getFirstRow();
+                return $result ? (array) $result : null;
+            }
+        }
+        
+        return parent::find($id);
+    }
+
+    /**
+     * Garante que update respeita o tenant quando id for informado.
+     */
+    public function update($id = null, $data = null): bool
+    {
+        if ($this->enforceTenant && $id !== null) {
+            $row = $this->asArray()->find(is_array($id) ? ($id[0] ?? null) : $id);
+            if ($row) {
+                [$idContador,$idEmpresa] = $this->resolveTenantIds();
+                // Se não conseguiu resolver IDs de tenant, permite update (para compatibilidade com APIs)
+                if ($idContador > 0 || $idEmpresa > 0) {
+                    $ok = (
+                        (!$this->tenantContadorField || (int) ($row[$this->tenantContadorField] ?? 0) === $idContador) &&
+                        (!$this->tenantEmpresaField  || (int) ($row[$this->tenantEmpresaField]  ?? 0) === $idEmpresa)
+                    );
+                    if (! $ok) { return false; }
+                }
+            }
+        }
+        return parent::update($id, $data);
+    }
+
+    /**
+     * Garante que delete respeita o tenant quando id for informado.
+     */
+    public function delete($id = null, bool $purge = false)
+    {
+        if ($this->enforceTenant && $id !== null) {
+            $row = $this->asArray()->find(is_array($id) ? ($id[0] ?? null) : $id);
+            if ($row) {
+                [$idContador,$idEmpresa] = $this->resolveTenantIds();
+                $ok = (
+                    (!$this->tenantContadorField || (int) ($row[$this->tenantContadorField] ?? 0) === $idContador) &&
+                    (!$this->tenantEmpresaField  || (int) ($row[$this->tenantEmpresaField]  ?? 0) === $idEmpresa)
+                );
+                if (! $ok) { return false; }
+            }
+        }
+        return parent::delete($id, $purge);
     }
 
     protected function outboxAfterInsert(array $data)
@@ -85,6 +261,53 @@ class BaseAppModel extends Model
             $this->outboxRecord('delete', [$pkName => $id]);
         }
         return $data;
+    }
+    
+    /**
+     * Busca otimizada com prepared statements e cache
+     */
+    public function findOptimized($id, bool $useCache = true)
+    {
+        if ($useCache) {
+            $cache = new \App\Libraries\TenantCache();
+            $cacheKey = "{$this->table}:find:{$id}";
+            
+            return $cache->remember($cacheKey, function() use ($id) {
+                return $this->find($id);
+            }, 600); // 10 minutos
+        }
+        
+        return $this->find($id);
+    }
+    
+    /**
+     * Busca múltiplos registros otimizada (elimina N+1)
+     */
+    public function findMultipleOptimized(array $ids, bool $useCache = true): array
+    {
+        if (empty($ids)) {
+            return [];
+        }
+        
+        if ($useCache) {
+            $cache = new \App\Libraries\TenantCache();
+            $cacheKey = "{$this->table}:findMultiple:" . md5(serialize($ids));
+            
+            return $cache->remember($cacheKey, function() use ($ids) {
+                return $this->whereIn($this->primaryKey, $ids)->findAll();
+            }, 600);
+        }
+        
+        return $this->whereIn($this->primaryKey, $ids)->findAll();
+    }
+    
+    /**
+     * Invalidar cache relacionado ao model
+     */
+    public function invalidateCache($entityId = null): void
+    {
+        $cache = new \App\Libraries\TenantCache();
+        $cache->invalidateEntity($this->table, $entityId);
     }
 }
 

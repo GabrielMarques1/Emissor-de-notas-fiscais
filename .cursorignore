@@ -1,0 +1,13 @@
+# .cursorignore
+node_modules/
+dist/
+build/
+.git/
+.env
+.env.local
+*.log
+coverage/
+*.lock
+package-lock.json
+yarn.lock
+# Add directories or file patterns to ignore during indexing (e.g. foo/ or *.csv)

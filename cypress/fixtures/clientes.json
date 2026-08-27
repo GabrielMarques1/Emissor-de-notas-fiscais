@@ -1,0 +1,27 @@
+[
+  {
+    "id_cliente": 1,
+    "nome": "João da Silva",
+    "cpf": "12345678900",
+    "tipo": 1,
+    "id_contador": 1,
+    "id_empresa": 100
+  },
+  {
+    "id_cliente": 2,
+    "nome": "Maria Santos",
+    "cpf": "98765432100",
+    "tipo": 1,
+    "id_contador": 1,
+    "id_empresa": 100
+  },
+  {
+    "id_cliente": 3,
+    "nome": "Empresa XPTO Ltda",
+    "cnpj": "12345678000190",
+    "tipo": 2,
+    "id_contador": 2,
+    "id_empresa": 200
+  }
+]
+

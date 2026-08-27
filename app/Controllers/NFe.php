@@ -1513,6 +1513,30 @@ class NFe extends Controller
             'id_empresa'      => $this->id_empresa
         ]);
 
+        // Credita estoque automaticamente e registra movimentos
+        try {
+            $produtoModel = new \App\Models\ProdutoModel();
+            $movModel = new \App\Models\InventoryMovementModel();
+            $creditos = [];
+            foreach ($produtos_da_nota as $p) {
+                if (!isset($p['id_produto'])) { continue; }
+                $qtd = (float) ($p['quantidade'] ?? 0);
+                if ($qtd <= 0) { continue; }
+                $creditos[] = [ 'id_produto' => (int) $p['id_produto'], 'quantidade' => $qtd ];
+                $movModel->insert([
+                    'id_produto'  => (int) $p['id_produto'],
+                    'tipo'        => 'entrada',
+                    'quantidade'  => $qtd,
+                    'motivo'      => 'Nota de Entrada #' . $guarda_numero_da_nota,
+                    'id_contador' => $this->id_contador,
+                    'id_empresa'  => $this->id_empresa,
+                ]);
+            }
+            if (!empty($creditos)) { $produtoModel->estornarEstoque($creditos); }
+        } catch (\Throwable $e) {
+            log_message('error', 'Falha ao creditar estoque na Nota de Entrada: ' . $e->getMessage());
+        }
+
         // Remove todos os produtos da tabela provisória
         $this->produto_provisorio_model
             ->where('id_contador', $this->id_contador)

@@ -32,6 +32,10 @@ class AddStripeToEmpresas extends Migration
                 'constraint' => 50,
                 'null'       => TRUE,
             ],
+            'current_period_end' => [
+                'type' => 'DATETIME',
+                'null' => TRUE,
+            ],
             'trial_ends_at' => [
                 'type' => 'DATETIME',
                 'null' => TRUE,
@@ -56,6 +60,7 @@ class AddStripeToEmpresas extends Migration
         $this->forge->dropColumn('empresas', 'stripe_price_id');
         $this->forge->dropColumn('empresas', 'stripe_product_id');
         $this->forge->dropColumn('empresas', 'stripe_status');
+        $this->forge->dropColumn('empresas', 'current_period_end');
         $this->forge->dropColumn('empresas', 'trial_ends_at');
     }
 }

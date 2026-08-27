@@ -11,7 +11,7 @@ class Produtos extends Controller
 {
     private $tipo = 3;
 
-    private $link = '6';
+    private $link = 'produtos';
 
     private $session;
     private $id_contador;

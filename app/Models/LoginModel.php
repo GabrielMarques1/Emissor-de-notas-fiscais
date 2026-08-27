@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class LoginModel extends BaseAppModel
+class LoginModel extends \CodeIgniter\Model
 {
     protected $table = 'logins';
     protected $primaryKey = 'id_login';

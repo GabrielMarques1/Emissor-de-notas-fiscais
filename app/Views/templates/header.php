@@ -64,9 +64,5 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <?php include 'sidebar.php'; ?>
     
-    <?php if (function_exists('is_offline_mode') && is_offline_mode()): ?>
-    <div style="background:#dc3545;color:#ffffff;padding:6px 12px;text-align:center;font-weight:600;">
-        <?= offline_banner_text(); ?>
-    </div>
-    <?php endif; ?>
+    <!-- Content Wrapper começa aqui para receber o conteúdo das views -->
         

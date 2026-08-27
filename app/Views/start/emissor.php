@@ -152,6 +152,16 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
+                            <div class="mb-3">
+                                <h6 class="m-0 text-dark"><i class="fas fa-user-tie"></i> Adicionar contador</h6>
+                                <div class="input-group" style="margin-top:.5rem;">
+                                    <input type="email" class="form-control" id="contador_email_dashboard" placeholder="E-mail do contador">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="adicionarContadorEmpresa()">Adicionar</button>
+                                    </div>
+                                </div>
+                                <small class="text-muted">Informe o e-mail do seu contador para conceder acesso.</small>
+                            </div>
                             <!-- BAR CHART -->
                             <canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
                         </div>
@@ -231,6 +241,24 @@
             const data = await res.json();
             if (data.url) window.location.href = data.url; else alert('Erro: ' + (data.error || 'desconhecido'));
         } catch (e) { alert('Falha ao abrir portal'); }
+    }
+
+    async function adicionarContadorEmpresa() {
+        try {
+            const email = document.getElementById('contador_email_dashboard').value.trim();
+            if (!email) { alert('Informe o e-mail do contador.'); return; }
+            const params = new URLSearchParams();
+            params.append('contador_email', email);
+            params.append('<?= csrf_token() ?>', '<?= csrf_hash() ?>');
+            const res = await fetch('/empresa/adicionar-contador', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params });
+            if (res.ok) {
+                const data = await res.json();
+                if (data.ok) { alert('Contador adicionado com sucesso.'); } else { alert('Falha: ' + (data.error || 'desconhecida')); }
+            } else {
+                const text = await res.text();
+                alert('Erro na requisição: ' + text);
+            }
+        } catch (e) { alert('Falha ao adicionar contador.'); }
     }
     // Gráfico
     new Chart(document.getElementById("chartjs-1"), {

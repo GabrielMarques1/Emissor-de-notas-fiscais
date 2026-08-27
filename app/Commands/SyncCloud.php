@@ -282,7 +282,12 @@ class SyncCloud extends BaseCommand
         $chunk = 500;
         $processed = 0;
         while (true) {
-            $q = $local->table('outbox_events')->where('processed_at', null)->orderBy('id', 'ASC');
+            // Buscar eventos pendentes ou com retry < max
+            $q = $local->table('outbox_events')
+                ->whereIn('status', ['pending', 'retry'])
+                ->where('(retry_count < 5 OR retry_count IS NULL)')
+                ->orderBy('id', 'ASC');
+                
             if ($limit > 0) {
                 $remaining = max(0, $limit - $processed);
                 if ($remaining === 0) break;
@@ -296,56 +301,142 @@ class SyncCloud extends BaseCommand
 
             foreach ($events as $ev) {
                 $processed++;
+                $eventId   = (int) $ev['id'];
                 $table     = $ev['table_name'];
                 $pkWhere   = json_decode($ev['primary_key_json'] ?? '{}', true) ?: [];
                 $operation = $ev['operation'];
                 $payload   = $ev['payload'] ? (json_decode($ev['payload'], true) ?: null) : null;
+                $idContador = (int) ($ev['id_contador'] ?? 0);
+                $idEmpresa  = (int) ($ev['id_empresa'] ?? 0);
 
                 try {
-                    if (! $cloud->tableExists($table)) {
-                        $this->log("OUTBOX SKIP missing table {$table}");
+                    // Validação de tenant obrigatória
+                    if ($idContador === 0 || $idEmpresa === 0) {
+                        $this->log("OUTBOX SKIP invalid tenant {$table} event_id={$eventId}");
+                        \App\Libraries\Outbox::markFailed($eventId, 'Tenant inválido');
                         continue;
                     }
+                    
+                    if (! $cloud->tableExists($table)) {
+                        $this->log("OUTBOX SKIP missing table {$table}");
+                        \App\Libraries\Outbox::markFailed($eventId, 'Tabela não existe na nuvem');
+                        continue;
+                    }
+                    
+                    // Adicionar tenant_id ao where para garantir isolamento
+                    $tenantWhere = array_merge($pkWhere, [
+                        'id_contador' => $idContador,
+                        'id_empresa' => $idEmpresa
+                    ]);
+                    
                     if ($operation === 'delete') {
                         if ($dryRun) {
-                            CLI::write("  - OUTBOX DELETE {$table} " . json_encode($pkWhere), 'blue');
-                            $this->log("OUTBOX DELETE {$table} " . json_encode($pkWhere));
+                            CLI::write("  - OUTBOX DELETE {$table} " . json_encode($pkWhere) . " tenant:{$idContador}:{$idEmpresa}", 'blue');
+                            $this->log("OUTBOX DELETE {$table} " . json_encode($pkWhere) . " tenant:{$idContador}:{$idEmpresa}");
                         } else {
-                            $cloud->table($table)->where($pkWhere)->update(['deleted_at' => date('Y-m-d H:i:s')]);
-                            $this->log("OUTBOX DELETE OK {$table} " . json_encode($pkWhere));
+                            $affected = $cloud->table($table)->where($tenantWhere)->update(['deleted_at' => date('Y-m-d H:i:s')]);
+                            $this->log("OUTBOX DELETE OK {$table} " . json_encode($pkWhere) . " affected={$affected}");
+                            \App\Libraries\Outbox::markProcessed($eventId);
                         }
                     } elseif ($operation === 'insert') {
                         if ($dryRun) {
-                            CLI::write("  + OUTBOX INSERT {$table} " . json_encode($pkWhere), 'green');
+                            CLI::write("  + OUTBOX INSERT {$table} " . json_encode($pkWhere) . " tenant:{$idContador}:{$idEmpresa}", 'green');
                             $this->log("OUTBOX INSERT {$table} " . json_encode($pkWhere));
                         } else {
-                            // upsert: se já existe, vira update
-                            $exists = $cloud->table($table)->where($pkWhere)->get()->getRowArray();
+                            // Verificar conflito: registro já existe na nuvem?
+                            $exists = $cloud->table($table)->where($tenantWhere)->get()->getRowArray();
+                            
                             if ($exists) {
-                                $cloud->table($table)->where($pkWhere)->update($payload ?? $pkWhere);
-                                $this->log("OUTBOX UPSERT->UPDATE OK {$table} " . json_encode($pkWhere));
+                                // Conflito: resolver com estratégia last-write-wins baseado em updated_at
+                                $conflict = $this->resolveConflict($exists, $payload, $table);
+                                
+                                if ($conflict === 'local_wins') {
+                                    $cloud->table($table)->where($tenantWhere)->update($payload ?? $pkWhere);
+                                    $this->log("OUTBOX CONFLICT RESOLVED local_wins {$table} " . json_encode($pkWhere));
+                                } else {
+                                    $this->log("OUTBOX CONFLICT RESOLVED cloud_wins {$table} " . json_encode($pkWhere));
+                                }
                             } else {
-                                $cloud->table($table)->insert($payload ?? $pkWhere);
+                                // Garantir tenant_id no payload
+                                if ($payload) {
+                                    $payload['id_contador'] = $idContador;
+                                    $payload['id_empresa'] = $idEmpresa;
+                                }
+                                $cloud->table($table)->insert($payload ?? array_merge($pkWhere, ['id_contador' => $idContador, 'id_empresa' => $idEmpresa]));
                                 $this->log("OUTBOX INSERT OK {$table} " . json_encode($pkWhere));
                             }
+                            \App\Libraries\Outbox::markProcessed($eventId);
                         }
                     } else { // update
                         if ($dryRun) {
-                            CLI::write("  ~ OUTBOX UPDATE {$table} " . json_encode($pkWhere), 'yellow');
+                            CLI::write("  ~ OUTBOX UPDATE {$table} " . json_encode($pkWhere) . " tenant:{$idContador}:{$idEmpresa}", 'yellow');
                             $this->log("OUTBOX UPDATE {$table} " . json_encode($pkWhere));
                         } else {
-                            $cloud->table($table)->where($pkWhere)->update($payload ?? $pkWhere);
-                            $this->log("OUTBOX UPDATE OK {$table} " . json_encode($pkWhere));
+                            // Verificar se registro existe antes de atualizar
+                            $exists = $cloud->table($table)->where($tenantWhere)->get()->getRowArray();
+                            
+                            if ($exists) {
+                                // Resolver conflito se necessário
+                                $conflict = $this->resolveConflict($exists, $payload, $table);
+                                
+                                if ($conflict === 'local_wins') {
+                                    $affected = $cloud->table($table)->where($tenantWhere)->update($payload ?? $pkWhere);
+                                    $this->log("OUTBOX UPDATE OK {$table} " . json_encode($pkWhere) . " affected={$affected}");
+                                } else {
+                                    $this->log("OUTBOX UPDATE SKIP cloud_newer {$table} " . json_encode($pkWhere));
+                                }
+                            } else {
+                                // Registro não existe na nuvem, fazer insert
+                                if ($payload) {
+                                    $payload['id_contador'] = $idContador;
+                                    $payload['id_empresa'] = $idEmpresa;
+                                }
+                                $cloud->table($table)->insert($payload ?? array_merge($pkWhere, ['id_contador' => $idContador, 'id_empresa' => $idEmpresa]));
+                                $this->log("OUTBOX UPDATE->INSERT {$table} " . json_encode($pkWhere));
+                            }
+                            \App\Libraries\Outbox::markProcessed($eventId);
                         }
                     }
 
-                    if (! $dryRun) {
-                        $local->table('outbox_events')->where('id', $ev['id'])->update(['processed_at' => date('Y-m-d H:i:s')]);
-                    }
                 } catch (\Throwable $e) {
-                    $this->log("OUTBOX ERROR {$table} id={$ev['id']} " . $e->getMessage());
+                    $errorMsg = $e->getMessage();
+                    $this->log("OUTBOX ERROR {$table} id={$eventId} " . $errorMsg);
+                    \App\Libraries\Outbox::markFailed($eventId, $errorMsg);
                 }
             }
+        }
+    }
+    
+    /**
+     * Resolve conflito entre versão local e cloud
+     * Estratégia: last-write-wins baseado em updated_at
+     * 
+     * @return string 'local_wins' ou 'cloud_wins'
+     */
+    private function resolveConflict(array $cloudData, ?array $localData, string $table): string
+    {
+        if (!$localData) {
+            return 'cloud_wins';
+        }
+        
+        $cloudUpdated = $cloudData['updated_at'] ?? $cloudData['created_at'] ?? null;
+        $localUpdated = $localData['updated_at'] ?? $localData['created_at'] ?? null;
+        
+        if (!$cloudUpdated || !$localUpdated) {
+            // Sem timestamps, preferir local (foi modificado offline)
+            $this->log("CONFLICT no timestamps, preferring local for {$table}");
+            return 'local_wins';
+        }
+        
+        $cloudTime = strtotime((string) $cloudUpdated);
+        $localTime = strtotime((string) $localUpdated);
+        
+        if ($localTime > $cloudTime) {
+            $this->log("CONFLICT local newer for {$table}");
+            return 'local_wins';
+        } else {
+            $this->log("CONFLICT cloud newer for {$table}");
+            return 'cloud_wins';
         }
     }
 

@@ -15,8 +15,11 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "laminas/laminas-escaper": "^2.9",
+        "league/oauth2-google": "4.0",
+        "phpoffice/phpspreadsheet": "^5.1",
         "psr/log": "^1.1",
-        "stripe/stripe-php": "*"
+        "stripe/stripe-php": "^13.0",
+        "tecnickcom/tcpdf": "^6.10"
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.7",
@@ -73,6 +76,7 @@
     "autoload-dev": {
         "psr-4": {
             "CodeIgniter\\": "tests/system/",
+            "Tests\\Support\\": "tests/Support/",
             "Utils\\": "utils/"
         }
     },

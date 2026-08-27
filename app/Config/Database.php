@@ -5,147 +5,72 @@ namespace Config;
 use CodeIgniter\Database\Config;
 
 /**
- * Database Configuration
+ * Database Configuration with Performance Optimizations
  */
 class Database extends Config
 {
     /**
-     * The directory that holds the Migrations
-     * and Seeds directories.
-     */
-    public string $filesPath = APPPATH . 'Database' . DIRECTORY_SEPARATOR;
-
-    /**
-     * Lets you choose which connection group to
-     * use if no other is specified.
-     */
-    public string $defaultGroup = 'cloud';
-
-    /**
-     * The default database connection.
+     * Configuração principal do banco (cloud/produção)
      */
     public array $default = [
         'DSN'          => '',
         'hostname'     => 'localhost',
-        'username'     => '',
-        'password'     => '',
-        'database'     => '',
-        'DBDriver'     => 'MySQLi',
-        'DBPrefix'     => '',
-        'pConnect'     => false,
-        'DBDebug'      => true,
-        'charset'      => 'utf8',
-        'DBCollat'     => 'utf8_general_ci',
-        'swapPre'      => '',
-        'encrypt'      => false,
-        'compress'     => false,
-        'strictOn'     => false,
-        'failover'     => [],
-        'port'         => 3306,
-        'numberNative' => false,
-    ];
-
-    /**
-     * Primary connection (cloud). Configure via .env as database.cloud.*
-     */
-    public array $cloud = [
-        'DSN'          => '',
-        'hostname'     => '127.0.0.1',
         'username'     => 'root',
         'password'     => '',
-        'database'     => 'erp_test',
+        'database'     => 'erp_local',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
-        'pConnect'     => false,
-        'DBDebug'      => true,
-        'charset'      => 'utf8',
-        'DBCollat'     => 'utf8_general_ci',
+        'pConnect'     => false,  // Persistent connections desabilitadas (multi-tenant)
+        'DBDebug'      => true,   // Modo desenvolvimento
+        'charset'      => 'utf8mb4',
+        'DBCollat'     => 'utf8mb4_unicode_ci',
         'swapPre'      => '',
         'encrypt'      => false,
-        'compress'     => false,
+        'compress'     => true,   // OTIMIZAÇÃO: Compressão de dados MySQL
         'strictOn'     => false,
         'failover'     => [],
         'port'         => 3306,
+        
+        // PERFORMANCE: Query caching
+        'cacheOn'      => false,  // Usar cache da aplicação (não do MySQL)
+        'cacheDir'     => '',
+        
+        // PERFORMANCE: Connection pooling
         'numberNative' => false,
+        
+        // SECURITY & PERFORMANCE
+        'dateFormat'   => [
+            'date'     => 'Y-m-d',
+            'datetime' => 'Y-m-d H:i:s',
+            'time'     => 'H:i:s',
+        ],
     ];
-
+    
     /**
-     * Secondary connection for local backup persistence on client machines.
-     * Configure via .env using database.default.* or database.local_backup.* groups as needed.
+     * Configuração secundária (backup local para modo offline)
      */
     public array $local_backup = [
         'DSN'          => '',
-        'hostname'     => '127.0.0.1',
-        'username'     => '',
+        'hostname'     => 'localhost',
+        'username'     => 'root',
         'password'     => '',
-        'database'     => '',
+        'database'     => 'erp_offline',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
         'DBDebug'      => true,
-        'charset'      => 'utf8',
-        'DBCollat'     => 'utf8_general_ci',
+        'charset'      => 'utf8mb4',
+        'DBCollat'     => 'utf8mb4_unicode_ci',
         'swapPre'      => '',
         'encrypt'      => false,
-        'compress'     => false,
+        'compress'     => true,
         'strictOn'     => false,
         'failover'     => [],
         'port'         => 3306,
-        'numberNative' => false,
     ];
-
+    
     /**
-     * This database connection is used when
-     * running PHPUnit database tests.
+     * Grupo padrão
      */
-    public array $tests = [
-        'DSN'         => '',
-        'hostname'    => '127.0.0.1',
-        'username'    => '',
-        'password'    => '',
-        'database'    => ':memory:',
-        'DBDriver'    => 'SQLite3',
-        'DBPrefix'    => 'db_',  // Needed to ensure we're working correctly with prefixes live. DO NOT REMOVE FOR CI DEVS
-        'pConnect'    => false,
-        'DBDebug'     => true,
-        'charset'     => 'utf8',
-        'DBCollat'    => 'utf8_general_ci',
-        'swapPre'     => '',
-        'encrypt'     => false,
-        'compress'    => false,
-        'strictOn'    => false,
-        'failover'    => [],
-        'port'        => 3306,
-        'foreignKeys' => true,
-        'busyTimeout' => 1000,
-    ];
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        // Ensure that we always set the database group to 'tests' if
-        // we are currently running an automated test suite, so that
-        // we don't overwrite live data on accident.
-        if (ENVIRONMENT === 'testing') {
-            $this->defaultGroup = 'tests';
-        }
-
-        // Configure cloud failover to local_backup so the app keeps working offline
-        if (!empty($this->local_backup['database']) || !empty($this->local_backup['DSN'])) {
-            $this->cloud['failover'] = [$this->local_backup];
-        }
-
-        // Backward compatibility: if someone connects using 'default', mirror 'cloud'
-        if (empty($this->default['database']) && empty($this->default['DSN'])) {
-            $this->default = $this->cloud;
-        }
-
-        // If cloud is not configured but local_backup is, use local_backup as default group
-        $cloudConfigured = !empty($this->cloud['database']) || !empty($this->cloud['DSN']);
-        $localConfigured = !empty($this->local_backup['database']) || !empty($this->local_backup['DSN']);
-        if (! $cloudConfigured && $localConfigured) {
-            $this->defaultGroup = 'local_backup';
-        }
-    }
+    public string $defaultGroup = 'default';
 }

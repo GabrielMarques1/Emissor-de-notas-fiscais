@@ -142,7 +142,7 @@ class Login extends Controller
                 return redirect()->to('/inicio/contador');
 
             elseif($login['tipo'] == 3) :
-                // Caso o tipo for 3 (Emissor) então pega o id_empresa e coloca também na sessão
+                // Caso o tipo for 3 (Empresa/Gerente) então pega o id_empresa e valida acesso
                 $empresa = $this->empresa_model
                                 ->where('id_login', $login['id_login'])
                                 ->first();
@@ -151,21 +151,6 @@ class Login extends Controller
                 $contador = $this->contador_model
                                 ->where('id_contador', $empresa['id_contador'])
                                 ->first();
-
-                // Verifica se o contador ou a empresa está desativado
-                if($contador['status'] == "Desativado" || $empresa['status'] == "Desativado") :
-                    
-                    $this->session->setFlashdata(
-                        'alert',
-                        [
-                            'type'  => 'warning',
-                            'title' => 'Acesso bloqueado. Entre em contato com o administrador.'
-                        ]
-                    );
-
-                    return redirect()->to('/login');
-
-                endif;
 
                 $this->session->regenerate();
                 $this->session->set('id_empresa', $empresa['id_empresa']);
@@ -187,7 +172,18 @@ class Login extends Controller
                 $this->session->set('usuario', $login['usuario']);
                 $this->session->set('tipo', $login['tipo']);
 
-                return redirect()->to('/inicio/emissor');
+                return redirect()->to('/painel/empresa');
+            
+            elseif($login['tipo'] == 4) :
+                // Tipo 4 não deve usar este login - redireciona para login PDV
+                $this->session->setFlashdata(
+                    'alert',
+                    [
+                        'type'  => 'warning',
+                        'title' => 'Use o login específico do PDV'
+                    ]
+                );
+                return redirect()->to('/index.php/login-pdv');
             endif;
 
         else :

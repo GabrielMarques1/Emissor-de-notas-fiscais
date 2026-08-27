@@ -78,6 +78,26 @@
         return $string;
     }
 
+    function validarCNPJ($cnpj)
+    {
+        $cnpj = preg_replace('/[^0-9]/', '', (string) $cnpj);
+        if (strlen($cnpj) != 14) return false;
+        if (preg_match('/^(\d)\1{13}$/', $cnpj)) return false;
+
+        $calcDV = function($base) {
+            $len = strlen($base);
+            $sum = 0; $pos = 0;
+            $weights = ($len === 12) ? [5,4,3,2,9,8,7,6,5,4,3,2] : [6,5,4,3,2,9,8,7,6,5,4,3,2];
+            foreach ($weights as $w) { $sum += (int) $base[$pos] * $w; $pos++; }
+            $rest = $sum % 11;
+            return ($rest < 2) ? 0 : 11 - $rest;
+        };
+
+        $dv1 = $calcDV(substr($cnpj, 0, 12));
+        $dv2 = $calcDV(substr($cnpj, 0, 12) . $dv1);
+        return $cnpj[12] == (string) $dv1 && $cnpj[13] == (string) $dv2;
+    }
+
     function converteMoney($valor)
     {
         $valor = str_replace('.', '', $valor);
@@ -106,5 +126,23 @@
     function offline_banner_text(): string
     {
         return 'Sem conexão com a nuvem. Operando em modo offline (dados locais).';
+    }
+
+    function resolve_tenant_ids(): array
+    {
+        $session = session();
+        $idContador = (int) ($session->get('id_contador') ?? 0);
+        $idEmpresa  = (int) ($session->get('id_empresa') ?? 0);
+        if ($idContador > 0 && $idEmpresa > 0) {
+            return [$idContador, $idEmpresa];
+        }
+        try {
+            $db = \Config\Database::connect();
+            $row = $db->table('empresas')->select('id_empresa,id_contador')->orderBy('id_empresa','ASC')->get()->getRowArray();
+            if ($row && (int) ($row['id_contador'] ?? 0) > 0) {
+                return [(int) $row['id_contador'], (int) $row['id_empresa']];
+            }
+        } catch (\Throwable $e) {}
+        return [0, 0];
     }
 ?>

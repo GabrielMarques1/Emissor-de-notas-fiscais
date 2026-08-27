@@ -1,0 +1,18 @@
+---
+alwaysApply: true
+---
+@multi-tenant-checklist:
+
+text
+# CHECKLIST MULTI-TENANT (VALIDAR TODA FUNCIONALIDADE)
+
+- [ ] tenant_id presente em TODAS queries
+- [ ] Validação de tenant no início da operação
+- [ ] Testes de isolamento implementados
+- [ ] Logs incluem tenant_id
+- [ ] Cache isolado (se aplicável)
+- [ ] Credenciais isoladas por tenant
+- [ ] Arquivos/uploads em diretórios separados
+- [ ] Webhooks validam tenant
+- [ ] Rate limiting por tenant
+- [ ] Sem variáveis globais compartilhadas
